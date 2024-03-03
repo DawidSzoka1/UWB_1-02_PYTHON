@@ -87,19 +87,19 @@
 # print(f"W wolnym czasie lubię {hobby}.")
 # print("To jest mój krótki życiorys.")
 
-# zad 3
-pary = ["be", "ce", "ći", "de", "ef", "gie", "ha", "jot", "ka", "el", "em", "en", "pe", "er", "es",
-        "te", "wu", "y", "zet", "żet", "źet"]
-spolgloska = input("Podaj spolgloske: ")
-for i in pary:
-    if spolgloska in i:
-        print(i)
-
-# zad 4
-name = input("What is your name? ")
-if name == "Janusz":
-    print("Janusz")
-elif name == "Grazyna":
-    print("Grazyna")
-else:
-    print("ani janusz ani grazyna")
+# # zad 3
+# pary = ["be", "ce", "ći", "de", "ef", "gie", "ha", "jot", "ka", "el", "em", "en", "pe", "er", "es",
+#         "te", "wu", "y", "zet", "żet", "źet"]
+# spolgloska = input("Podaj spolgloske: ")
+# for i in pary:
+#     if spolgloska in i:
+#         print(i)
+#
+# # zad 4
+# name = input("What is your name? ")
+# if name == "Janusz":
+#     print("Janusz")
+# elif name == "Grazyna":
+#     print("Grazyna")
+# else:
+#     print("ani janusz ani grazyna")
