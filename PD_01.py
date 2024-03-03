@@ -59,11 +59,47 @@
 # elif x != 5 or x < 0:
 #     print("x != od 5 lub mniejszy od 0")
 
+# # zad dodatkowe:
+# # zad 1
+# name = input("What is your name? ")
+# surname = input("What is your surname? ")
+# age = input("What is your age? ")
+# eat = input("Do you eat well? ")
+# sport = input("Do you like sport? ")
+# games = input("Do you like games? ")
+# books = input("Do you like reading books? ")
+# art = input("Do you have an interest in art?: ")
+# print("Podsumowanie \n")
+# print(f"Imie: {name} \nSurname: {surname} \nWiek: {age} \nDo you eat well: {eat}"
+#       f"\nDo you like sport: {sport} \nDo you like games: {games} \nDo you like reading books: {books}"
+#       f"\nDo you have an interest in art: {art} ")
 
 
+# # zad 2
+# name = input("What is your name? ")
+# surname = input("What is your surname? ")
+# age = input("What is your age? ")
+# job = input("What is your job? ")
+# place_of_birth = input("Where were you born? ")
+# hobby = input("What are your hobbies? ")
+# print(f"Jestem {name} {surname}, mam {age} lat. Zawodowo pracuję jako {job}.")
+# print(f"Urodziłem się w miejscowości {place_of_birth}.")
+# print(f"W wolnym czasie lubię {hobby}.")
+# print("To jest mój krótki życiorys.")
 
+# zad 3
+pary = ["be", "ce", "ći", "de", "ef", "gie", "ha", "jot", "ka", "el", "em", "en", "pe", "er", "es",
+        "te", "wu", "y", "zet", "żet", "źet"]
+spolgloska = input("Podaj spolgloske: ")
+for i in pary:
+    if spolgloska in i:
+        print(i)
 
-
-
-
-
+# zad 4
+name = input("What is your name? ")
+if name == "Janusz":
+    print("Janusz")
+elif name == "Grazyna":
+    print("Grazyna")
+else:
+    print("ani janusz ani grazyna")
