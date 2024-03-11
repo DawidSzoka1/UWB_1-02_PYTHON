@@ -41,8 +41,45 @@
 # quotient = lambda x, y, z: x/y/z
 
 # ########################## Task 6
-# Utwórz listę złożoną z pojedynczych liter swojego imienia następnie korzystając
-# z funkcji lambda połącz kolejne litery w jeden wyraz (swoje imie)
+# # Utwórz listę złożoną z pojedynczych liter swojego imienia następnie korzystając
+# # z funkcji lambda połącz kolejne litery w jeden wyraz (swoje imie)
 
-name = ['d', 'a', 'w', 'i', 'd']
-join_lambda = lambda name: ''.join(name)
+# name = ['d', 'a', 'w', 'i', 'd']
+# join_lambda = lambda name: ''.join(name)
+
+# ########################## Task  7
+# # Przypisz do zmiennej wartość która będzie twoim imieniem i nazwiskiem następnie korzystając
+# # z funkcji lambda rozdziel wyraz na poszczegolne wyrazy, a potem wyrazy na litery
+# # użyj funkcji list i metody split - dla zmiennych typu string
+
+# full_name = 'Tomasz Kowalski'
+# separate = lambda name: list(name.replace(" ", ''))
+# print(separate(full_name))
+
+
+# ########################## Task 8
+# # Utwórz funkcję która w dowolnym wyrazie (1 argument funkcji)
+# # znajdzie dowolną literę (2 argument funkcji)
+## użyj lammbda()
+
+# find_in_text = lambda text, word: text.find(word)
+
+# ########################## Task 9
+## Utwórz dwie listy, do każdej z nich niezależnie zapisuj odpowiednio
+## podawane przez użytkowników login (pierwsza lista) i hasło (druga lista),
+## operacja zapisu jest powtarzana aż do momentu wpisania przez użytkownika "STOP"
+## użyj break, continue, enumerate().
+## Następnie login-y i hasła zapisz do słownika (login to klucz słownika).
+
+# logins = []
+# passwords = []
+# while True:
+#     login = input("Enter a login: ")
+#     password = input("Enter a password: ")
+#     if login.lower() == 'stop' or password.lower() == 'stop':
+#         break
+#     logins.append(login)
+#     passwords.append(password)
+# dict_log_pass = dict(zip(logins, passwords))
+#
+
