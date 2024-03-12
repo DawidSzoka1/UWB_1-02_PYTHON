@@ -1,0 +1,89 @@
+## Zadanie 1
+# # Utwórz 1 funkcje wielu-zmiennych wejściowych, która obliczy wartość wyrażenia
+# ## dla dowolnego jednego argumentu wejściowego, x^x
+# ## dla dowolnych dwóch argumentów wejściowych  x^x,
+# dla pozostałych przypadków wyświetli komunikat, że jest błąd.
+
+# def power(*args):
+#     if len(args) > 2:
+#         print("za duzo zmiennych")
+#         return 0
+#     for num in args:
+#         print(num ** num)
+######### Zadanie 2
+## Wczytaj poniższy fragment tekstu opisujący komputer
+## Napisz funkcję która ustali liczbę występujących w tym tekście wyrazów wskazanych przez użytkownika
+## ciąg nazw i liczba wyszukiwanych wyrazów podanych przez użytkownika jest dowolna,
+## niemniej w tekście są wyrazy o nazwach kluczowych i potencjalnie zawsze ważnych
+### dla innych użytkowników np. komputera, skaner, uwzględnij je w wyszukiwaniu.
+
+# text = 'Wczytywanie do komputera tekstów, ilustracji, fotografii, itp. jest '   \
+#        'możliwe dzięki urządzeniom zewnętrznym zwanym skanerami. Skaner to ' \
+#        'urządzenie umożliwiające wprowadzenie do komputera grafiki i tekstu. ' \
+#        'Dzięki zamianie skanowanej płaszczyzny na postać cyfrową może ona zostać ' \
+#        'wyświetlona na ekranie monitora i zapisana na dysku w odpowiednim formacie ' \
+#        'oraz może zostać poddana komputerowej obróbce. Skanery dzielimy na dwie podstawowe ' \
+#        'grupy: ręczne (np. czytniki kodów paskowych) oraz stacjonarne. Najpopularniejszym ' \
+#        'typem skanerów są skanery stacjonarne płaskie, które umożliwiają skanowanie ' \
+#        'dokumentów o formacie A3 lub A4 i ich pochodnych. Są one podłączane do ' \
+#        'komputerów przez port równoległy, uniwersalną magistralę szeregową lub sterownik SCSI.'
+#
+# def Intext(text, *args):
+#     for word in args:
+#         print(f"wyrazu {word} w teksie jest {text.count(word)}")
+#
+# Intext(text, 'komputer', 'a')
+
+
+############ Zadanie 3 #################
+## Utwórz funkcję o nazwie "SredniaLiczb.py", która wczyta N dowolnych liczb
+## i obliczy średnią z w/w liczb, podane przez użytkownika liczby przypisz do listy
+
+# def SredniaLiczba(*N):
+#     return sum(N)/len(N)
+
+############ Zadanie ##################
+## Utwórz funkcję o nazwie "ZdanieRozdziel.py", która wczyta od użytkownika pewien dowolny tekst,'
+## a następnie podzieli go na zdania (zakładamy, że jednoznacznie kropka rozdziela zdania)'
+## funkcja w zależności od ustawionych kolejnych parametrów wejściowych funkcji
+## (ustaw domyślnie argumenty wejściowe: True),
+## może ale nie musi wyświetlić następujące informacje:
+## ile w każdym zdaniu jest fragmentów rozdzielonych przez określony znak np. ',', ';'
+# (domyślnie argument wejściowy to przecinek: ',')
+## ile w każdym zdaniu jest wyrazów (zakładamy, że spacja oddziela wyrazy w zdaniu)
+## użyj odpowiednich metod dla zmiennych typu string np. split do rozdzielenia elementów: x = ‘blue,red,green’,   x.split(“,”)
+
+# def ZdanieROdziel(text, sep=',', space=True):
+#     words = text.split('.')
+#     if sep:
+#
+#         for word in words:
+#             length = len(word.split(sep))
+#             print(f"W zdaniu '{word}' separator {sep} rozdziela {length if length > 1 else 0} slow")
+#     if space:
+#         for word in words:
+#             print(f"W zdaniu '{word}' jest {word.count(' ')} spacji")
+#
+#
+# ZdanieROdziel('tesdt, gfd', sep='.')
+
+########### Zadanie 6  ########################
+## Zdefiniuj funkcję "CiagGometryczny.py", która dla podanych trzech parametrów:
+## n=numer elementu ciągu, a1=wartość pierwszego elementu ciągu (domyślnie: 1),
+## q=wartość iloczynu ciągu geometrycznego (domyślnie: 2)
+## zwróci w zależności od ustawianych parametrów funkcji
+## a) wartość n-tego elementu ciągu geometrycznego
+## b) sumę elementów ciągu geometrycznego
+
+# def CiagGeometryczny(n, a1=1, q=2, sum=False):
+#     if q == 1:
+#         return a1 * n
+#     if sum:
+#         return a1 * ((1 - q ** n) / (1 - q))
+#     return a1 * (q ** (n - 1))
+
+# ########################## Zadanie 7
+## Zaprojektuj program służący do obsługi prostej bazy danych dla sklepu z
+## dowolnej branży o różnej liczbie pracowników. Program zapisuje do kolejnych list
+## liczby produktów dostarczonych w danym dniu (nazwa listy odpowiada nazwie towaru)
+## liczba towarów powinna być zapamiętana
