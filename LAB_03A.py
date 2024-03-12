@@ -78,8 +78,58 @@
 #     password = input("Enter a password: ")
 #     if login.lower() == 'stop' or password.lower() == 'stop':
 #         break
+#     if login in logins:
+#         continue
+#     if password in passwords:
+#         continue
 #     logins.append(login)
 #     passwords.append(password)
 # dict_log_pass = dict(zip(logins, passwords))
 #
+# ########################## Task 10  - Module in Python
+# # #Utwórz funkcje Poziom: która rysuje gwiazdki poziomo, liczbę gwiazdek podaje użytkownik jako argument funkcji')
+# # #Utwórz funkcje Pion: która rysuje gwiazdeki pionowo, liczbę gwiazdek podaje użytkownik jako argument funkcji')
+# # obie funkcje są z modułu o nazwie stars
+# # Korzystając z modułu stars i funkcji Pion Poziom wypisz litery: E, L
+# from stars import Pion, Poziom
+#
+# Poziom(3)
+# Pion(2)
+# Poziom(3)
+# Pion(2)
+# Poziom(3)
+# print("\n")
+# Pion(6)
+# Poziom(3)
 
+
+# ########################## Task 11
+# # utwórz moduł o nazwie sil, w którym znajdzie się funkcja silnia (użyj lammbda), a następnie korzystając z
+# modułu sil, oblicz symbol Newtona dla dowolnych 2 liczb wskazanych przez
+# użytkownika(http://www.fizykon.org/wzory/wzory_matem_kombinatoryka.htm)
+# from sil import silnia
+#
+# number_1 = float(input("Enter a number: "))
+# number_2 = float(input("Enter a number: "))
+# print(f"{number_1}!  = {silnia(number_1)}\n")
+# print(f"{number_2}!  = {silnia(number_2)}\n")
+# ########################## Task 12
+# # Write a script to filter out only the even items from a list (i.e. made from range(1, 100))
+# # using filter() and lambda functions.
+# #  The numbers obtained should be printed in a comma-separated sequence on a single line.
+#
+# numbers = [x for x in range(1, 100)]
+# numbers_filter = list(filter(lambda x: True if x % 2 == 0 else False, numbers))
+# print(numbers_filter)
+
+# ########################## Task 13
+#### Write a script, using reduce(), which will multiply elements in range (1, 100)
+# import functools
+#
+# number = functools.reduce(lambda x, y: x * y, [x for x in range(1, 100)])
+# ########################## Task 14
+### Write a program which will find all such numbers which are
+### divisible by 7 but are not a multiple of 5 between 2000 and 3200 (both included)
+
+# numbers_filtered = list(filter(lambda number: True if number % 7 == 0 and number % 5 != 0 else False, [x for x in range(2000, 3201)]))
+# print(numbers_filtered)
