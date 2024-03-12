@@ -87,3 +87,18 @@
 ## dowolnej branży o różnej liczbie pracowników. Program zapisuje do kolejnych list
 ## liczby produktów dostarczonych w danym dniu (nazwa listy odpowiada nazwie towaru)
 ## liczba towarów powinna być zapamiętana
+
+
+# def Shop(**kwargs):
+#     for k,v in kwargs.items():
+
+# ########################## Zadanie 8
+## W module pole_prostokata.py
+## Zdefiniuj funkcję która obliczy pole powierzchni prostokąta
+## W module pole_trojkata.py
+## Zdefiniuj funkcję która obliczy pole powierzchni trójkąta
+# W module pola.py
+## Korzystając z modułów pole_prostokata i pole_trojkata
+## napisz funkcję która ma możliwość obliczenia pola prostokąta, trójkąta i kwadratu
+## Użyj zmiennych globals, utwórz moduł globals.py w którym będą przechowywane
+## domyślne wartości dla boków prostokąta, trójkąta, kwadratu (równe 1)
