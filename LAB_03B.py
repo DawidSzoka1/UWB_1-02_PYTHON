@@ -53,16 +53,15 @@
 ## ile w każdym zdaniu jest wyrazów (zakładamy, że spacja oddziela wyrazy w zdaniu)
 ## użyj odpowiednich metod dla zmiennych typu string np. split do rozdzielenia elementów: x = ‘blue,red,green’,   x.split(“,”)
 
-# def ZdanieROdziel(text, sep=',', space=True):
+# def ZdanieRodziel(text, sep=',',separator=True , space=True):
 #     words = text.split('.')
-#     if sep:
-#
+#     if separator:
 #         for word in words:
 #             length = len(word.split(sep))
 #             print(f"W zdaniu '{word}' separator {sep} rozdziela {length if length > 1 else 0} slow")
 #     if space:
 #         for word in words:
-#             print(f"W zdaniu '{word}' jest {word.count(' ')} spacji")
+#             print(f"W zdaniu '{word}' jest {word.count(' ')} wyrazow")
 #
 #
 # ZdanieROdziel('tesdt, gfd', sep='.')
@@ -89,8 +88,32 @@
 ## liczba towarów powinna być zapamiętana
 
 
-# def Shop(**kwargs):
-#     for k,v in kwargs.items():
+# def Shop(id_sklep=0, liczba_pracownikow=5, **kwargs):
+#     shop = {'id_sklep': id_sklep, 'liczba_pracownikow': liczba_pracownikow, 'produkty': kwargs}
+#     print("Sklep zostal stworzony")
+#     return shop
+#
+#
+# def delivery(shop, **kwargs):
+#     print(f"Stan magazynu:")
+#     for product, amount in kwargs.items():
+#         if product in shop['produkty']:
+#             shop['produkty'][product] += amount
+#         else:
+#             shop['produkty'][product] = amount
+#     for product, amount in shop['produkty'].items():
+#         print(f"Produktu {product} mamy: {amount}")
+#
+#
+# def shop_info(shop:dict):
+#     print(f"W sklepie {shop['id_sklep']} pracuje {shop['liczba_pracownikow']} pracownikow")
+#     delivery(shop)
+#
+#
+# shop = Shop(2, liczba_pracownikow=15, drabina=500, cement=200)
+# delivery(shop, drabina=50, cement=200, jabłka = 200)
+#
+# shop_info(shop)
 
 # ########################## Zadanie 8
 ## W module pole_prostokata.py
@@ -102,3 +125,17 @@
 ## napisz funkcję która ma możliwość obliczenia pola prostokąta, trójkąta i kwadratu
 ## Użyj zmiennych globals, utwórz moduł globals.py w którym będą przechowywane
 ## domyślne wartości dla boków prostokąta, trójkąta, kwadratu (równe 1)
+
+
+# rozwiazanie w module pole.py
+
+# ########################## Zadanie 9
+## Zdefiniuj funkcję wyższego rzędu która ma możliwość obliczenia
+## pole powierzchni prostokąta i pola powierzchni trójkąta
+## Nie modyfikując zawartości w/w funkcji, użyj dekoratora i dodaj możliwość
+## obliczenia pola kwadratu
+
+
+# def area_higer(func):
+#
+
