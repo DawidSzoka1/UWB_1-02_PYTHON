@@ -6,17 +6,17 @@ import os
 ## użytkownika (nazwa ścieżki do katalogu to argument wejściowy funkcji)
 ## oraz będzie wyświetlała zawartość wskazanego przez użytkownika katalogu.
 
-def change_dir(new_dir_path, files_size=False):
-    if os.path.isdir(new_dir_path):
-        os.chdir(new_dir_path)
-        print(f"You are now in {new_dir_path}")
-        # print(os.listdir('.'))
-        if files_size:
-            for file in os.listdir('.'):
-                print(f"The file {file} have size {os.path.getsize(file)}")
-    else:
-        print("This directory does not exist")
-
+# def change_dir(new_dir_path, files_size=False):
+#     if os.path.isdir(new_dir_path):
+#         os.chdir(new_dir_path)
+#         print(f"You are now in {new_dir_path}")
+#         # print(os.listdir('.'))
+#         if files_size:
+#             for file in os.listdir('.'):
+#                 print(f"The file {file} have size {os.path.getsize(file)}")
+#     else:
+#         print("This directory does not exist")
+#
 
 #
 # while True:
@@ -61,33 +61,88 @@ def change_dir(new_dir_path, files_size=False):
 ## StudentDoc, StudentObrazy, do w/w folderów zapisz w każdym z nich 2 dowolne
 ## pliki odpowiednio tekstowe i graficzne, a następnie wyświetl zawartość poszczególnych
 ## folderów podaj rozmiar każdego pliku
-parent_dir = os.getcwd()
-directory_names = ["StudentDoc", "StudentObrazy"]
-path_student_doc = os.path.join(parent_dir, directory_names[0])
-path_student_obrazy = os.path.join(parent_dir, directory_names[1])
-try:
-    os.mkdir(path_student_doc)
-    os.mkdir(path_student_obrazy)
-    print(f"Directory {directory_names} created successfully")
-except FileExistsError:
-    print("Files already exists")
-for directory in directory_names:
-    change_dir(directory)
-    if not os.path.exists("text_file") and not os.path.exists("photo_file"):
-        with open('text_file.txt', 'w') as text_file:
-            text_file.write(f'{directory}\n to jest sobie teks')
-        with open('photo_file.jpg', 'w') as photo_file:
-            photo_file.write(f'a')
-    else:
-        print("Files already exists")
-    change_dir(parent_dir)
+# parent_dir = os.getcwd()
+# directory_names = ["StudentDoc", "StudentObrazy"]
+# path_student_doc = os.path.join(parent_dir, directory_names[0])
+# path_student_obrazy = os.path.join(parent_dir, directory_names[1])
+# try:
+#     os.mkdir(path_student_doc)
+#     os.mkdir(path_student_obrazy)
+#     print(f"Directory {directory_names} created successfully")
+# except FileExistsError:
+#     print("Files already exists")
+# for directory in directory_names:
+#     change_dir(directory)
+#     if not os.path.exists("text_file") and not os.path.exists("photo_file"):
+#         with open('text_file.txt', 'w') as text_file:
+#             text_file.write(f'{directory}\n to jest sobie teks')
+#         with open('photo_file.jpg', 'w') as photo_file:
+#             photo_file.write(f'a')
+#     else:
+#         print("Files already exists")
+#     change_dir(parent_dir)
+#
+#
+# for file in os.listdir('.'):
+#     if os.path.isdir(file):
+#         os.chdir(file)
+#         print(f"Files in directory {file}")
+#         for file_in_dir in os.listdir('.'):
+#
+#             print(f"The file {file_in_dir} have size {os.path.getsize(file_in_dir)}")
+#         os.chdir(parent_dir)
+
+########################## Zadanie 5 #######################
+## Korzystając wyłącznie z metod Pythona, utworz w swoim folderze katalog,
+## a następnie zmień nazwę katalogu na inną, dowolną.
+# local_path = os.getcwd()
+# new_file_path = os.path.join(local_path, "change")
+# try:
+#     os.mkdir(new_file_path)
+# except FileExistsError:
+#     print("File exists!")
+# try:
+#     os.rename(new_file_path, os.path.join(local_path, "after_change"))
+# except FileExistsError:
+#     print("File exists!")
+
+########################## Zadanie 6 ########################
+# # Utwórz trzy listy, zapisz, usuń a następnie odczytaj z pliku listy, użyj pickle
+# import pickle
+#
+# list1 = [1, 2, 3, 4]
+# list2 = ["12", "32"]
+# list3 = ["owoce wow", "owoce wow"]
+# with open("test.pickle.txt", "wb") as f:
+#     pickle.dump([list1, list2, list3], f)
+#
+# del list1, list2, list3
+# with open("test.pickle.txt", "rb") as f:
+#     obj1, obj2, obj3 = pickle.load(f)
+#
+# print(obj1, obj2, obj3)
+########################## Zadanie 7 ########################
+## Zapisz do pliku liczbę 123456789, spakuj, rozpakuj dane
+## Sprawdź w dokumentacji pakietu struct typ danej
+## https://docs.python.org/3/library/struct.html
+# import struct
 
 
-for file in os.listdir('.'):
-    if os.path.isdir(file):
-        os.chdir(file)
-        print(f"Files in directory {file}")
-        for file_in_dir in os.listdir('.'):
-
-            print(f"The file {file_in_dir} have size {os.path.getsize(file_in_dir)}")
-        os.chdir(parent_dir)
+######################### Zadanie 8 #########################
+# Utwórz i zapisz do folderu 5 dowolnych plików tekstowych z dowolnym tekstem
+##(więcej niż 5 zdań), możesz tez skopiować dowolny tekst.
+## Nazwy plików: Tekst1ID_ABC, Tekst2ID_405.txt, Tekst3ID_607.txt, Tekst4ID_ABC.txt, Tekst5ID_DEF.txt
+## Uwaga: pisząc program przyjmij założenie, że masz takich nazw plików w folderze tysiące,
+## program ma działać niezależnie od liczby plików w folderze
+## Utwórz funkcję która:
+## a) odczyta z folderu nazwy wszystkich plików
+## b) dla plików zakończonych ciągiem znaków 'ABC' wyznacz liczbę wyrazów złożonych z conajmnie 3 liter.
+## Utwórz dodatkowową funkcję która wykorzystując poprzednią funkcję sprawdzi:
+## a) ile plików zawiera w identyfikatorze ID liczbę 0
+## b) dla wszystkich plików które w nazwie nie mają liczby 0
+##    wyznaczy liczbę słów
+## c) dla plików zakończonych ciągiem znaków 'ABC' wyznacz liczbę wyrazów złożonych z conajmnie 3 liter.
+def directory_read(path_to_dir):
+    print(os.listdir(path_to_dir))
+    for filename in os.listdir(path_to_dir):
+        continue
