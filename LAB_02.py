@@ -4,7 +4,7 @@
 ## a) Które elementy/geny są wspólne dla wszystkich pacjentów?
 ## b) Jakie elementy/geny są wspólne dla 2 pacjentów?
 ## c) Jakie elementy/geny występują wyłącznie w przypadku 1 choroby?
-import math
+# import math
 
 # set_gene1 = {'SLC19A2', 'ATP7B', 'ERBB3', 'FGFR4', 'ABCC3', 'GALNT14', 'ERCC1',
 #              'LJS19A2', 'AKM7B', 'ELLB34', 'FULR4', 'ANGC3', 'WELNT14', 'EOO1',
@@ -95,7 +95,8 @@ import math
 #     print("dostales 3.5")
 # elif mean >= 50:
 #     print("dostales 3.0")
-
+# else:
+#     print("Nie zdales")
 
 # # #Zadanie 6
 ### Napisz skrypt, ktory obliczy sume ciagu: 1+1/2+1/3+...+1/n korzystając z pętli for
@@ -106,6 +107,7 @@ import math
 # n = int(input("Enter number: "))
 # for i in range(1, n+1):
 #     sum += 1/n
+# print(f"sum = {sum}")
 
 ###### Zadanie 7
 ###### Calculate the root of the numbers from 1 to 10 using the while loop
