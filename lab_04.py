@@ -1,6 +1,5 @@
 import os
 
-
 ########################## Zadanie 1 #########################
 ## Utwórz funkcję która będzie zmieniała bieżący katalog dyskowy na inny wskazany przez
 ## użytkownika (nazwa ścieżki do katalogu to argument wejściowy funkcji)
@@ -41,6 +40,7 @@ import os
 #     print(f"Directory {directory_name} created successfully")
 # except FileExistsError:
 #     print("This file already exists")
+# print(f"Pliki w folderze {os.listdir('.')}")
 # change_dir(path)
 # print(f"You are now in {os.getcwd()}")
 # for i in range(3):
@@ -113,7 +113,7 @@ import os
 # list1 = [1, 2, 3, 4]
 # list2 = ["12", "32"]
 # list3 = ["owoce wow", "owoce wow"]
-# with open("test.pickle.txt", "wb") as f:
+# with open("testpickle.txt", "wb") as f:
 #     pickle.dump([list1, list2, list3], f)
 #
 # del list1, list2, list3
@@ -126,7 +126,19 @@ import os
 ## Sprawdź w dokumentacji pakietu struct typ danej
 ## https://docs.python.org/3/library/struct.html
 # import struct
-
+#
+# with open("struct_test.txt", "wb") as file:
+#     file.write(struct.pack('q', 123456789))
+#
+#
+# with open("struct_test.txt", "rb") as file:
+#     packed_data = file.read()
+#
+#
+# unpacked_data = struct.unpack('q', packed_data)
+#
+# print("Pakowane dane:", packed_data)
+# print("Rozpakowane dane:", unpacked_data[0])
 
 ######################### Zadanie 8 #########################
 # Utwórz i zapisz do folderu 5 dowolnych plików tekstowych z dowolnym tekstem
@@ -142,7 +154,44 @@ import os
 ## b) dla wszystkich plików które w nazwie nie mają liczby 0
 ##    wyznaczy liczbę słów
 ## c) dla plików zakończonych ciągiem znaków 'ABC' wyznacz liczbę wyrazów złożonych z conajmnie 3 liter.
-def directory_read(path_to_dir):
-    print(os.listdir(path_to_dir))
-    for filename in os.listdir(path_to_dir):
-        continue
+
+# file_names = ["Tekst1ID_ABC.txt", "Tekst2ID_405.txt", "Tekst3ID_607.txt", "Tekst4ID_ABC.txt", "Tekst5ID_DEF.txt"]
+# path_home = os.getcwd()
+# new_dir_path = os.path.join(path_home, 'task8_lab_04')
+# try:
+#     os.mkdir(new_dir_path)
+# except FileExistsError as e:
+#     print(f"FIleExistsError exeption {e}")
+#
+# for file_name in file_names:
+#     with open(os.path.join(new_dir_path, file_name), 'w') as f:
+#         f.write(
+#             f"fdbgdfuhbvkjdfhkjvbdfjbvhjdfb {file_name} {new_dir_path}. "
+#             f"daohdija ahsfdshu gggydtdtd gdgfdggf. sdufhsdufhiu. sdifhsudhfiusdh hsdiufhsdiufhsdiufh iushdfiuh siudfh."
+#             f" sdfiohsdiufhiusdhfiusdhfiu. sdofjidshfiushdiughdu dfuh gudfhgu hdfughd fu . fdgdfg")
+#
+#
+# def directory_read(path_to_dir):
+#     print(os.listdir(path_to_dir))
+#     for filename in os.listdir(path_to_dir):
+#         if filename.split(".")[0].split('_')[1].endswith('ABC'):
+#             with open(os.path.join(path_to_dir, filename), 'r') as f:
+#                 count = 0
+#                 for word in f.read().split(' '):
+#                     if len(word) >= 3:
+#                         count += 1
+#                 print(f"Ilosc wyrazow z dlugoscia co najmniej 3 {count}")
+#     return os.listdir(path_to_dir)
+#
+#
+# def second_func(path):
+#     files_with_0 = [file for file in directory_read(path) if '0' in file]
+#     print(f"Liczba plikow zawierajaca 0 w nazwie: {len(files_with_0)}")
+#
+#     files_without_0 = [file for file in directory_read(path) if '0' not in file]
+#     for file in files_without_0:
+#         with open(os.path.join(path, file), 'r') as f:
+#             print(f"Ilosc slow: {len(f.read().split(' '))}")
+#
+#
+# directory_read(new_dir_path)
