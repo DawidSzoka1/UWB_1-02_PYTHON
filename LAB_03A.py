@@ -3,10 +3,14 @@
 ###### calculate multiplication x*y. The program stops working if x or y is equal to 0.
 # x = int(input("Enter a number x: "))
 # y = int(input("Enter a number y: "))
-# while x and y:
+# while True:
+#     if not x or not y:
+#         print("Invalid")
+#         break
 #     print(x*y)
 #     x = int(input("Enter a number x: "))
 #     y = int(input("Enter a number y: "))
+#     continue
 
 ## # ################################ Task 2
 ## Napisz program, który wyświetli twoje imię i nazwisko jeżeli użytkownik poda
@@ -46,13 +50,14 @@
 
 # name = ['d', 'a', 'w', 'i', 'd']
 # join_lambda = lambda name: ''.join(name)
-
+# print(join_lambda(name))
 # ########################## Task  7
 # # Przypisz do zmiennej wartość która będzie twoim imieniem i nazwiskiem następnie korzystając
 # # z funkcji lambda rozdziel wyraz na poszczegolne wyrazy, a potem wyrazy na litery
 # # użyj funkcji list i metody split - dla zmiennych typu string
 
 # full_name = 'Tomasz Kowalski'
+# split_name = full_name.split(' ')
 # separate = lambda name: list(name.replace(" ", ''))
 # print(separate(full_name))
 
@@ -109,10 +114,13 @@
 # użytkownika(http://www.fizykon.org/wzory/wzory_matem_kombinatoryka.htm)
 # from sil import silnia
 #
-# number_1 = float(input("Enter a number: "))
-# number_2 = float(input("Enter a number: "))
-# print(f"{number_1}!  = {silnia(number_1)}\n")
-# print(f"{number_2}!  = {silnia(number_2)}\n")
+# n = float(input("Enter a number: "))
+# k = float(input("Enter a number: "))
+# if k > n:
+#     print("Nie da sie tak")
+# else:
+#     print(f"({n} {k}) = {n}!/({k}!*{n-k}!)  == {silnia(n)/(silnia(k)*silnia(n-k))}")
+
 # ########################## Task 12
 # # Write a script to filter out only the even items from a list (i.e. made from range(1, 100))
 # # using filter() and lambda functions.
