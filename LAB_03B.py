@@ -136,6 +136,3 @@
 ## obliczenia pola kwadratu
 
 
-# def area_higer(func):
-#
-
