@@ -3,16 +3,16 @@ from pole_prostokata import square_area
 from globals import a, b
 
 
-def area(figure, a=a, b=b):
+def area(figure, x=a, y=b):
     match figure:
         case 'kwadrat':
-            print(square_area(a, b))
+            print(square_area(x, y))
         case 'trojkat':
-            print(area_triangle(a, b))
+            print(area_triangle(x, y))
         case 'prostokat':
-            print(square_area(a, b))
+            print(square_area(x, y))
         case _:
             print("Zla nazwa figury")
 
 
-area('trojkat', 5, 10)
+

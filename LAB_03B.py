@@ -1,3 +1,14 @@
+##zadanie 0
+# from Rozprawka import rozprawka
+#
+# print(f"Posąg Zeusa w Olimpii Miał 14 m wysokości."
+#       f"{rozprawka()}"
+#       f" Przedstawiał boga siedzącego na tronie. "
+#       f"{rozprawka()}"
+#       f"W jednej ręce trzymał statuę bogini Nike, w drugiej berło inkrustowane drogocennymi kamieniami. "
+#       f"{rozprawka()}"
+#       f"Na głowie miał wieniec z gałązek oliwnych, z lewego ramienia zwisał mu złoty płaszcz.")
+
 ## Zadanie 1
 # # Utwórz 1 funkcje wielu-zmiennych wejściowych, która obliczy wartość wyrażenia
 # ## dla dowolnego jednego argumentu wejściowego, x^x
@@ -29,18 +40,19 @@
 #        'komputerów przez port równoległy, uniwersalną magistralę szeregową lub sterownik SCSI.'
 #
 # def Intext(text, *args):
-#     for word in args:
+#     look_in = (*args, 'komputer', 'skaner')
+#     for word in look_in:
 #         print(f"wyrazu {word} w teksie jest {text.count(word)}")
 #
-# Intext(text, 'komputer', 'a')
+# Intext(text, 'fsd', 'a')
 
 
 ############ Zadanie 3 #################
 ## Utwórz funkcję o nazwie "SredniaLiczb.py", która wczyta N dowolnych liczb
 ## i obliczy średnią z w/w liczb, podane przez użytkownika liczby przypisz do listy
-
-# def SredniaLiczba(*N):
-#     return sum(N)/len(N)
+# from SredniaLiczba import SredniaLiczba
+#
+# SredniaLiczba(3)
 
 ############ Zadanie ##################
 ## Utwórz funkcję o nazwie "ZdanieRozdziel.py", która wczyta od użytkownika pewien dowolny tekst,'
@@ -125,14 +137,91 @@
 ## napisz funkcję która ma możliwość obliczenia pola prostokąta, trójkąta i kwadratu
 ## Użyj zmiennych globals, utwórz moduł globals.py w którym będą przechowywane
 ## domyślne wartości dla boków prostokąta, trójkąta, kwadratu (równe 1)
+# import pola
+# from globals import a, b
+#
+# print("Pole prostokąta:", pola.area("prostokat"))
+# print("Pole trójkąta:", pola.area("prostokat"))
+# print("Pole kwadratu:", pola.area("prostokat"))
 
-
-# rozwiazanie w module pole.py
 
 # ########################## Zadanie 9
 ## Zdefiniuj funkcję wyższego rzędu która ma możliwość obliczenia
 ## pole powierzchni prostokąta i pola powierzchni trójkąta
 ## Nie modyfikując zawartości w/w funkcji, użyj dekoratora i dodaj możliwość
 ## obliczenia pola kwadratu
+# def dec(func):
+#     def wrapper(*args):
+#         if len(args) == 2:
+#             return args[1] ** 2
+#         else:
+#             return func(*args)
+#
+#     return wrapper
+#
+#
+# def pole_prostokata(a, b):
+#     return a * b
+#
+#
+# def pole_trojkata(a, h):
+#     return 0.5 * a * h
+#
+#
+# @dec
+# def pola(figura, a, b):
+#     if figura == "prostokat":
+#         return pole_prostokata(a, b)
+#     else:
+#         return pole_trojkata(a, b)
 
 
+# ########################## Zadanie 10
+## Utwórz funkcję która umożliwia logowanie na serwer
+## Ma dwa argumenty wejściowe:
+## user i password (domyślne wartości odpowiednio: 'edek2003', 'Wsx123')
+## a) nie modyfikując zawartości w/w funkcji, użyj dekoratora i dodaj dodatkowe
+## pola tj. host, port
+## b) nie modyfikując zawartości w/w funkcji, użyj dekoratora i  daj możliwość
+## wprowadzania dodatkowych innch pól użytkownikowi (wprowadzane jako słownik
+##  np. {'data_base': 'https://pl.wikipedia.org'})
+
+# def add_fields(func):
+#     # a)
+#     # def wrapper(**kwargs):
+#     #     # dict_func = func()
+#     #     # return dict_func.update(kwargs)
+#     # b)
+#     def wrapper(username, password, **kwargs):
+#         dict_func = func(username, password)
+#         return dict_func.update(kwargs)
+#
+#     return wrapper
+#
+#
+# @add_fields
+# def log_in(username='edek2003', password='Wsx123'):
+#     return {"username": username, "password": password}
+
+# ########################## Zadanie 11
+## Zdefiniuj funkcję ciag_gometryczny, która dla podanych trzech parametrów:
+## n=numer elementu ciągu, a1=wartość pierwszego elementu ciągu (domyślnie: 1),
+## q=wartość iloczynu ciągu geometrycznego (domyślnie: 2)
+## zwróci w zależności od ustawianych parametrów funkcji
+## a) wartość n-tego elementu ciągu geometrycznego
+
+## Następnie korzystając z dekoratora udoskonal swoją funkcję,
+## dodaj możliwość obliczenia sumy elementów ciągu geometrycznego
+
+# def dec(func):
+#     def wrapper(*args):
+#         n, a1, q = args
+#         suma = a1 * (1 - q ** n) / (1 - q) if q != 1 else n * a1
+#         print(f"Suma {n} elementow wynosi: {suma}")
+#         return func(*args)
+#     return wrapper
+#
+# @dec
+# def ciag_geometryczny(n, a1=1, q=2):
+#     an = a1 * (q ** (n - 1)) if a1 != 1 else a1
+#     return an
