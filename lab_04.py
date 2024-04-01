@@ -185,7 +185,7 @@ import os
 #
 #
 # def second_func(path):
-#     files_with_0 = [file for file in directory_read(path) if '0' in file]
+#     files_with_0 = [file for file in directory_read(path) if '0' in file.split('ID_')[1]]
 #     print(f"Liczba plikow zawierajaca 0 w nazwie: {len(files_with_0)}")
 #
 #     files_without_0 = [file for file in directory_read(path) if '0' not in file]
