@@ -134,20 +134,20 @@
 ## You should to document your code by using python docstrings (google)
 ###############
 
-def task3(*args):
-    '''
-    Takes numbers and append list with every number to the power of that number
-    Args:
-        *args: numbers
-
-    Returns:
-        list: list with every number to the power of that number
-    '''
-    if len(args) > 99:
-        return "za duzo argmuentow"
-
-    return [pow(x, x) for x in args]
-
+# def task3(*args):
+#     '''
+#     Takes numbers and append list with every number to the power of that number
+#     Args:
+#         *args: numbers
+#
+#     Returns:
+#         list: list with every number to the power of that number
+#     '''
+#     if len(args) > 99:
+#         return "za duzo argmuentow"
+#
+#     return [pow(x, x) for x in args]
+#
 
 # task3(3, 2, 5, 6, 7)
 # print(x1)
@@ -214,84 +214,84 @@ def task3(*args):
 ## b) if the file has 0 in the filename then the function counts words in the text of the file
 ## c) if the filename contains 'EF.txt', then the function copy this file to
 ## 'DocumentLab5copy' directory
-import os
-import shutil
-
-main_path = os.getcwd()
-new_file_name = "task5"
-try:
-    os.mkdir(os.path.join(main_path, new_file_name))
-
-except FileExistsError as e:
-    print(f"FIleExistsError {e} ")
-file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt", " Text5ID_DEF.txt"]
-os.chdir(os.path.join(main_path, new_file_name))
-for i in file_names:
-    with open(i, "w") as f:
-        f.write(f"plik {i}. zawiera tekst. jakis tam. i saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
-
-os.chdir(main_path)
-
-
-def doc(fun):
-    def wrapper(*args):
-
-        fun(*args)
-        for path in args:
-            ilosc_z_0 = 0
-            if not os.path.isdir(path):
-                raise FileNotFoundError("Nie ma takiego folderu")
-            for file_name in os.listdir(f"{path}"):
-                if file_name.endswith("EF.txt"):
-                    try:
-                        os.mkdir("DocumentLab5copy")
-                    except FileExistsError as e:
-                        print(f"FIleExistsError {e} ")
-                    try:
-                        shutil.copy(os.path.join(path, file_name), f"DocumentLab5copy/{file_name}")
-                    except IOError as e:
-                        print(f"IOError {e} ")
-
-                if "0" in file_name:
-                    ilosc_z_0 += 1
-                    count = 0
-                    with open(os.path.join(path, file_name), "r") as f:
-                        count += len(f.read().split(" "))
-
-                    print(f"ilosc wyrazow w {file_name}: {count}")
-            print(f"W folderze {path} sa {ilosc_z_0} pliki ktore maja 0 w nazwie")
-
-    return wrapper
-
-
-@doc
-def task5(*args):
-    """
-        takes path of files and prints how many words longer than 3 are in files
-        that contains ABC in their name
-
-    Args:
-        *args (str): name of file
-
-    Returns:
-        nothing
-    Raises:
-        FileNotFoundError: if path is not found
-
-    """
-    for path in args:
-        if not os.path.isdir(path):
-            raise FileNotFoundError("Nie ma takiego folderu")
-
-        print(os.listdir(f"{path}"))
-        for file_name in os.listdir(f"{path}"):
-            if "ABC" in file_name:
-                count = 0
-                with open(os.path.join(path, file_name), "r") as f:
-                    for word in f.read().split(" "):
-                        if len(word) > 3:
-                            count += 1
-                print(f"ilosc slow dlugosci ponad 3: {count}")
-
-
-task5(os.path.join(main_path, new_file_name))
+# import os
+# import shutil
+#
+# main_path = os.getcwd()
+# new_file_name = "task5"
+# try:
+#     os.mkdir(os.path.join(main_path, new_file_name))
+#
+# except FileExistsError as e:
+#     print(f"FIleExistsError {e} ")
+# file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt", " Text5ID_DEF.txt"]
+# os.chdir(os.path.join(main_path, new_file_name))
+# for i in file_names:
+#     with open(i, "w") as f:
+#         f.write(f"plik {i}. zawiera tekst. jakis tam. i saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
+#
+# os.chdir(main_path)
+#
+#
+# def doc(fun):
+#     def wrapper(*args):
+#
+#         fun(*args)
+#         for path in args:
+#             ilosc_z_0 = 0
+#             if not os.path.isdir(path):
+#                 raise FileNotFoundError("Nie ma takiego folderu")
+#             for file_name in os.listdir(f"{path}"):
+#                 if file_name.endswith("EF.txt"):
+#                     try:
+#                         os.mkdir("DocumentLab5copy")
+#                     except FileExistsError as e:
+#                         print(f"FIleExistsError {e} ")
+#                     try:
+#                         shutil.copy(os.path.join(path, file_name), f"DocumentLab5copy/{file_name}")
+#                     except IOError as e:
+#                         print(f"IOError {e} ")
+#
+#                 if "0" in file_name:
+#                     ilosc_z_0 += 1
+#                     count = 0
+#                     with open(os.path.join(path, file_name), "r") as f:
+#                         count += len(f.read().split(" "))
+#
+#                     print(f"ilosc wyrazow w {file_name}: {count}")
+#             print(f"W folderze {path} sa {ilosc_z_0} pliki ktore maja 0 w nazwie")
+#
+#     return wrapper
+#
+#
+# @doc
+# def task5(*args):
+#     """
+#         takes path of files and prints how many words longer than 3 are in files
+#         that contains ABC in their name
+#
+#     Args:
+#         *args (str): name of file
+#
+#     Returns:
+#         nothing
+#     Raises:
+#         FileNotFoundError: if path is not found
+#
+#     """
+#     for path in args:
+#         if not os.path.isdir(path):
+#             raise FileNotFoundError("Nie ma takiego folderu")
+#
+#         print(os.listdir(f"{path}"))
+#         for file_name in os.listdir(f"{path}"):
+#             if "ABC" in file_name:
+#                 count = 0
+#                 with open(os.path.join(path, file_name), "r") as f:
+#                     for word in f.read().split(" "):
+#                         if len(word) > 3:
+#                             count += 1
+#                 print(f"ilosc slow dlugosci ponad 3: {count}")
+#
+#
+# task5(os.path.join(main_path, new_file_name))
