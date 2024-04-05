@@ -134,22 +134,19 @@
 ## You should to document your code by using python docstrings (google)
 ###############
 
-# def task3(*args):
-#     '''
-#     Takes numbers and creat new variabules
-#     Args:
-#         **kwargs: x1 = num , x2 = num, ... , xn = num
-#
-#     Returns:
-#         creats new variabuls x1, x2, x3, ... xn with value x1^x1, x2^x2, ... xn^xn
-#     '''
-#     if len(args) > 100:
-#         return "za duzo argmuentow"
-#     j = 1
-#     for i in args:
-#         globals()[f"x{j}"] = pow(i, i)
-#         j += 1
-#
+def task3(*args):
+    '''
+    Takes numbers and append list with every number to the power of that number
+    Args:
+        *args: numbers
+
+    Returns:
+        list: list with every number to the power of that number
+    '''
+    if len(args) > 99:
+        return "za duzo argmuentow"
+
+    return [pow(x, x) for x in args]
 
 
 # task3(3, 2, 5, 6, 7)
@@ -177,26 +174,30 @@ def task4(*args):
 
     Returns:
         creats new variabuls x1, x2, x3, ... xn with value x1^x1, x2^x2, ... xn^xn
+        (list): paraments ** paramets
     Raises:
         ValueError: If the number of input parameters is grater than 99
         ValueError: If the argument isnt number
     '''
+    numbers = []
     if len(args) > 99:
-        raise ValueError("Number of inputs must be less than 100")
+        raise ValueError("Number of inputs must be less or equal than 99")
 
     for i, num in enumerate(args, 1):
         try:
             globals()[f"x{i}"] = pow(num, num)
+            numbers.append(pow(num, num))
         except ValueError as e:
             print(f"ValueError {e}")
+    return numbers
 
 
 input_params = input("Enter comma-separated numbers: ").split(',')
 try:
     float_params = [float(x) for x in input_params]
+    print(task4(*float_params))
 except ValueError as e:
     print(f"ValueError {e}")
-
 
 ########################## Task 5 ########################
 ## The first step,
@@ -251,4 +252,3 @@ except ValueError as e:
 #                         if len(word) > 3:
 #                             count += 1
 #                 print(f"ilosc slow dlugosci ponad 3: {count}")
-
