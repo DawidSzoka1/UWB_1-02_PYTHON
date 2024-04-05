@@ -1,159 +1,27 @@
-################## Dokumentacja  (docstrings) ########################################
-################################################################################
-#
-# Dla zachowania czytelności i jednolitości kodu stosuj określoną gramatykę kodu, w pythonie
-# najczęściej stosuje się konwencję opisaną w dokumencie PEP 258
-# Wykonaj dokumentację kodu (dla funkcji, modułu)
-# Stosuj obsługę wyjątków
-
-# #################### Przykład 1 - dokumentacja funkcji (Google style)
-# def divide(x: int, y: int) -> float:
-#     """
-#     Funkcja dzieli liczbę x przez liczbę y
-#
-#     Args:
-#       x (int): dzielna
-#       y (int): dzielnik
-#
-#     Returns:
-#       wynik dzielenia x/y
-#
-#     """
-#     result = x / y
-#     return (result)
-#
-#
-# print(divide(2, 3))
-# print(divide(x=1, y=2))
-# help(divide)
-# print(divide.__doc__)
-################################################################################
-################################################################################
-######## Function: break() and continue()
-################################################################################
-## Funkcja break() jest używana często do zakończenia programu/pętli (for, while)
-## podczas gdy funkcja continue() pozwala opuścić blok instrukcji
-## i wrócić do początku pętli.
-
-################### Example 1: the program only prints the numbers 0 1 2 3 4
-# list_1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-# licz = 0
-# while licz in list_1:
-#     print(list_1[licz]),
-#     licz += 1  # licz = licz + 1
-#     if licz >= 5:
-#         break
-
-####### Example: the program prints out only odd numbers: 1 3 5 7 9
-# for x in range(1, 10):
-#     if x % 2 == 0:  # Sprawdź, czy x jest parzystą liczbą
-#         continue
-#     print(x)
-
-################################################################################
-## Function with multiple arguments: args, kwargs
-################################################################################
-
-################################## Example 1:  sum of a sequence of numbers
-# def suma(*args):
-#     if not args:                        # case: no input parameters
-#         return('no parameters')
-#     return(sum(args))
-#
-# print(suma(1,2,3))
-# print(suma(1,2,3,4,5,6))
-
-
-############# Example 2: Sum of arithmetic sequence
-## functional requirements:
-##  minimum number of input parameters: 1
-
-# def suma2(x,*args):
-#     sumaLiczb = x + sum(args)
-#     return(sumaLiczb)
-#
-# print(suma2(100,1,2,3))
-
-############  Example 3:   Sum the first four elements of arithmetic sequence
-## functional requirements:
-##  minimum number of input parameters: 4
-
-# def sum2(*args):
-#     if bool(args):
-#         sumaLiczb = args[0] + args[1] + args[2] + args[3]
-#     else:
-#         sumaLiczb = 0
-#
-#      print(sumaLiczb)
-#     return(None)
-#
-# sum2(1,2,3,4,5,6,7,8,9,10)
-# sum2()
-
-############  Example 3:   Sum the three elements
-## functional requirements:
-## minimum number of input parameters: 3
-## user enter the name of input parameters
-
-# def dict1(**kwargs):
-#    for klucz, wartosc in kwargs.items():
-#        print(klucz, wartosc)
-#
-# dict1(a=1, b=2, c=3)
-
-############  Example 4: Say hello to a friend
-## functional requirements:
-## minimum number of input parameters: unknown
-## name of input parameters: unknown
-
-# def hello(**kwargs):
-#     for key, value in kwargs.items():
-#         print("{0} = {1}".format(key, value))
-#
-# hallo(firstname="John", secondname='Smith')
-# hallo(user="John")
-
-############  Example 5: unpack list
-
-# list_arg = [1, 3, 5]
-#
-# def unpack1(arg1, arg2, arg3):
-#     print(arg1)
-#     print(arg2)
-#     print(arg3)
-#
-#
-# unpack1(*list_arg)
-#####################################################
-################################################################################
-################################################################################
-
-
 ########################## Zadania do wykonania
 # # ################################ Task 0
-# '''
 ## Write a function which will find all such numbers which are divisible by 7 but
 ## are not a multiple of 5  in range  from x to y (both included).
 ## The numbers obtained should be printed in a comma-separated sequence on a
 ## single line. Don't forget about function documentation
 
-def div_by_7_not_5(*args):
-    """
-    takes some numbers checks if number is divisible by 7 and not multiply by 5
-    Args:
-        *args (int): numbers to check
-
-    Returns:
-        list: numbers that are divisible by 7 and not multiply by 5
-
-    """
-    good = []
-    for num in args:
-        if num % 7 == 0 and num % 5 != 0:
-            good.append(num)
-            print(num, end=',')
-    return good
-
+# def div_by_7_not_5(*args):
+#     """
+#     takes some numbers checks if number is divisible by 7 and not multiply by 5
+#     Args:
+#         *args (int): numbers to check
+#
+#     Returns:
+#         list: numbers that are divisible by 7 and not multiply by 5
+#
+#     """
+#     good = []
+#     for num in args:
+#         if num % 7 == 0 and num % 5 != 0:
+#             good.append(num)
+#             print(num, end=',')
+#     return good
+#
 
 #
 # '''
@@ -188,7 +56,7 @@ def div_by_7_not_5(*args):
 #          4. Minimum length of transaction password: 4
 #          5. Maximum length of transaction password: 8
 #     Args:
-#         to_check_password (str): to_check_password to validate
+#         to_check_password (str): password  to validate
 #
 #     Returns:
 #         bool: True if to_check_password is correct else False
@@ -252,13 +120,6 @@ def div_by_7_not_5(*args):
 # with open("div_7_not_mul_5.pkl", "wb") as f:
 #     pickle.dump(my_list_correct, f)
 
-
-## '''
-##### do testów możesz użyć:
-
-# # print(my_list)
-#
-
 ################ Task 3
 ## Create function with multiple arguments (x1,x2,...,xn) that accepts a sequence of
 ## comma-separated numbers from console and returns:
@@ -308,26 +169,33 @@ def div_by_7_not_5(*args):
 ## You should to document your code by using python docstrings (google)
 ## Don't forget to handle exceptions (obsłudze wyjątków)
 ###############
-# def task4(*args):
-#     '''
-#     Takes key, values return string of every single number to the power of that number
-#     Args:
-#         *args (int): numbers
-#
-#     Returns:
-#         creats new variabuls x1, x2, x3, ... xn with value x1^x1, x2^x2, ... xn^xn
-#     '''
-#     if len(args) > 100:
-#         return "za duzo argmuentow"
-#     j = 1
-#     for i in args:
-#         try:
-#             globals()[f"x{j}"] = pow(i, i)
-#             j += 1
-#         except ValueError as e:
-#             print(f"KeyError {e}")
+def task4(*args):
+    '''
+    Takes key, values return string of every single number to the power of that number
+    Args:
+        *args (int): numbers
+
+    Returns:
+        creats new variabuls x1, x2, x3, ... xn with value x1^x1, x2^x2, ... xn^xn
+    Raises:
+        ValueError: If the number of input parameters is grater than 99
+        ValueError: If the argument isnt number
+    '''
+    if len(args) > 99:
+        raise ValueError("Number of inputs must be less than 100")
+
+    for i, num in enumerate(args, 1):
+        try:
+            globals()[f"x{i}"] = pow(num, num)
+        except ValueError as e:
+            print(f"ValueError {e}")
 
 
+input_params = input("Enter comma-separated numbers: ").split(',')
+try:
+    float_params = [float(x) for x in input_params]
+except ValueError as e:
+    print(f"ValueError {e}")
 
 
 ########################## Task 5 ########################
@@ -345,42 +213,42 @@ def div_by_7_not_5(*args):
 ## b) if the file has 0 in the filename then the function counts words in the text of the file
 ## c) if the filename contains 'EF.txt', then the function copy this file to
 ## 'DocumentLab5copy' directory
-import os
+# import os
+#
+# main_path = os.getcwd()
+# new_file_name = "task5"
+# try:
+#     os.mkdir(os.path.join(main_path, new_file_name))
+#
+# except FileExistsError as e:
+#     print(f"FIleExistsError {e} ")
+# file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt"," Text5ID_DEF.txt"]
+# os.chdir(os.path.join(main_path, new_file_name))
+# for i in file_names:
+#     with open(i, "w") as f:
+#         f.write(f"plik {i}. zawiera tekst. jakis tam. saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
+#
+# os.chdir(main_path)
+#
 
-main_path = os.getcwd()
-new_file_name = "task5"
-try:
-    os.mkdir(os.path.join(main_path, new_file_name))
-
-except FileExistsError as e:
-    print(f"FIleExistsError {e} ")
-file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt"," Text5ID_DEF.txt"]
-os.chdir(os.path.join(main_path, new_file_name))
-for i in file_names:
-    with open(i, "w") as f:
-        f.write(f"plik {i}. zawiera tekst. jakis tam. saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
-
-os.chdir(main_path)
-
-
-def task5(*args):
-    """
-        takes names of files and prints how many words longer than 3 are in files that coitains ABC in their name
-
-    Args:
-        *args (str): name of file
-
-    Returns:
-
-    """
-    for file in args:
-        print(os.listdir(f"{file}"))
-        for file_name in os.listdir(f"{file}"):
-            if "ABC" in file_name:
-                count = 0
-                with open(file_name, "r") as f:
-                    for word in f:
-                        if len(word) > 3:
-                            count += 1
-                print(f"ilosc slow dlugosci ponad 3: {count}")
+# def task5(*args):
+#     """
+#         takes names of files and prints how many words longer than 3 are in files that coitains ABC in their name
+#
+#     Args:
+#         *args (str): name of file
+#
+#     Returns:
+#
+#     """
+#     for file in args:
+#         print(os.listdir(f"{file}"))
+#         for file_name in os.listdir(f"{file}"):
+#             if "ABC" in file_name:
+#                 count = 0
+#                 with open(file_name, "r") as f:
+#                     for word in f:
+#                         if len(word) > 3:
+#                             count += 1
+#                 print(f"ilosc slow dlugosci ponad 3: {count}")
 
