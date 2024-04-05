@@ -215,6 +215,7 @@ def task3(*args):
 ## c) if the filename contains 'EF.txt', then the function copy this file to
 ## 'DocumentLab5copy' directory
 import os
+import shutil
 
 main_path = os.getcwd()
 new_file_name = "task5"
@@ -223,32 +224,42 @@ try:
 
 except FileExistsError as e:
     print(f"FIleExistsError {e} ")
-file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt"," Text5ID_DEF.txt"]
+file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt", " Text5ID_DEF.txt"]
 os.chdir(os.path.join(main_path, new_file_name))
 for i in file_names:
     with open(i, "w") as f:
-        f.write(f"plik {i}. zawiera tekst. jakis tam. saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
+        f.write(f"plik {i}. zawiera tekst. jakis tam. i saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
 
 os.chdir(main_path)
 
 
 def doc(fun):
     def wrapper(*args):
+
         fun(*args)
         for path in args:
+            ilosc_z_0 = 0
             if not os.path.isdir(path):
                 raise FileNotFoundError("Nie ma takiego folderu")
-
-            print(os.listdir(f"{path}"))
             for file_name in os.listdir(f"{path}"):
-                if "ABC" in file_name:
-                    count = 0
-                    with open(file_name, "r") as f:
-                        for word in f.read().split(" "):
-                            if len(word) > 3:
-                                count += 1
-                    print(f"ilosc slow dlugosci ponad 3: {count}")
+                if file_name.endswith("EF.txt"):
+                    try:
+                        os.mkdir("DocumentLab5copy")
+                    except FileExistsError as e:
+                        print(f"FIleExistsError {e} ")
+                    try:
+                        shutil.copy(os.path.join(path, file_name), f"DocumentLab5copy/{file_name}")
+                    except IOError as e:
+                        print(f"IOError {e} ")
 
+                if "0" in file_name:
+                    ilosc_z_0 += 1
+                    count = 0
+                    with open(os.path.join(path, file_name), "r") as f:
+                        count += len(f.read().split(" "))
+
+                    print(f"ilosc wyrazow w {file_name}: {count}")
+            print(f"W folderze {path} sa {ilosc_z_0} pliki ktore maja 0 w nazwie")
 
     return wrapper
 
@@ -276,8 +287,11 @@ def task5(*args):
         for file_name in os.listdir(f"{path}"):
             if "ABC" in file_name:
                 count = 0
-                with open(file_name, "r") as f:
+                with open(os.path.join(path, file_name), "r") as f:
                     for word in f.read().split(" "):
                         if len(word) > 3:
                             count += 1
                 print(f"ilosc slow dlugosci ponad 3: {count}")
+
+
+task5(os.path.join(main_path, new_file_name))
