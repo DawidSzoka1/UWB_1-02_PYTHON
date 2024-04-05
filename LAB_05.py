@@ -166,38 +166,38 @@ def task3(*args):
 ## You should to document your code by using python docstrings (google)
 ## Don't forget to handle exceptions (obsłudze wyjątków)
 ###############
-def task4(*args):
-    '''
-    Takes key, values return string of every single number to the power of that number
-    Args:
-        *args (int): numbers
-
-    Returns:
-        creats new variabuls x1, x2, x3, ... xn with value x1^x1, x2^x2, ... xn^xn
-        (list): paraments ** paramets
-    Raises:
-        ValueError: If the number of input parameters is grater than 99
-        ValueError: If the argument isnt number
-    '''
-    numbers = []
-    if len(args) > 99:
-        raise ValueError("Number of inputs must be less or equal than 99")
-
-    for i, num in enumerate(args, 1):
-        try:
-            globals()[f"x{i}"] = pow(num, num)
-            numbers.append(pow(num, num))
-        except ValueError as e:
-            print(f"ValueError {e}")
-    return numbers
-
-
-input_params = input("Enter comma-separated numbers: ").split(',')
-try:
-    float_params = [float(x) for x in input_params]
-    print(task4(*float_params))
-except ValueError as e:
-    print(f"ValueError {e}")
+# def task4(*args):
+#     '''
+#     Takes key, values return string of every single number to the power of that number
+#     Args:
+#         *args (int): numbers
+#
+#     Returns:
+#         creats new variabuls x1, x2, x3, ... xn with value x1^x1, x2^x2, ... xn^xn
+#         (list): paraments ** paramets
+#     Raises:
+#         ValueError: If the number of input parameters is grater than 99
+#         ValueError: If the argument isnt number
+#     '''
+#     numbers = []
+#     if len(args) > 99:
+#         raise ValueError("Number of inputs must be less or equal than 99")
+#
+#     for i, num in enumerate(args, 1):
+#         try:
+#             globals()[f"x{i}"] = pow(num, num)
+#             numbers.append(pow(num, num))
+#         except ValueError as e:
+#             print(f"ValueError {e}")
+#     return numbers
+#
+#
+# input_params = input("Enter comma-separated numbers: ").split(',')
+# try:
+#     float_params = [float(x) for x in input_params]
+#     print(task4(*float_params))
+# except ValueError as e:
+#     print(f"ValueError {e}")
 
 ########################## Task 5 ########################
 ## The first step,
@@ -214,41 +214,70 @@ except ValueError as e:
 ## b) if the file has 0 in the filename then the function counts words in the text of the file
 ## c) if the filename contains 'EF.txt', then the function copy this file to
 ## 'DocumentLab5copy' directory
-# import os
-#
-# main_path = os.getcwd()
-# new_file_name = "task5"
-# try:
-#     os.mkdir(os.path.join(main_path, new_file_name))
-#
-# except FileExistsError as e:
-#     print(f"FIleExistsError {e} ")
-# file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt"," Text5ID_DEF.txt"]
-# os.chdir(os.path.join(main_path, new_file_name))
-# for i in file_names:
-#     with open(i, "w") as f:
-#         f.write(f"plik {i}. zawiera tekst. jakis tam. saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
-#
-# os.chdir(main_path)
-#
+import os
 
-# def task5(*args):
-#     """
-#         takes names of files and prints how many words longer than 3 are in files that coitains ABC in their name
-#
-#     Args:
-#         *args (str): name of file
-#
-#     Returns:
-#
-#     """
-#     for file in args:
-#         print(os.listdir(f"{file}"))
-#         for file_name in os.listdir(f"{file}"):
-#             if "ABC" in file_name:
-#                 count = 0
-#                 with open(file_name, "r") as f:
-#                     for word in f:
-#                         if len(word) > 3:
-#                             count += 1
-#                 print(f"ilosc slow dlugosci ponad 3: {count}")
+main_path = os.getcwd()
+new_file_name = "task5"
+try:
+    os.mkdir(os.path.join(main_path, new_file_name))
+
+except FileExistsError as e:
+    print(f"FIleExistsError {e} ")
+file_names = ["Text1ID_ABC.txt", "Text2ID_405.txt", "Text3ID_607.txt", "Text4ID_ABC5.txt"," Text5ID_DEF.txt"]
+os.chdir(os.path.join(main_path, new_file_name))
+for i in file_names:
+    with open(i, "w") as f:
+        f.write(f"plik {i}. zawiera tekst. jakis tam. saffsdfdsfds. sdfsdfsdf .sdf sdfsdfsdfsdf. sdfsdf")
+
+os.chdir(main_path)
+
+
+def doc(fun):
+    def wrapper(*args):
+        fun(*args)
+        for path in args:
+            if not os.path.isdir(path):
+                raise FileNotFoundError("Nie ma takiego folderu")
+
+            print(os.listdir(f"{path}"))
+            for file_name in os.listdir(f"{path}"):
+                if "ABC" in file_name:
+                    count = 0
+                    with open(file_name, "r") as f:
+                        for word in f.read().split(" "):
+                            if len(word) > 3:
+                                count += 1
+                    print(f"ilosc slow dlugosci ponad 3: {count}")
+
+
+    return wrapper
+
+
+@doc
+def task5(*args):
+    """
+        takes path of files and prints how many words longer than 3 are in files
+        that contains ABC in their name
+
+    Args:
+        *args (str): name of file
+
+    Returns:
+        nothing
+    Raises:
+        FileNotFoundError: if path is not found
+
+    """
+    for path in args:
+        if not os.path.isdir(path):
+            raise FileNotFoundError("Nie ma takiego folderu")
+
+        print(os.listdir(f"{path}"))
+        for file_name in os.listdir(f"{path}"):
+            if "ABC" in file_name:
+                count = 0
+                with open(file_name, "r") as f:
+                    for word in f.read().split(" "):
+                        if len(word) > 3:
+                            count += 1
+                print(f"ilosc slow dlugosci ponad 3: {count}")
