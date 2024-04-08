@@ -44,7 +44,7 @@
 #     for word in look_in:
 #         print(f"wyrazu {word} w teksie jest {text.count(word)}")
 #
-# Intext(text, 'fsd', 'a')
+# Intext(text, 'komputer', 'a')
 
 
 ############ Zadanie 3 #################
@@ -144,6 +144,8 @@
 # print("Pole trójkąta:", pola.area("prostokat"))
 # print("Pole kwadratu:", pola.area("prostokat"))
 
+
+# rozwiazanie w module pole.py
 
 # ########################## Zadanie 9
 ## Zdefiniuj funkcję wyższego rzędu która ma możliwość obliczenia
