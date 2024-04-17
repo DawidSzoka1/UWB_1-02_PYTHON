@@ -1,5 +1,33 @@
 import requests
 from bs4 import BeautifulSoup as bs
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from secret_data import password, email
+
+email_host = 'smtp.example.com'
+email_port = 587  # Port SMTP
+email_user = email
+email_password = password
+
+
+def send_message(to, subject, body):
+    """
+    Function to send email
+    Args:
+        to(str): to who you want to send email
+        subject(str): email title
+        body(str): what you want to send
+
+    Returns:
+
+    """
+    msg = MIMEMultipart()
+    msg['From'] = email_user
+    msg['To'] = to
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
 
 url = input("Podaj adres do aukcji na olx program znajdzie cene: ")
 page = requests.get(
