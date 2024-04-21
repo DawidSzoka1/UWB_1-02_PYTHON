@@ -1,5 +1,6 @@
 import os
 
+
 ########################## Zadanie 1 #########################
 ## Utwórz funkcję która będzie zmieniała bieżący katalog dyskowy na inny wskazany przez
 ## użytkownika (nazwa ścieżki do katalogu to argument wejściowy funkcji)
