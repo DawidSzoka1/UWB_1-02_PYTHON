@@ -3,17 +3,20 @@ from datetime import date
 
 
 def add_book(title, author, pages):
-    df = read_csv('book.csv',
+    df = read_csv('Library/book.csv',
                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     time = date.today()
-    max_index = df.index[-1] + 1
+    try:
+        max_index = int(df.index[-1]) + 1
+    except ValueError as e:
+        return e
     df.loc[max_index] = [title.title(), author.title(), pages, time, time]
     df.to_csv('Library/book.csv')
     print('Added book to database')
 
 
 def update_book(book_id, title, author, pages):
-    df = read_csv('book.csv',
+    df = read_csv('Library/book.csv',
                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     time = date.today()
     if book_id in list(df.index.values):
@@ -24,8 +27,8 @@ def update_book(book_id, title, author, pages):
         print('Book not found')
 
 
-def delete_book(book_id=0, title=''):
-    df = read_csv('book.csv',
+def delete_book(book_id=False, title=False):
+    df = read_csv('Library/book.csv',
                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     if title:
         if not df[df.TITLE == title].empty:
