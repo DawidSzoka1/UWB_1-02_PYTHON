@@ -23,7 +23,12 @@ def update_book(book_id, title, author, pages):
 
 
 def delete_book(book_id):
-    pass
+    df = read_books('book.csv')
+    if book_id not in list(df.index.values):
+        return 'Book not found'
+    df.drop([103], inplace=True)
+    df.to_csv('Library/book.csv')
+    return 'Book deleted'
 
 
-print(add_book(103, 'testowe cos', 'testowe cos', 230))
+print(delete_book(103))
