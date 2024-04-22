@@ -2,15 +2,14 @@ from additionalfun import *
 from datetime import date
 
 
-def add_book(book_id, title, author, pages):
+def add_book(title, author, pages):
     df = read_csv('book.csv',
                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     time = date.today()
-
-    if book_id in list(df.index.values):
-        return 'Book id is taken'
-    df.loc[book_id] = [title.title(), author.title(), pages, time, time]
+    max_index = df.index[-1] + 1
+    df.loc[max_index] = [title.title(), author.title(), pages, time, time]
     df.to_csv('Library/book.csv')
+    print('Added book to database')
 
 
 def update_book(book_id, title, author, pages):
@@ -20,6 +19,7 @@ def update_book(book_id, title, author, pages):
     if book_id in list(df.index.values):
         df.loc[book_id] = [title.title(), author.title(), pages, df.loc[book_id]['CREATED'], time]
         df.to_csv('Library/book.csv')
+        print("Updated book")
     else:
         print('Book not found')
 
