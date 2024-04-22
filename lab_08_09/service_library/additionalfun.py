@@ -1,9 +1,9 @@
 import pandas as pd
 
 
-def read_books(csv_file):
+def read_csv(csv_file, *args):
     return pd.read_csv(
         f'Library/{csv_file}',
-        usecols=['ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'],
+        usecols=[*args],
         index_col='ID'
     )

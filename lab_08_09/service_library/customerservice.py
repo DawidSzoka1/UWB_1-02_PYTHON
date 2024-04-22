@@ -1,5 +1,8 @@
+import pandas as pd
+
+
 def add_customer(name, email, phone_number):
-    pass
+    df = pd.read_csv('Library/customer.csv')
 
 
 def update_customer(name, email, phone_number):
