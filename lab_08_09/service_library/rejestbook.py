@@ -22,13 +22,19 @@ def update_book(book_id, title, author, pages):
         print('Book not found')
 
 
-def delete_book(book_id):
+def delete_book(book_id=0, title=''):
     df = read_books('book.csv')
-    if book_id not in list(df.index.values):
+    if title:
+        if not df[df.TITLE == title].empty:
+            df.drop(df[df.TITLE == title].index, inplace=True)
+            df.to_csv('Library/book.csv')
+        else:
+            return 'Book not found'
+    elif book_id:
+        if book_id not in list(df.index.values):
+            return 'Book not found'
+        df.drop([book_id], inplace=True)
+        df.to_csv('Library/book.csv')
+    else:
         return 'Book not found'
-    df.drop([103], inplace=True)
-    df.to_csv('Library/book.csv')
     return 'Book deleted'
-
-
-print(delete_book(103))
