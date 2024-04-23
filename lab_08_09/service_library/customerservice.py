@@ -36,13 +36,11 @@ def add_customer(name, email=None, phone_number=None, street=None, city=None, co
     df_address.loc[max_index] = [street.title(), city.title(), country]
     df.loc[max_index] = [name.title(), email, phone_number, time, time]
     if df_address[max_index].empty or df[max_index].empty:
-        delete_customer(max_index)
+        delete_customer(customer_id=max_index)
         return 0
     df.to_csv('Library/customer.csv')
     df_address.to_csv('Library/address.csv')
     return 1
-
-
 def borrow_book():
     pass
 
@@ -51,5 +49,20 @@ def update_customer(name, email, phone_number):
     pass
 
 
-def delete_customer(name):
-    pass
+def delete_customer(name='', customer_id=None):
+    df = read_csv('Library/customer.csv',
+                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+    if not name or not customer_id:
+        return 0
+    df_address = read_csv('Library/address.csv',
+                          'ID', 'STREET', 'CITY', 'COUNTRY')
+    if name.title() in df['NAME']:
+        index = df['NAME'].index
+        del df[df['NAME'] == name.title()]
+        del df_address[index]
+    elif customer_id in list(df.index.values):
+        df.drop([customer_id], inplace=True)
+        df_address.drop([customer_id], inplace=True)
+
+    df.to_csv('Library/customer.csv')
+    return 1
