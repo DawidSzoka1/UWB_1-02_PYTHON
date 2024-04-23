@@ -11,10 +11,12 @@ def add_customer(name, email=None, phone_number=None, street=None, city=None, co
         name(str): The name of the customer:
         email(str): The email of the customer:
         phone_number(str): The phone number of the customer:
+        street(str): The street of the customer:
+        city(str): The city of the customer:
+        country(str): The country of the customer:
 
     Returns:
-        0 if the customer phone_number is already taken or email is already taken
-        else 'Added Customer successfully'
+        1 if successful added customer to customer.csv and address to address.csv, else 0
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
