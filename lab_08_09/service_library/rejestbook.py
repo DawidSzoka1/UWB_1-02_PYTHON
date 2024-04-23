@@ -40,24 +40,24 @@ def update_book(read_func, book_id, title, author, pages):
         df.loc[book_id] = [title.title(), author.title(), pages, df.loc[book_id]['CREATED'], time]
         df.to_csv('Library/book.csv')
         print("Updated book")
-    else:
-        print('Book not found')
+        return 1
+    print('Book not found')
+    return 0
 
 
-def delete_book(read_func, book_id=False, title=False):
+def delete_book(read_func, book_id=False, title=''):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     if title:
-        if not df[df.TITLE == title].empty:
-            df.drop(df[df.TITLE == title].index, inplace=True)
-            df.to_csv('Library/book.csv')
-        else:
-            return 'Book not found'
+        if df[df.TITLE == title.title()].empty:
+            return 0
+        df.drop(df[df.TITLE == title].index, inplace=True)
+        df.to_csv('Library/book.csv')
+        return 1
     elif book_id:
         if book_id not in list(df.index.values):
-            return 'Book not found'
+            return 0
         df.drop([book_id], inplace=True)
         df.to_csv('Library/book.csv')
-    else:
-        return 'Book not found'
-    return 'Book deleted'
+        return 1
+    return 0
