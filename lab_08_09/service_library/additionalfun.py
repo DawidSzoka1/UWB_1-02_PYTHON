@@ -7,10 +7,10 @@ def read_csv(path_to_csv_file, *args):
             return pd.read_csv(path_to_csv_file, usecols=[*args])
         except FileNotFoundError as e:
             print(f"File not found error occurred: {e}")
-            return None
+            return e
         except ValueError as e:
             print(f"Value error occurred: {e}")
-            return None
+            return e
     try:
         return pd.read_csv(
             path_to_csv_file,
@@ -19,7 +19,7 @@ def read_csv(path_to_csv_file, *args):
         )
     except FileNotFoundError as e:
         print(f"File not found error occurred: {e}")
-        return None
+        return e
     except ValueError as e:
         print(f"Value error occurred: {e}")
-        return None
+        return e
