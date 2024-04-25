@@ -1,3 +1,11 @@
+"""
+NAME
+    rejestbook
+DESCRIPTION
+    This module provides functions to add book to database giving function to read_csv file,
+    title of the book, author of the book and how many pages that book have.
+
+"""
 from datetime import date
 
 
