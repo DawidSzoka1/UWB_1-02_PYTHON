@@ -89,7 +89,9 @@ def borrow_book():
 def return_book(customer_id):
     os.chdir('DATABASE')
     for filename in os.listdir():
-        if filename == customer_id:
+        if str(customer_id) in filename:
+            with open(filename, 'r') as f:
+                pass
             pass
     print('There is no customer with that id')
     return 0
