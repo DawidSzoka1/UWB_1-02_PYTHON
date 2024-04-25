@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import date
 
 
 def read_csv(path_to_csv_file, *args):
@@ -42,11 +43,3 @@ def update_customer(customer_id, df, name='', email='', phone_number=0):
     df.loc[customer_id] = [name.title(), email, phone_number, df.loc[customer_id]['CREATE'], date.today()]
     df.to_csv('Library/customer.csv')
     return 1
-
-
-def delete_address():
-    pass
-
-
-def delete_customer():
-    pass
