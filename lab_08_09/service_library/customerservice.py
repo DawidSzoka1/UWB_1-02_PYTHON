@@ -6,6 +6,7 @@ DESCRIPTION
 """
 from additionalfun import *
 from datetime import date
+import os
 
 
 def delete_user(name='', customer_id=None):
@@ -83,6 +84,15 @@ def add_customer(name, email=None, phone_number=None, street=None, city=None, co
 
 def borrow_book():
     pass
+
+
+def return_book(customer_id):
+    os.chdir('DATABASE')
+    for filename in os.listdir():
+        if filename == customer_id:
+            pass
+    print('There is no customer with that id')
+    return 0
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
