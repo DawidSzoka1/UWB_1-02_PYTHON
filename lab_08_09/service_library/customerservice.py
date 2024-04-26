@@ -2,7 +2,24 @@
 NAME
     customerservice
 DESCRIPTION
-    This module
+    This module allows the user to register a new user with address, delete user and update user info
+    saving changes to csv file
+
+    This script doesn't require any packages
+
+FUNCTIONS
+    This module contains the following functions:
+    * add_customer(f(path_to_csv_file, *args), path_to_csv, title, author, pages)-
+        Returns
+    * update_user(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
+        Returns
+    * delete_user(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
+        Returns
+
+Examples
+    add_customer()
+    update_user()
+    delete_user()
 """
 from additionalfun import *
 from datetime import date
