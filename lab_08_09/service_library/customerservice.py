@@ -7,6 +7,7 @@ DESCRIPTION
 from additionalfun import *
 from datetime import date
 import os
+import random
 
 
 def delete_user(name='', customer_id=None):
@@ -29,11 +30,11 @@ def delete_user(name='', customer_id=None):
     if name.title() in df['NAME']:
         index = df['NAME'].index
         del df[df['NAME'] == name.title()]
-        del df_address[index]
-    elif customer_id in list(df.index.values):
+        del df_address.loc[index]
+    elif customer_id in df.index:
         df.drop([customer_id], inplace=True)
         df_address.drop([customer_id], inplace=True)
-    if df[df['ID'] == customer_id].empty or df[df['NAME'] == name].empty:
+    if df.loc[customer_id].empty or df[df['NAME'] == name].empty:
         df.to_csv('Library/customer.csv')
         df_address.to_csv('Library/address.csv')
         return 1
@@ -41,7 +42,7 @@ def delete_user(name='', customer_id=None):
     return 0
 
 
-def add_customer(name, email=None, phone_number=None, street=None, city=None, country=None):
+def add_customer(name, email='', phone_number='', street='', city='', country=''):
     """
     Function to add a customer to an existing csv file (customer.csv) with
     name and email and phone number and data of created and updated customer
@@ -68,10 +69,14 @@ def add_customer(name, email=None, phone_number=None, street=None, city=None, co
         return 0
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
-    max_index = int(df.index[-1]) + 1
-    max_index_address = int(df_address.index[-1]) + 1
-    if max_index != max_index_address:
+    if not df or not df_address:
+        print('Problems with reading customer data or address data')
         return 0
+
+    max_index = random.randint(1000, 9999)
+    while max_index in df.index:
+        max_index = random.randint(1000, 9999)
+
     df_address.loc[max_index] = [street.title(), city.title(), country]
     df.loc[max_index] = [name.title(), email, phone_number, time, time]
     if df_address[max_index].empty or df[max_index].empty:
