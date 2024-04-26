@@ -2,9 +2,24 @@
 NAME
     rejestbook
 DESCRIPTION
-    This module provides functions to add book to database giving function to read_csv file,
-    title of the book, author of the book and how many pages that book have.
+    This module allows the user to add book update book and delete book from csv file
+    book info: title, author, pages
 
+    This script doesn't require any packages
+
+FUNCTIONS
+    This module contains the following functions:
+    * add_book(f(path_to_csv_file, *args), path_to_csv, title, author, pages)-
+        Returns
+    * update_book(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
+        Returns
+    * delete_book(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
+        Returns
+
+Examples
+    add_book()
+    update_book()
+    delete_book()
 """
 from datetime import date
 
@@ -43,19 +58,22 @@ def add_book(read_func, title, author, pages):
     return 0
 
 
-def update_book(read_func, book_id, title, author, pages):
+def update_book(read_func, book_id, author='', title_book='', pages=None):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     time = date.today()
-    df_to_update = df.loc[book_id]
-    if df_to_update.empty:
+    if book_id not in df.index:
         print('Book not found')
         return 0
-    df_to_update = [title.title(), author.title(), pages, df_to_update['CREATED'], time]
+
+    author = author.title() if author else df.loc[book_id]['AUTHOR']
+    title_book = title_book.title() if title_book else df.loc[book_id]['TITLE']
+    pages = pages if pages else df.loc[book_id]['PAGES']
+
+    df.loc[book_id] = [author, title_book, pages, df.loc[book_id]['CREATED'], time]
     df.to_csv('Library/book.csv')
     print("Updated book")
     return 1
-
 
 
 def delete_book(read_func, book_id=False, title=''):
