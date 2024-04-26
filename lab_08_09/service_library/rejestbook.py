@@ -27,10 +27,13 @@ def add_book(read_func, title, author, pages):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     time = date.today()
-    try:
-        max_index = int(df.index[-1]) + 1
-    except ValueError as e:
-        return e
+    if df.empty:
+        max_index = 1000
+    else:
+        try:
+            max_index = int(df.index[-1]) + 1
+        except ValueError as e:
+            return e
     df.loc[max_index] = [title.title(), author.title(), pages, time, time]
     if not df[max_index].empty:
         df.to_csv('Library/book.csv')
@@ -44,13 +47,15 @@ def update_book(read_func, book_id, title, author, pages):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
     time = date.today()
-    if book_id in list(df.index.values):
-        df.loc[book_id] = [title.title(), author.title(), pages, df.loc[book_id]['CREATED'], time]
-        df.to_csv('Library/book.csv')
-        print("Updated book")
-        return 1
-    print('Book not found')
-    return 0
+    df_to_update = df.loc[book_id]
+    if df_to_update.empty:
+        print('Book not found')
+        return 0
+    df_to_update = [title.title(), author.title(), pages, df_to_update['CREATED'], time]
+    df.to_csv('Library/book.csv')
+    print("Updated book")
+    return 1
+
 
 
 def delete_book(read_func, book_id=False, title=''):
