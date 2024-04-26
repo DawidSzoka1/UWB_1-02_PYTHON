@@ -21,7 +21,6 @@ def read_csv(path_to_csv_file, *args):
 
 def update_address(customer_id, df_address, street='', city='', country=''):
     if customer_id not in df_address.index:
-        print('Customer ID not found')
         return 0
     address = df_address.loc[customer_id]
     street = street.title() if street else address['STREET']
@@ -34,7 +33,6 @@ def update_address(customer_id, df_address, street='', city='', country=''):
 
 def update_customer(customer_id, df, name='', email='', phone_number=0):
     if customer_id not in df.index:
-        print('Customer ID not found')
         return 0
     user = df.loc[customer_id]
     name = name.title() if name else user['NAME']
