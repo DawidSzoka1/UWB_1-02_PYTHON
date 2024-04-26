@@ -40,18 +40,24 @@ def delete_user(name='', customer_id=None):
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
-    if not name or not customer_id:
-        return 0
+    if name:
+        if name.title() not in df['NAME']:
+            print('No customer with that name')
+            return 0
+    else:
+        if customer_id not in df.index:
+            print('No customer with that id')
+            return 0
+    customer_id = customer_id if customer_id else df[df['NAME'] == name.title()].index
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
-    if name.title() in df['NAME']:
-        index = df['NAME'].index
-        del df[df['NAME'] == name.title()]
-        del df_address.loc[index]
-    elif customer_id in df.index:
+    try:
         df.drop([customer_id], inplace=True)
         df_address.drop([customer_id], inplace=True)
-    if df.loc[customer_id].empty or df[df['NAME'] == name].empty:
+    except TypeError as e:
+        print('TypeError', e)
+        return 0
+    if df.loc[customer_id].empty:
         df.to_csv('Library/customer.csv')
         df_address.to_csv('Library/address.csv')
         return 1
@@ -93,11 +99,20 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
-
-    df_address.loc[max_index] = [street.title(), city.title(), country]
-    df.loc[max_index] = [name.title(), email, phone_number, time, time]
-    if df_address[max_index].empty or df[max_index].empty:
-        delete_user(customer_id=max_index)
+    try:
+        df_address.loc[max_index] = [street.title(), city.title(), country]
+        df.loc[max_index] = [name.title(), email, phone_number, time, time]
+    except ValueError as e:
+        print("Value error occurred: ", e)
+        return 0
+    except TypeError as e:
+        print("Type error occurred: ", e)
+        return 0
+    except SettingWithCopyWarning as e:
+        print("SettingWithCopyWarning error occurred: ", e)
+        return 0
+    except IndexingError as e:
+        print("IndexingErrors error occurred: ", e)
         return 0
     df.to_csv('Library/customer.csv')
     df_address.to_csv('Library/address.csv')
@@ -110,13 +125,11 @@ def borrow_book():
 
 def return_book(customer_id):
     os.chdir('DATABASE')
-    for filename in os.listdir():
-        if str(customer_id) in filename:
-            with open(filename, 'r') as f:
-                pass
-            pass
-    print('There is no customer with that id')
-    return 0
+    if customer_id not in os.listdir():
+        print('There is no customer with that id')
+        return 0
+    with open(f'{customer_id}.txt', 'w'):
+        pass
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
@@ -124,15 +137,17 @@ def update_user(customer_id, name='', email='', phone_number=0, street='', city=
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
-    if customer_id not in list(df.index.values):
+    if customer_id not in df.index:
         print('NIe ma takiego uzytkownika')
         return 0
-    elif customer_id not in list(df_address.index.values):
+    elif customer_id not in df_address.index:
         print('Nie ma takiego adresu')
         return 0
     if update_customer(customer_id, df, name, email, phone_number):
         if update_address(customer_id, df_address, street, city, country):
+            print('Poprawnie zmieniono wszystkie dane')
             return 1
         print('Zmieniono tylko uzytkownika')
         return 1
+    print('Wystapil problem ze zmiana uzytkownika')
     return 0
