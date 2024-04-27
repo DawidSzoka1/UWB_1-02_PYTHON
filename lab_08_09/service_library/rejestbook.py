@@ -22,6 +22,7 @@ Examples
     delete_book()
 """
 from datetime import date
+import pandas as pd
 
 
 def add_book(read_func, title, author, pages):
@@ -41,6 +42,11 @@ def add_book(read_func, title, author, pages):
     """
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+    if not df:
+        return 0
+    if type(df) is not pd.DataFrame:
+        print('Please enter a valid dataframe')
+        return 0
     time = date.today()
     if df.empty:
         max_index = 1000
@@ -61,6 +67,11 @@ def add_book(read_func, title, author, pages):
 def update_book(read_func, book_id, author='', title_book='', pages=None):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+    if not df:
+        return 0
+    if type(df) is not pd.DataFrame:
+        print('Please enter valid dataframe')
+        return 0
     time = date.today()
     if book_id not in df.index:
         print('Book not found')
@@ -79,6 +90,11 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
 def delete_book(read_func, book_id=False, title=''):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+    if not df:
+        return 0
+    if type(df) is not pd.DataFrame:
+        print('Enter a valid dataframe')
+        return 0
     if title:
         if df[df.TITLE == title.title()].empty:
             return 0
