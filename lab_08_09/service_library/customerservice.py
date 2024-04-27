@@ -22,8 +22,7 @@ Examples
     delete_user()
 """
 from additionalfun import *
-from datetime import date
-import os
+from additionaluserfun import *
 import random
 
 
@@ -129,17 +128,6 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
         return 0
     df.to_csv('Library/customer.csv')
     df_address.to_csv('Library/address.csv')
-    return 1
-
-
-def check_if_dataset(customer_id):
-    if not os.path.exists('DATASET'):
-        print('DATASET does not exist')
-        return 0
-    os.chdir('DATABASE')
-    if not os.path.exists(f'{customer_id}.txt'):
-        print('There is no customer with that id')
-        return 0
     return 1
 
 
