@@ -132,14 +132,26 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     return 1
 
 
-def borrow_book():
-    pass
+def check_if_dataset(customer_id):
+    if not os.path.exists('DATASET'):
+        print('DATASET does not exist')
+        return 0
+    os.chdir('DATABASE')
+    if not os.path.exists(f'{customer_id}.txt'):
+        print('There is no customer with that id')
+        return 0
+    return 1
+
+
+def borrow_book(customer_id):
+    if not check_if_dataset(customer_id):
+        return 0
+    with open(f'{customer_id}.txt', 'w'):
+        pass
 
 
 def return_book(customer_id):
-    os.chdir('DATABASE')
-    if customer_id not in os.listdir():
-        print('There is no customer with that id')
+    if not check_if_dataset(customer_id):
         return 0
     with open(f'{customer_id}.txt', 'w'):
         pass
