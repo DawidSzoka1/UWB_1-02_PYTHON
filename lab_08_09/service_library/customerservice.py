@@ -15,11 +15,17 @@ FUNCTIONS
         Returns
     * delete_user(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
         Returns
+    * borrow_book(customer_id, book_id=None, book_title='')-
+        Returns
+    * return_book(customer_id, book_id=None, book_title='')-
+        Returns
 
 Examples
     add_customer()
     update_user()
     delete_user()
+    borrow_book()
+    return_book()
 """
 from additionalfun import *
 from additionaluserfun import *
@@ -131,14 +137,22 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     return 1
 
 
-def borrow_book(customer_id):
+def borrow_book(customer_id, book_id=None, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
+    df = read_csv('Library/customer.csv',
+                  'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+    if not df:
+        return 0
+    if type(df) is not pd.DataFrame:
+        print('Enter a valid dataframe')
+        return 0
+    book_id = book_id if book_id else df[df['TITLE'] == book_title.title()].index
     with open(f'{customer_id}.txt', 'w'):
         pass
 
 
-def return_book(customer_id):
+def return_book(customer_id, book_id=None, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
     with open(f'{customer_id}.txt', 'w'):
