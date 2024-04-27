@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import date
-
+import os
 from pandas.errors import SettingWithCopyWarning, IndexingError
 
 
@@ -69,3 +69,19 @@ def update_customer(customer_id, df, name='', email='', phone_number=0):
     except IndexingError as e:
         print("IndexingErrors error occurred: ", e)
         return 0
+
+
+def create_user_dataset(customer_id):
+    if not os.path.exists('DATASET'):
+        try:
+            os.mkdir(os.path.join(os.getcwd(), 'DATASET'))
+        except PermissionError as e:
+            print('Error ', e)
+            return 0
+        except OSError as e:
+            print('Error ', e)
+            return 0
+
+    os.chdir('DATASET')
+    with open(f'{customer_id}.txt', 'w') as f:
+        pass
