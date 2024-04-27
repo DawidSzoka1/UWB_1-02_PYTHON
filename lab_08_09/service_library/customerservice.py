@@ -111,6 +111,7 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
+    create_user_dataset(max_index)
     try:
         df_address.loc[max_index] = [street.title(), city.title(), country]
         df.loc[max_index] = [name.title(), email, phone_number, time, time]
