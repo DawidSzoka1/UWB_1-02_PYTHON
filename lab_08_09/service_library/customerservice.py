@@ -40,6 +40,11 @@ def delete_user(name='', customer_id=None):
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+    if not df:
+        return 0
+    if type(df) is pd.DataFrame:
+        print('Error while loading the csv (customer.csv)')
+        return 0
     if name:
         if name.title() not in df['NAME']:
             print('No customer with that name')
@@ -83,6 +88,11 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+    if not df:
+        return 0
+    if type(df) is not pd.DataFrame:
+        print('Error while loading the csv (customer.csv)')
+        return 0
     time = date.today()
     if phone_number in df['PHONE']:
         print('Phone number is already taken')
@@ -92,8 +102,10 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
         return 0
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
-    if not df or not df_address:
-        print('Problems with reading customer data or address data')
+    if not df_address:
+        return 0
+    if type(df_address) is not pd.DataFrame:
+        print('Error while loading the csv (address.csv)')
         return 0
 
     max_index = random.randint(1000, 9999)
@@ -137,17 +149,21 @@ def update_user(customer_id, name='', email='', phone_number=0, street='', city=
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
+    if not df or not df_address:
+        return 0
+    if type(df) is not pd.DataFrame or type(df_address) is not pd.DataFrame:
+        print('Please enter a valid dataframe')
+        return 0
     if customer_id not in df.index:
-        print('NIe ma takiego uzytkownika')
+        print('User does not exist')
         return 0
     elif customer_id not in df_address.index:
-        print('Nie ma takiego adresu')
+        print('Address does not exist')
         return 0
     if update_customer(customer_id, df, name, email, phone_number):
         if update_address(customer_id, df_address, street, city, country):
-            print('Poprawnie zmieniono wszystkie dane')
+            print('Successfully updated')
             return 1
-        print('Zmieniono tylko uzytkownika')
+        print('Only user was updated')
         return 1
-    print('Wystapil problem ze zmiana uzytkownika')
     return 0
