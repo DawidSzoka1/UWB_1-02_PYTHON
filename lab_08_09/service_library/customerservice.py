@@ -27,9 +27,9 @@ Examples
     borrow_book()
     return_book()
 """
-from additionalfun import *
 from additionaluserfun import *
 import random
+from rejestbook import delete_book
 
 
 def delete_user(name='', customer_id=None):
@@ -116,7 +116,8 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
-    create_user_dataset(max_index)
+    if not os.path.exists('DATASET'):
+        create_user_dataset(max_index)
     try:
         df_address.loc[max_index] = [street.title(), city.title(), country]
         df.loc[max_index] = [name.title(), email, phone_number, time, time]
@@ -140,15 +141,21 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
 def borrow_book(customer_id, book_id=None, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
-    df = read_csv('Library/customer.csv',
-                  'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
-    if not df:
+    df_book = read_csv('Library/book.csv',
+                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+    if not df_book:
         return 0
-    if type(df) is not pd.DataFrame:
+    if type(df_book) is not pd.DataFrame:
         print('Enter a valid dataframe')
         return 0
-    book_id = book_id if book_id else df[df['TITLE'] == book_title.title()].index
-    with open(f'{customer_id}.txt', 'w'):
+    path = os.path.join(os.getcwd(), 'DATASET')
+    try:
+        book_id = book_id if book_id else df_book[df_book['TITLE'] == book_title.title()].index
+    except KeyError as e:
+        print('KeyError ', e)
+        return 0
+    delete_book(read_csv, book_id=book_id)
+    with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
         pass
 
 
