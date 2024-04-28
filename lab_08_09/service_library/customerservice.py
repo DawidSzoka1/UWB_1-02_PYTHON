@@ -171,8 +171,6 @@ def return_book(customer_id, book_title=''):
                 add_book(read_csv, title, line.split(',')[1].split(':')[1], int(line.split(',')[3].split(':')[1]))
 
 
-return_book(204,'The Art of Computer Programming')
-
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
     df = read_csv('Library/customer.csv',

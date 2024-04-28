@@ -23,6 +23,8 @@ Examples
 """
 from datetime import date
 import pandas as pd
+from additionalfun import read_csv
+import random
 
 
 def add_book(read_func, title, author, pages):
@@ -47,15 +49,11 @@ def add_book(read_func, title, author, pages):
         print('Please enter a valid dataframe')
         return 0
     time = date.today()
-    if df.empty:
-        max_index = 1000
-    else:
-        try:
-            max_index = int(df.index[-1]) + 1
-        except ValueError as e:
-            return e
+    max_index = random.randint(1000, 9999)
+    while max_index in df.index:
+        max_index = random.randint(1000, 9999)
     df.loc[max_index] = [title.title(), author.title(), pages, time, time]
-    if not df[max_index].empty:
+    if not df.loc[max_index].empty:
         df.to_csv('Library/book.csv')
         print('Added book to database')
         return 1
