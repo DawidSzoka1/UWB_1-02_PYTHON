@@ -142,24 +142,40 @@ def borrow_book(customer_id, book_id=None, book_title=''):
         return 0
     path = os.path.join(os.getcwd(), 'DATASET')
     try:
-        book_id = book_id if book_id else df_book[df_book['TITLE'] == book_title.title()].index
+        book_id = book_id if book_id in df_book.index else df_book[
+            df_book['TITLE'] == book_title.title()].index if book_title else False
     except KeyError as e:
         print('KeyError ', e)
+        return 0
+    if not book_id:
+        print('No such book')
         return 0
     book = df_book.loc[book_id]
     delete_book(read_csv, book_id)
 
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
-        f.write(f"{book_id} {book['AUTHOR']}  {book['TITLE']}  {book['PAGES']} borrowed: {date.today()}")
+        f.write(
+            f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  pages:{book['PAGES']}, borrowed: {date.today()}")
     print('Borrowed: ', book['AUTHOR'])
     return 1
 
 
-def return_book(customer_id, book_id=None, book_title=''):
+def return_book(customer_id, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
-    with open(f'{customer_id}.txt', 'w'):
-        pass
+
+    path = os.path.join(os.getcwd(), 'DATASET')
+    with open(os.path.join(path, f'{customer_id}.txt'), 'r') as f:
+        for item in f.readline().split(','):
+            if 'title' in item.strip():
+                check = item.split(':')[1]
+                print(check)
+                if check == book_title.title():
+                    pass
+
+
+
+return_book(204)
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
