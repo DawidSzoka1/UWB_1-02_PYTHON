@@ -70,7 +70,7 @@ def create_user_dataset(customer_id):
             return 0
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
-    if not df:
+    if type(df) is not pd.DataFrame:
         return 0
     elif customer_id not in df.index:
         print('No such customer')
@@ -86,9 +86,9 @@ def check_if_dataset(customer_id):
     if not os.path.exists('DATASET'):
         return create_user_dataset(customer_id)
     df = read_csv('Library/customer.csv',
-                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     path = os.path.join(os.getcwd(), 'DATASET')
-    if not df:
+    if type(df) is not pd.DataFrame:
         return 0
     elif customer_id not in df.index:
         print('No such customer')
