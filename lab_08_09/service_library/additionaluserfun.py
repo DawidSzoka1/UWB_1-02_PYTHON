@@ -69,7 +69,7 @@ def create_user_dataset(customer_id):
             print('Error ', e)
             return 0
     df = read_csv('Library/customer.csv',
-                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     if type(df) is not pd.DataFrame:
         return 0
     elif customer_id not in df.index:

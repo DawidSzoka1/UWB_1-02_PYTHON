@@ -73,7 +73,7 @@ def delete_user(name='', customer_id=None):
     return 0
 
 
-def add_customer(name, email='', phone_number='', street='', city='', country=''):
+def add_customer(name, email='', phone_number=0, street='', city='', country=''):
     """
     Function to add a customer to an existing csv file (customer.csv) with
     name and email and phone number and data of created and updated customer
@@ -90,15 +90,15 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
         1 if successful added customer to customer.csv and address to address.csv, else 0
     """
     df = read_csv('Library/customer.csv',
-                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     if type(df) is not pd.DataFrame:
         print('Error while loading the csv (customer.csv)')
         return 0
     time = date.today()
-    if phone_number in df['PHONE']:
+    if float(phone_number) in df['PHONE'].values:
         print('Phone number is already taken')
         return 0
-    if email in df['E-MAIL']:
+    if email in df['E-MAIL'].values:
         print('E-mail is already taken')
         return 0
     df_address = read_csv('Library/address.csv',
@@ -110,8 +110,8 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
-    if not os.path.exists('DATASET'):
-        create_user_dataset(max_index)
+
+    create_user_dataset(max_index)
     try:
         df_address.loc[max_index] = [street.title(), city.title(), country]
         df.loc[max_index] = [name.title(), email, phone_number, time, time]
@@ -153,9 +153,6 @@ def borrow_book(customer_id, book_id=None, book_title=''):
         f.write(f"{book_id} {book['AUTHOR']}  {book['TITLE']}  {book['PAGES']} borrowed: {date.today()}")
     print('Borrowed: ', book['AUTHOR'])
     return 1
-
-
-borrow_book(204, 103)
 
 
 def return_book(customer_id, book_id=None, book_title=''):
