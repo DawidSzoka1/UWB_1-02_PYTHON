@@ -45,8 +45,6 @@ def delete_user(name='', customer_id=None):
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
-    if not df:
-        return 0
     if type(df) is pd.DataFrame:
         print('Error while loading the csv (customer.csv)')
         return 0
@@ -93,8 +91,6 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
-    if not df:
-        return 0
     if type(df) is not pd.DataFrame:
         print('Error while loading the csv (customer.csv)')
         return 0
@@ -107,8 +103,6 @@ def add_customer(name, email='', phone_number='', street='', city='', country=''
         return 0
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
-    if not df_address:
-        return 0
     if type(df_address) is not pd.DataFrame:
         print('Error while loading the csv (address.csv)')
         return 0
@@ -143,8 +137,6 @@ def borrow_book(customer_id, book_id=None, book_title=''):
         return 0
     df_book = read_csv('Library/book.csv',
                        'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
-    if not df_book:
-        return 0
     if type(df_book) is not pd.DataFrame:
         print('Enter a valid dataframe')
         return 0
@@ -154,9 +146,16 @@ def borrow_book(customer_id, book_id=None, book_title=''):
     except KeyError as e:
         print('KeyError ', e)
         return 0
-    delete_book(read_csv, book_id=book_id)
+    book = df_book.loc[book_id]
+    delete_book(read_csv, book_id)
+
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
-        pass
+        f.write(f"{book_id} {book['AUTHOR']}  {book['TITLE']}  {book['PAGES']} borrowed: {date.today()}")
+    print('Borrowed: ', book['AUTHOR'])
+    return 1
+
+
+borrow_book(204, 103)
 
 
 def return_book(customer_id, book_id=None, book_title=''):
