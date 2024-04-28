@@ -1,0 +1,2 @@
+id:102, author:Donald Knuth,  title:The Art of Computer Programming,  pages:3168, borrowed: 2024-04-28
+id:9698, author:Jakis,  title:Fgds,  pages:123, borrowed: 2024-04-28
