@@ -26,7 +26,7 @@ import pandas as pd
 import random
 
 
-def add_book(read_func, title, author, pages):
+def add_book(read_func, author, title, pages):
     """
     Add a book to the book.csv
     Args:
@@ -51,7 +51,7 @@ def add_book(read_func, title, author, pages):
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
-    df.loc[max_index] = [title.title(), author.title(), pages, time, time, False]
+    df.loc[max_index] = [author.title(), title.title(), pages, time, time, False]
     if not df.loc[max_index].empty:
         df.to_csv('Library/book.csv')
         print('Added book to database')
