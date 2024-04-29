@@ -23,7 +23,6 @@ Examples
 """
 from datetime import date
 import pandas as pd
-from additionalfun import read_csv
 import random
 
 
@@ -43,7 +42,7 @@ def add_book(read_func, title, author, pages):
 
     """
     df = read_func('Library/book.csv',
-                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
 
     if type(df) is not pd.DataFrame:
         print('Please enter a valid dataframe')
@@ -52,7 +51,7 @@ def add_book(read_func, title, author, pages):
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
-    df.loc[max_index] = [title.title(), author.title(), pages, time, time]
+    df.loc[max_index] = [title.title(), author.title(), pages, time, time, False]
     if not df.loc[max_index].empty:
         df.to_csv('Library/book.csv')
         print('Added book to database')
@@ -63,7 +62,7 @@ def add_book(read_func, title, author, pages):
 
 def update_book(read_func, book_id, author='', title_book='', pages=None):
     df = read_func('Library/book.csv',
-                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     if type(df) is not pd.DataFrame:
         print('Please enter valid dataframe')
         return 0
@@ -76,7 +75,7 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
     title_book = title_book.title() if title_book else df.loc[book_id]['TITLE']
     pages = pages if pages else df.loc[book_id]['PAGES']
 
-    df.loc[book_id] = [author, title_book, pages, df.loc[book_id]['CREATED'], time]
+    df.loc[book_id] = [author, title_book, pages, df.loc[book_id]['CREATED'], time, df.loc[book_id]['BORROWED']]
     df.to_csv('Library/book.csv')
     print("Updated book")
     return 1
@@ -84,7 +83,7 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
 
 def delete_book(read_func, book_id=False, title=''):
     df = read_func('Library/book.csv',
-                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+                   'ID', 'TITLE')
 
     if type(df) is not pd.DataFrame:
         print('Enter a valid dataframe')
