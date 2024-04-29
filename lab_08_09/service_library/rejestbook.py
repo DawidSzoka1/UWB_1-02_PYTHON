@@ -24,7 +24,6 @@ Examples
 from datetime import date
 import pandas as pd
 import random
-from additionalfun import *
 
 
 def add_book(read_func, author, title, pages):
