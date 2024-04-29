@@ -73,7 +73,7 @@ def delete_user(name='', customer_id=None):
     return 0
 
 
-def add_customer(name, email='', phone_number=0, street='', city='', country=''):
+def add_customer(name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA', country='NO DATA'):
     """
     Function to add a customer to an existing csv file (customer.csv) with
     name and email and phone number and data of created and updated customer
@@ -136,7 +136,7 @@ def borrow_book(customer_id, book_id=None, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
-                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED')
+                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'BORROWED')
     if type(df_book) is not pd.DataFrame:
         print('Enter a valid dataframe')
         return 0
@@ -151,8 +151,8 @@ def borrow_book(customer_id, book_id=None, book_title=''):
         print('No such book')
         return 0
     book = df_book.loc[book_id]
-    delete_book(read_csv, book_id)
-
+    df_book.at[book_id, 'BORROWED'] = True
+    df_book.to_csv('Library/book.csv')
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
         f.write(
             f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  pages:{book['PAGES']}, borrowed: {date.today()}\n")
@@ -163,13 +163,15 @@ def borrow_book(customer_id, book_id=None, book_title=''):
 def return_book(customer_id, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
+    df_book = read_csv('Library/book.csv',
+                       'ID', 'TITLE', 'BORROWED')
+    df_book.at[customer_id, 'BORROWED'] = False
     path = os.path.join(os.getcwd(), 'DATASET')
     with open(os.path.join(path, f'{customer_id}.txt'), 'r') as f:
         for line in f.readlines():
             title = line.split(',')[2].split(':')[1]
             if title == book_title:
                 add_book(read_csv, title, line.split(',')[1].split(':')[1], int(line.split(',')[3].split(':')[1]))
-
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
