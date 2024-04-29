@@ -24,6 +24,7 @@ Examples
 from datetime import date
 import pandas as pd
 import random
+from additionalfun import *
 
 
 def add_book(read_func, author, title, pages):
@@ -81,9 +82,9 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
     return 1
 
 
-def delete_book(read_func, book_id=False, title=''):
+def delete_book(read_func, book_id=None, title=''):
     df = read_func('Library/book.csv',
-                   'ID', 'TITLE')
+                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
 
     if type(df) is not pd.DataFrame:
         print('Enter a valid dataframe')
@@ -93,11 +94,13 @@ def delete_book(read_func, book_id=False, title=''):
             return 0
         df.drop(df[df.TITLE == title].index, inplace=True)
         df.to_csv('Library/book.csv')
+        print('Successfully deleted book')
         return 1
     elif book_id:
         if book_id not in list(df.index.values):
             return 0
-        df.drop([book_id], inplace=True)
+        df.drop(book_id, inplace=True)
         df.to_csv('Library/book.csv')
+        print('Successfully deleted book')
         return 1
     return 0
