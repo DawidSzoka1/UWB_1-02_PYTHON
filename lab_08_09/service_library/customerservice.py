@@ -161,13 +161,13 @@ def borrow_book(customer_id, book_id=None, book_title=''):
     return 1
 
 
-def return_book(customer_id, book_title='', book_id=None):
+def return_book(customer_id, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
-                       'ID', 'TITLE', 'BORROWED')
+                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     if book_title.title() not in df_book['TITLE'].values:
-        print('No such book')
+        print('Our library does not have that book title.')
         return 0
 
     path = os.path.join(os.getcwd(), 'DATASET')
@@ -176,15 +176,20 @@ def return_book(customer_id, book_title='', book_id=None):
         lines = f.readlines()
 
     for i, line in enumerate(lines):
-        if line.split(',')[2].split(':')[1] == book_title:
+        print(line.split(',')[5].split(':')[1][:-1].strip() == 'False')
+        if line.split(',')[2].split(':')[1] == book_title and line.split(',')[5].split(':')[1][:-1].strip() == 'False':
             index = i
             break
     if index is not None:
-        lines[index].replace('returned: False', f'returned: {date.today()}')
+        lines[index] = lines[index].replace('returned: False', f'returned: {date.today()}')
         with open(os.path.join(path, f'{customer_id}.txt'), 'w') as file:
             file.writelines(lines)
         df_book.at[customer_id, 'BORROWED'] = False
         df_book.to_csv('Library/book.csv')
+        print('Successfully returned book')
+        return 1
+    print('The book was not found in your database or you already returned the book')
+    return 0
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
