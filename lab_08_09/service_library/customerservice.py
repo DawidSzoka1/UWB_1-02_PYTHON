@@ -155,23 +155,36 @@ def borrow_book(customer_id, book_id=None, book_title=''):
     df_book.to_csv('Library/book.csv')
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
         f.write(
-            f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  pages:{book['PAGES']}, borrowed: {date.today()}\n")
+            f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  "
+            f"pages:{book['PAGES']}, borrowed: {date.today()} returned: False\n")
     print('Borrowed: ', book['AUTHOR'])
     return 1
 
 
-def return_book(customer_id, book_title=''):
+def return_book(customer_id, book_title='', book_id=None):
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
                        'ID', 'TITLE', 'BORROWED')
-    df_book.at[customer_id, 'BORROWED'] = False
+    if book_title.title() not in df_book['TITLE'].values:
+        print('No such book')
+        return 0
+
     path = os.path.join(os.getcwd(), 'DATASET')
+    index = None
     with open(os.path.join(path, f'{customer_id}.txt'), 'r') as f:
-        for line in f.readlines():
-            title = line.split(',')[2].split(':')[1]
-            if title == book_title:
-                add_book(read_csv, title, line.split(',')[1].split(':')[1], int(line.split(',')[3].split(':')[1]))
+        lines = f.readlines()
+
+    for i, line in enumerate(lines):
+        if line.split(',')[2].split(':')[1] == book_title:
+            index = i
+            break
+    if index is not None:
+        lines[index].replace('returned: False', f'returned: {date.today()}')
+        with open(os.path.join(path, f'{customer_id}.txt'), 'w') as file:
+            file.writelines(lines)
+        df_book.at[customer_id, 'BORROWED'] = False
+        df_book.to_csv('Library/book.csv')
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
