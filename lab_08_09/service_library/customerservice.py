@@ -73,13 +73,14 @@ def delete_user(name='', customer_id=None):
     return 0
 
 
-def add_customer(name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA', country='NO DATA'):
+def add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA', country='NO DATA'):
     """
     Function to add a customer to an existing csv file (customer.csv) with
     name and email and phone number and data of created and updated customer
 
     Args:
-        name(str): The name of the customer:
+        first_name(str): First name of the customer:
+        last_name(str): Last name of the customer:
         email(str): The email of the customer:
         phone_number(str): The phone number of the customer:
         street(str): The street of the customer:
@@ -110,7 +111,7 @@ def add_customer(name, email='NO DATA', phone_number=None, street='NO DATA', cit
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
         max_index = random.randint(1000, 9999)
-
+    name = f'{first_name.title()} {last_name.title()}'
     create_user_dataset(max_index)
     try:
         df_address.loc[max_index] = [street.title(), city.title(), country]
