@@ -45,8 +45,7 @@ def add_book(read_func, author, title, pages):
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
 
     if type(df) is not pd.DataFrame:
-        print('Please enter a valid dataframe')
-        return 0
+        return df
     time = date.today()
     max_index = random.randint(1000, 9999)
     while max_index in df.index:
@@ -64,8 +63,7 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     if type(df) is not pd.DataFrame:
-        print('Please enter valid dataframe')
-        return 0
+        return df
     time = date.today()
     if book_id not in df.index:
         print('Book not found')
@@ -86,8 +84,7 @@ def delete_book(read_func, book_id=None, title=''):
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
 
     if type(df) is not pd.DataFrame:
-        print('Enter a valid dataframe')
-        return 0
+        return df
     if title:
         if df[df.TITLE == title.title()].empty:
             return 0
