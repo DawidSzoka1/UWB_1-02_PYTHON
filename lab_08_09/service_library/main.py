@@ -47,8 +47,23 @@ class LibraryApp(tk.Tk):
         self.label_listbox_borrowed = tk.Label(self, text="BORROWED")
         self.label_listbox_borrowed.grid(row=0, column=5, pady=5, sticky="ew")
 
-        self.listbox_books = tk.Listbox(self, width=50, height=25, font=('Arial', 16))
-        self.listbox_books.grid(row=1, column=0, columnspan=6, padx=5, pady=10, sticky="nsew")
+        self.listbox_title = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_title.grid(row=1, column=0, columnspan=1, pady=10, sticky="nsew")
+
+        self.listbox_author = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_author.grid(row=1, column=1, columnspan=1, pady=10, sticky="nsew")
+
+        self.listbox_pages = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_pages.grid(row=1, column=2, columnspan=1, pady=10, sticky="nsew")
+
+        self.listbox_created = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_created.grid(row=1, column=3, columnspan=1, pady=10, sticky="nsew")
+
+        self.listbox_updated = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_updated.grid(row=1, column=4, columnspan=1, pady=10, sticky="nsew")
+
+        self.listbox_borrowed = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_borrowed.grid(row=1, column=5, columnspan=1, pady=10, sticky="nsew")
 
         # self.button_remove = tk.Button(self, text="Remove Book", command=self.remove_book)
         # self.button_remove.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
@@ -63,7 +78,6 @@ class LibraryApp(tk.Tk):
         df = read_csv("Library/book.csv",
                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
         if type(df) is not pd.DataFrame:
-            self.listbox_books.insert(tk.END, f"{df}")
             return 0
 
         for index, row in df.iterrows():
@@ -74,8 +88,12 @@ class LibraryApp(tk.Tk):
             pages, created = row['PAGES'], row['CREATED']
             updated, borrowed = row['UPDATED'], row['BORROWED']
             self.books.append((author, title, pages, created, updated, borrowed))
-            self.listbox_books.insert(tk.END,
-                                      f"{author},   {title},    {pages},    {created},  {updated},  {borrowed}")
+            self.listbox_author.insert(tk.END, f'{author}')
+            self.listbox_title.insert(tk.END, f'{title}')
+            self.listbox_pages.insert(tk.END, f'{pages}')
+            self.listbox_created.insert(tk.END, f'{created}')
+            self.listbox_updated.insert(tk.END, f'{updated}')
+            self.listbox_borrowed.insert(tk.END, f'{borrowed}')
 
 
 def main():
