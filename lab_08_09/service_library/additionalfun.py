@@ -3,8 +3,7 @@ import pandas as pd
 
 def read_csv(path_to_csv_file, *args):
     if 'ID' not in args:
-        print('ID is required in args')
-        return 0
+        return 'ID is required in args'
     try:
         return pd.read_csv(
             path_to_csv_file,
@@ -12,11 +11,8 @@ def read_csv(path_to_csv_file, *args):
             index_col='ID'
         )
     except FileNotFoundError as e:
-        print(f"File not found error occurred: {e}")
-        return 0
+        return f"File not found error occurred: {e}"
     except ValueError as e:
-        print(f"Value error occurred: {e}")
-        return 0
+        return f"Value error occurred: {e}"
     except TypeError as e:
-        print('Type error occurred: ', e)
-        return 0
+        return f"Type error occurred: {e}"
