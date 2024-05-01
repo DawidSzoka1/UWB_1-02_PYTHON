@@ -10,15 +10,15 @@ DESCRIPTION
 FUNCTIONS
     This module contains the following functions:
     * add_customer(f(path_to_csv_file, *args), path_to_csv, title, author, pages)-
-        Returns
+        Returns 1 if successful, otherwise returns 0
     * update_user(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
-        Returns
+        Returns 1 if successful, otherwise returns 0
     * delete_user(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
-        Returns
+        Returns 1 if successful, otherwise returns 0
     * borrow_book(customer_id, book_id=None, book_title='')-
-        Returns
+        Returns 1 if successful, otherwise returns 0
     * return_book(customer_id, book_id=None, book_title='')-
-        Returns
+        Returns 1 if successful, otherwise returns 0
 
 Examples
     add_customer()
@@ -77,7 +77,7 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
                  country='NO DATA'):
     """
     Function to add a customer to an existing csv file (customer.csv) with
-    name and email and phone number and data of created and updated customer
+    first name, last name , email ,phone number, data of created and updated customer
 
     Args:
         first_name(str): First name of the customer:
@@ -90,6 +90,11 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
 
     Returns:
         1 if successful added customer to customer.csv and address to address.csv, else 0
+    Exceptions:
+        ValueError: If we try to add a customer with an invalid data value of all fields
+        TypeError: If we try to add a customer with an invalid data type of all fields
+        SettingWithCopyWarning: If we are working with copy of a dataframe
+        IndexingError: If we try to go the wrong index
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
@@ -158,7 +163,7 @@ def return_book(customer_id, book_title=''):
         book_id = df_book[df_book['TITLE'] == book_title.title()].index.values[0]
     except IndexError as e:
         print('Our library does not have that book title.')
-        return e
+        return 0
     if not book_id:
         print('Our library does not have that book title.')
         return 0

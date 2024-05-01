@@ -10,11 +10,11 @@ DESCRIPTION
 FUNCTIONS
     This module contains the following functions:
     * add_book(f(path_to_csv_file, *args), path_to_csv, title, author, pages)-
-        Returns
+        Returns 1 if successful, otherwise returns 0
     * update_book(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
-        Returns
+        Returns 1 if successful, otherwise returns 0
     * delete_book(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
-        Returns
+        Returns 1 if successful, otherwise returns 0
 
 Examples
     add_book()
