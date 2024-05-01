@@ -23,7 +23,7 @@ Examples
 """
 from datetime import date
 import pandas as pd
-import random
+from additionalfun import find_free_id
 
 
 def add_book(read_func, author, title, pages):
@@ -47,11 +47,9 @@ def add_book(read_func, author, title, pages):
     if type(df) is not pd.DataFrame:
         return df
     time = date.today()
-    max_index = random.randint(1000, 9999)
-    while max_index in df.index:
-        max_index = random.randint(1000, 9999)
-    df.loc[max_index] = [author.title(), title.title(), pages, time, time, False]
-    if not df.loc[max_index].empty:
+    next_id = find_free_id(df)
+    df.loc[next_id] = [author.title(), title.title(), pages, time, time, False]
+    if not df.loc[next_id].empty:
         df.to_csv('Library/book.csv')
         print('Added book to database')
         return 1
