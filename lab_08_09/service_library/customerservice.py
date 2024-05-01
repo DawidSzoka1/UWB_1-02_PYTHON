@@ -28,7 +28,7 @@ Examples
     return_book()
 """
 from additionaluserfun import *
-import random
+from decorator import decorator
 from additionalfun import find_free_id
 
 
@@ -146,12 +146,20 @@ def borrow_book(customer_id, *args):
     return 1 if all(borrowed_books_info) else 0
 
 
+@decorator
 def return_book(customer_id, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
-                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
-    if book_title.title() not in df_book['TITLE'].values:
+                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'BORROWED')
+    if type(df_book) is not pd.DataFrame:
+        return 0
+    try:
+        book_id = df_book[df_book['TITLE'] == book_title.title()].index.values[0]
+    except IndexError as e:
+        print('Our library does not have that book title.')
+        return e
+    if not book_id:
         print('Our library does not have that book title.')
         return 0
 
@@ -161,15 +169,14 @@ def return_book(customer_id, book_title=''):
         lines = f.readlines()
 
     for i, line in enumerate(lines):
-        print(line.split(',')[5].split(':')[1][:-1].strip() == 'False')
-        if line.split(',')[2].split(':')[1] == book_title and line.split(',')[5].split(':')[1][:-1].strip() == 'False':
+        if line.split(',')[2].split(':')[1] == book_title.title() and line.split(',')[5].split(':')[1][:-1].strip() == 'False':
             index = i
             break
     if index is not None:
         lines[index] = lines[index].replace('returned: False', f'returned: {date.today()}')
         with open(os.path.join(path, f'{customer_id}.txt'), 'w') as file:
             file.writelines(lines)
-        df_book.at[customer_id, 'BORROWED'] = False
+        df_book.at[book_id, 'BORROWED'] = False
         df_book.to_csv('Library/book.csv')
         print('Successfully returned book')
         return 1
