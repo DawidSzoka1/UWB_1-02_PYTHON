@@ -113,5 +113,5 @@ def borrow_book_function(df_book, customer_id, title):
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
         f.write(
             f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  "
-            f"pages:{book['PAGES']}, borrowed: {date.today()} returned: False\n")
+            f"pages:{book['PAGES']}, borrowed: {date.today()}, returned: False\n")
     return 1
