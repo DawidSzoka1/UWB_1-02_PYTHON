@@ -29,7 +29,7 @@ Examples
 """
 from additionaluserfun import *
 import random
-from rejestbook import delete_book, add_book
+from additionalfun import find_free_id
 
 
 def delete_user(name='', customer_id=None):
@@ -109,14 +109,12 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         print('Error while loading the csv (address.csv)')
         return 0
 
-    max_index = random.randint(1000, 9999)
-    while max_index in df.index:
-        max_index = random.randint(1000, 9999)
+    next_id = find_free_id(df)
     name = f'{first_name.title()} {last_name.title()}'
-    create_user_dataset(max_index)
+    create_user_dataset(next_id)
     try:
-        df_address.loc[max_index] = [street.title(), city.title(), country]
-        df.loc[max_index] = [name.title(), email, phone_number, time, time]
+        df_address.loc[next_id] = [street.title(), city.title(), country]
+        df.loc[next_id] = [name.title(), email, phone_number, time, time]
     except ValueError as e:
         print("Value error occurred: ", e)
         return 0
@@ -135,7 +133,7 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
 
 
 def borrow_book(customer_id, *args):
-    if len(args) == 0:
+    if not args:
         return 0
     if not check_if_dataset(customer_id):
         return 0
@@ -145,22 +143,7 @@ def borrow_book(customer_id, *args):
         print('Enter a valid dataframe')
         return 0
     path = os.path.join(os.getcwd(), 'DATASET')
-    for title in args:
-        book_id = df_book[df_book['TITLE'] == title.title()].index
-        if not book_id:
-            print('No such book')
-            return 0
-        book = df_book.loc[book_id]
-        if book['BORROWED'] == 'True':
-            return 0
-        df_book.at[book_id, 'BORROWED'] = 'True'
-        df_book.to_csv('Library/book.csv')
-        with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
-            f.write(
-                f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  "
-                f"pages:{book['PAGES']}, borrowed: {date.today()} returned: False\n")
-        print('Borrowed: ', book['AUTHOR'])
-        return 1
+    map(lambda title: borrow_book_function(df_book, customer_id, title), args)
 
 
 def return_book(customer_id, book_title=''):
