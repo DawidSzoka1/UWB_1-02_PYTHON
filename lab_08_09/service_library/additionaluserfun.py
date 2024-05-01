@@ -103,14 +103,9 @@ def borrow_book_function(df_book, customer_id, title):
     if type(df_book) is not pd.DataFrame:
         return 0
     path = os.path.join(os.getcwd(), 'DATASET')
-    book_id = df_book[df_book['TITLE'] == title.title()].index
-    if not book_id:
-        print('No such book')
-        return 0
+    book_id = df_book[df_book['TITLE'] == title.title()].index[0]
     book = df_book.loc[book_id]
-    if book['BORROWED'] == 'True':
-        return 0
-    df_book.at[book_id, 'BORROWED'] = 'True'
+    df_book.at[book_id, 'BORROWED'] = True
     df_book.to_csv('Library/book.csv')
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
         f.write(

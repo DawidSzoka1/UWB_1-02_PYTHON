@@ -142,8 +142,8 @@ def borrow_book(customer_id, *args):
     if type(df_book) is not pd.DataFrame:
         print('Enter a valid dataframe')
         return 0
-    path = os.path.join(os.getcwd(), 'DATASET')
-    map(lambda title: borrow_book_function(df_book, customer_id, title), args)
+    borrowed_books_info = list(map(lambda title: borrow_book_function(df_book, customer_id, title), args))
+    return 1 if all(borrowed_books_info) else 0
 
 
 def return_book(customer_id, book_title=''):
