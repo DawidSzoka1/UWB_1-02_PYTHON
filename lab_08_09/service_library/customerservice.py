@@ -73,7 +73,8 @@ def delete_user(name='', customer_id=None):
     return 0
 
 
-def add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA', country='NO DATA'):
+def add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA',
+                 country='NO DATA'):
     """
     Function to add a customer to an existing csv file (customer.csv) with
     name and email and phone number and data of created and updated customer
@@ -133,7 +134,9 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
     return 1
 
 
-def borrow_book(customer_id, book_id=None, book_title=''):
+def borrow_book(customer_id, *args):
+    if len(args) == 0:
+        return 0
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
@@ -142,24 +145,22 @@ def borrow_book(customer_id, book_id=None, book_title=''):
         print('Enter a valid dataframe')
         return 0
     path = os.path.join(os.getcwd(), 'DATASET')
-    try:
-        book_id = book_id if book_id in df_book.index else df_book[
-            df_book['TITLE'] == book_title.title()].index if book_title else False
-    except KeyError as e:
-        print('KeyError ', e)
-        return 0
-    if not book_id:
-        print('No such book')
-        return 0
-    book = df_book.loc[book_id]
-    df_book.at[book_id, 'BORROWED'] = True
-    df_book.to_csv('Library/book.csv')
-    with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
-        f.write(
-            f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  "
-            f"pages:{book['PAGES']}, borrowed: {date.today()} returned: False\n")
-    print('Borrowed: ', book['AUTHOR'])
-    return 1
+    for title in args:
+        book_id = df_book[df_book['TITLE'] == title.title()].index
+        if not book_id:
+            print('No such book')
+            return 0
+        book = df_book.loc[book_id]
+        if book['BORROWED'] == 'True':
+            return 0
+        df_book.at[book_id, 'BORROWED'] = 'True'
+        df_book.to_csv('Library/book.csv')
+        with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
+            f.write(
+                f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  "
+                f"pages:{book['PAGES']}, borrowed: {date.today()} returned: False\n")
+        print('Borrowed: ', book['AUTHOR'])
+        return 1
 
 
 def return_book(customer_id, book_title=''):
