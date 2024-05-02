@@ -3,33 +3,38 @@ NAME
     customerservice
 DESCRIPTION
     This module allows the user to register a new user with address, delete user and update user info
-    saving changes to csv file
+    saving changes to csv file, borrow books from book.csv and return them
 
-    This script doesn't require any packages
+    This script requires pandas to be installed
 
 FUNCTIONS
     This module contains the following functions:
-    * add_customer(f(path_to_csv_file, *args), path_to_csv, title, author, pages)-
-        Returns 1 if successful, otherwise returns 0
+    * add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA',
+                 country='NO DATA')-
+        Returns 1 if successful added customer to database, otherwise returns 0
     * update_user(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
-        Returns 1 if successful, otherwise returns 0
-    * delete_user(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
-        Returns 1 if successful, otherwise returns 0
-    * borrow_book(customer_id, book_id=None, book_title='')-
-        Returns 1 if successful, otherwise returns 0
+        Returns 1 if successful updated user info, otherwise returns 0
+    * delete_user(name='', customer_id=None)-
+        Returns 1 if successful deleted user and user address form database, otherwise returns 0
+    * borrow_book(customer_id, *args)-
+        Args:
+            titles of books you want to borrow
+        Returns 1 if successful borrowed book by user of books, otherwise returns 0
     * return_book(customer_id, book_id=None, book_title='')-
-        Returns 1 if successful, otherwise returns 0
+        Returns 1 if successful returned book to library, otherwise returns 0
 
 Examples
-    add_customer()
-    update_user()
-    delete_user()
-    borrow_book()
-    return_book()
+    add_customer('Tomasz', 'Nowak', email='emaile@gmail.com', phone_number=4324324,
+                  street='street', city='city', country='country')
+    update_user(203, name='full name', email='em@gmail.com', phone_number=0, street='', city='', country='')
+    delete_user(name='Tomasz Nowak') or delete_user(customer_id=203)
+    borrow_book(203, 'tytul1', 'tytul2', ...)
+    return_book(203, 'tytul1')
 """
 from additionaluserfun import *
 from decorator import decorator
 from additionalfun import find_free_id
+import pandas as pd
 
 
 def delete_user(name='', customer_id=None):
@@ -41,6 +46,8 @@ def delete_user(name='', customer_id=None):
 
     Returns:
         1 if successful, else 0
+    Raises:
+        TypeError: if customer_id is not a number
 
     """
     df = read_csv('Library/customer.csv',
