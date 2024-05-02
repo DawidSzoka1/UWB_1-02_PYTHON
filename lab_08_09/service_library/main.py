@@ -68,9 +68,12 @@ class LibraryApp(tk.Tk):
         self.listbox_borrowed = tk.Listbox(self, width=8, height=25, font=('Arial', 16))
         self.listbox_borrowed.grid(row=1, column=5, columnspan=1, pady=10, sticky="nsew", rowspan=1)
 
-        # self.button_remove = tk.Button(self, text="Remove Book", command=self.remove_book)
-        # self.button_remove.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
-        #
+        self.button_remove = tk.Button(self, text="Remove Book", command=self.delete_book)
+        self.button_remove.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+        self.label_remove_id = tk.Label(self, text="book_id")
+        self.label_remove_id.grid(row=4, column=0, padx=5, pady=5)
+        self.remove_id = tk.Entry(self)
+        self.remove_id.grid(row=5, column=0, padx=5, pady=5)
         self.load_books()
 
     def add_book(self):
@@ -102,7 +105,14 @@ class LibraryApp(tk.Tk):
                 self.listbox_borrowed.insert(tk.END, f'Na stanie')
 
     def delete_book(self):
-        pass
+        try:
+            book_id = int(self.remove_id.get())
+        except ValueError as e:
+            return e
+        rejestbook.delete_book(read_csv, book_id=book_id)
+        self.load_books()
+
+
 
     def edit_book(self):
         pass
