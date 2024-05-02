@@ -101,6 +101,25 @@ class LibraryApp(tk.Tk):
             else:
                 self.listbox_borrowed.insert(tk.END, f'Na stanie')
 
+    def delete_book(self):
+        pass
+
+    def edit_book(self):
+        pass
+
+    def add_customer(self):
+        pass
+
+    def edit_customer(self):
+        pass
+
+    def borrow_books(self):
+        pass
+
+    def return_books(self):
+        pass
+
+
 def main():
     pass
 
