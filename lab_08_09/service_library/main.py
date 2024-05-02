@@ -113,7 +113,14 @@ class LibraryApp(tk.Tk):
         self.load_books()
 
     def edit_book(self):
-        pass
+        try:
+            book_id = int(self.update_id.get())
+            pages = int(self.update_pages.get())
+        except ValueError as e:
+            return e
+        author = self.update_author.get()
+        title = self.update_title.get()
+        rejestbook.update_book(read_csv, book_id, author, title, pages)
 
     def add_customer(self):
         pass
