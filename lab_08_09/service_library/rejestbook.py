@@ -5,15 +5,18 @@ DESCRIPTION
     This module allows the user to add book update book and delete book from csv file
     book info: title, author, pages
 
-    This script doesn't require any packages
+    This script requires pandas to be installed
 
 FUNCTIONS
     This module contains the following functions:
-    * add_book(f(path_to_csv_file, *args), path_to_csv, title, author, pages)-
+    * add_book(f(path_to_csv_file, *args), title, author, pages)-
+        where f(path_to_csv_file, *args) is function to read_csv files using columns that came in args
         Returns 1 if successful, otherwise returns 0
-    * update_book(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
+    * update_book(f(path_to_csv_file, *args), book_id, author='', title_book='', pages=None)-
+        where f(path_to_csv_file, *args) is function to read_csv files using columns that came in args
         Returns 1 if successful, otherwise returns 0
-    * delete_book(f(path_to_csv_file, *args), path_to_csv, book_id=None, title='')-
+    * delete_book(f(path_to_csv_file, *args), book_id=None, title='')-
+        where f(path_to_csv_file, *args) is function to read_csv files using columns that came in args
         Returns 1 if successful, otherwise returns 0
 
 Examples
