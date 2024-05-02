@@ -135,15 +135,16 @@ class LibraryApp(tk.Tk):
         pass
 
     def edit_customer(self):
-        first_name, last_name = self.update_customer_first_name.get(), self.update_customer_last_name.get()
+        customer_id = self.update_customer_id.get()
+        first_name = self.update_customer_first_name.get()
+        last_name= self.update_customer_last_name.get()
         email = self.update_customer_email.get()
         phone_number = self.update_customer_phone.get()
         street = self.update_customer_street.get()
         city = self.update_customer_city.get()
         country = self.update_customer_country.get()
-        customerservice.update_user(f'{first_name} {last_name}',
+        customerservice.update_user(customer_id,f'{first_name} {last_name}',
                                     email, phone_number, street, city, country)
-
 
     def borrow_books(self):
         pass
