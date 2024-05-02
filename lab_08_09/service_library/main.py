@@ -1,6 +1,8 @@
-from customerservice import *
+import customerservice
 import rejestbook
 import tkinter as tk
+from additionalfun import read_csv
+import pandas as pd
 
 
 class LibraryApp(tk.Tk):
@@ -123,10 +125,25 @@ class LibraryApp(tk.Tk):
         rejestbook.update_book(read_csv, book_id, author, title, pages)
 
     def add_customer(self):
+        first_name, last_name = self.add_customer_first_name.get(), self.add_customer_last_name.get()
+        email = self.add_customer_email.get()
+        phone_number = self.add_customer_phone.get()
+        street = self.add_customer_street.get()
+        city = self.add_customer_city.get()
+        country = self.add_customer_country.get()
+        customerservice.add_customer(first_name, last_name, email, phone_number, street, city, country)
         pass
 
     def edit_customer(self):
-        pass
+        first_name, last_name = self.update_customer_first_name.get(), self.update_customer_last_name.get()
+        email = self.update_customer_email.get()
+        phone_number = self.update_customer_phone.get()
+        street = self.update_customer_street.get()
+        city = self.update_customer_city.get()
+        country = self.update_customer_country.get()
+        customerservice.update_user(f'{first_name} {last_name}',
+                                    email, phone_number, street, city, country)
+
 
     def borrow_books(self):
         pass
