@@ -12,7 +12,7 @@ FUNCTIONS
     * add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA',
                  country='NO DATA')-
         Returns 1 if successful added customer to database, otherwise returns 0
-    * update_user(f(path_to_csv_file, *args), path_to_csv, book_id, title, author, pages)-
+    * update_user(customer_id, name='', email='', phone_number=0, street='', city='', country='')-
         Returns 1 if successful updated user info, otherwise returns 0
     * delete_user(name='', customer_id=None)-
         Returns 1 if successful deleted user and user address form database, otherwise returns 0
@@ -20,7 +20,7 @@ FUNCTIONS
         Args:
             titles of books you want to borrow
         Returns 1 if successful borrowed book by user of books, otherwise returns 0
-    * return_book(customer_id, book_id=None, book_title='')-
+    * return_book(customer_id, book_title='')-
         Returns 1 if successful returned book to library, otherwise returns 0
 
 Examples
