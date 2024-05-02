@@ -50,11 +50,11 @@ class LibraryApp(tk.Tk):
         self.label_listbox_borrowed = tk.Label(self, text="BORROWED")
         self.label_listbox_borrowed.grid(row=0, column=5, pady=5, sticky="ew")
 
-        self.listbox_title = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
-        self.listbox_title.grid(row=1, column=0, columnspan=1, pady=10, sticky="nsew", rowspan=1)
-
         self.listbox_author = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
-        self.listbox_author.grid(row=1, column=1, columnspan=1, pady=10, sticky="nsew", rowspan=1)
+        self.listbox_author.grid(row=1, column=0, columnspan=1, pady=10, sticky="nsew", rowspan=1)
+
+        self.listbox_title = tk.Listbox(self, width=10, height=25, font=('Arial', 16))
+        self.listbox_title.grid(row=1, column=1, columnspan=1, pady=10, sticky="nsew", rowspan=1)
 
         self.listbox_pages = tk.Listbox(self, width=5, height=25, font=('Arial', 16))
         self.listbox_pages.grid(row=1, column=2, columnspan=1, pady=10, sticky="nsew", rowspan=1)
@@ -111,8 +111,6 @@ class LibraryApp(tk.Tk):
             return e
         rejestbook.delete_book(read_csv, book_id=book_id)
         self.load_books()
-
-
 
     def edit_book(self):
         pass
