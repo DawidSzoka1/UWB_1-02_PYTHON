@@ -156,7 +156,7 @@ def return_book(customer_id, book_title=''):
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
-                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'BORROWED')
+                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     if type(df_book) is not pd.DataFrame:
         return 0
     try:
@@ -191,7 +191,7 @@ def return_book(customer_id, book_title=''):
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
     df = read_csv('Library/customer.csv',
-                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
     if not df or not df_address:
