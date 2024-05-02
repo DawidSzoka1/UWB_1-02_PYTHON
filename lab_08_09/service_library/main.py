@@ -137,7 +137,7 @@ class LibraryApp(tk.Tk):
     def edit_customer(self):
         customer_id = self.update_customer_id.get()
         first_name = self.update_customer_first_name.get()
-        last_name= self.update_customer_last_name.get()
+        last_name = self.update_customer_last_name.get()
         email = self.update_customer_email.get()
         phone_number = self.update_customer_phone.get()
         street = self.update_customer_street.get()
@@ -147,10 +147,14 @@ class LibraryApp(tk.Tk):
                                     email, phone_number, street, city, country)
 
     def borrow_books(self):
-        pass
+        customer_id = self.borrow_book_id.get()
+        args = self.borrow_book_titles.get()
+        customerservice.borrow_book(customer_id, args)
 
     def return_books(self):
-        pass
+        customer_id = self.return_book_id.get()
+        book_title = self.return_book_title.get()
+        customerservice.return_book(customer_id, book_title)
 
 
 def main():
