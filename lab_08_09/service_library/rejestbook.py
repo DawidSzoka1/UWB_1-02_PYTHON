@@ -20,9 +20,9 @@ FUNCTIONS
         Returns 1 if successful, otherwise returns 0
 
 Examples
-    add_book()
-    update_book()
-    delete_book()
+    add_book(read_csv, 'Author', 'Title', 304)
+    update_book(read_csv, 201, 'new', 'newT', 321)
+    delete_book(read_csv, book_id=201)
 """
 from datetime import date
 import pandas as pd
