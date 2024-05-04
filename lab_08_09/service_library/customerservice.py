@@ -161,17 +161,27 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
 
 
 def borrow_book(customer_id, *args):
+    return_div = {'type': 'error'}
     if not args:
-        return 0
+        return_div['message'] = 'You must provide some book titles'
+        return return_div
     if not check_if_dataset(customer_id):
-        return 0
+        return_div['message'] = 'User does not exist or some error with his dataset file'
+        return return_div
     df_book = read_csv('Library/book.csv',
                        'ID', 'AUTHOR', 'TITLE', 'PAGES', 'BORROWED')
     if type(df_book) is not pd.DataFrame:
-        print('Enter a valid dataframe')
-        return 0
+        return_div['message'] = f'Some error with database: \n {df_book}'
+        return return_div
     borrowed_books_info = list(map(lambda title: borrow_book_function(df_book, customer_id, title), args))
-    return 1 if all(borrowed_books_info) else 0
+    all_success = all(item['type'] == 'success' for item in borrowed_books_info)
+    if not all_success:
+        error_messages = [item['message'] if item['type'] == 'error' else 0 for item in borrowed_books_info]
+        return_div['message'] = f'Some error with borrowing books: {error_messages}'
+        return return_div
+    return_div['type'] = 'success'
+    return_div['message'] = 'All books borrowed'
+    return return_div
 
 
 @decorator
