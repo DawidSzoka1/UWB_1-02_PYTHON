@@ -26,7 +26,7 @@ Examples
 """
 from datetime import date
 import pandas as pd
-from additionalfun import find_free_id
+from additionalfun import find_free_id, read_csv
 
 
 def add_book(read_func, author, title, pages):
@@ -39,9 +39,10 @@ def add_book(read_func, author, title, pages):
         pages(int): number of pages of the book:
 
     Returns:
-        1 if book was successfully added else 0
+        {'type': 'success', 'message': 'Book was successfully added'} if book was successfully added else
+        {'type': 'success', 'message': 'some error info'}
     Raises:
-        ValueError: if index of dataframe is not a number
+        ValueError: if index of dataframe is not a number and if pages is not int
 
     """
     df = read_func('Library/book.csv',
@@ -50,8 +51,6 @@ def add_book(read_func, author, title, pages):
     error = 0
     if type(df) is not pd.DataFrame:
         error = df
-    time = date.today()
-    next_id = find_free_id(df)
     try:
         pages = int(pages)
     except ValueError as e:
@@ -59,6 +58,8 @@ def add_book(read_func, author, title, pages):
     if error:
         return_div['message'] = f'{error}'
         return return_div
+    time = date.today()
+    next_id = find_free_id(df)
     df.loc[next_id] = [author.title(), title.title(), pages, time, time, False]
     return_div['type'] = 'success'
     return_div['message'] = 'Book was successfully added'
@@ -72,41 +73,48 @@ def add_book(read_func, author, title, pages):
 def update_book(read_func, book_id, author='', title_book='', pages=None):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
+    return_div = {'type': 'error'}
+    error = 0
     if type(df) is not pd.DataFrame:
-        return df
+        error = df
     time = date.today()
     if book_id not in df.index:
-        print('Book not found')
-        return 0
-
+        error = 'Book not found'
+    if error:
+        return_div['message'] = f'{error}'
+        return return_div
     author = author.title() if author else df.loc[book_id]['AUTHOR']
     title_book = title_book.title() if title_book else df.loc[book_id]['TITLE']
     pages = pages if pages else df.loc[book_id]['PAGES']
-
     df.loc[book_id] = [author, title_book, pages, df.loc[book_id]['CREATED'], time, df.loc[book_id]['BORROWED']]
     df.to_csv('Library/book.csv')
-    print("Updated book")
-    return 1
+    return_div['type'] = 'success'
+    return_div['message'] = 'Book was updated successfully'
+
+    return return_div
 
 
 def delete_book(read_func, book_id=None, title=''):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
+    return_div = {'type': 'error'}
+    error = 0
 
     if type(df) is not pd.DataFrame:
-        return df
-    if title:
-        if df[df.TITLE == title.title()].empty:
-            return 0
-        df.drop(df[df.TITLE == title].index, inplace=True)
-        df.to_csv('Library/book.csv')
-        print('Successfully deleted book')
-        return 1
-    elif book_id:
-        if book_id not in list(df.index.values):
-            return 0
-        df.drop(book_id, inplace=True)
-        df.to_csv('Library/book.csv')
-        print('Successfully deleted book')
-        return 1
-    return 0
+        error = 1
+        return_div['message'] = f'There was an error with loading database:\n {df}'
+    try:
+        book_id = book_id if book_id else df[df['TITLE'] == title.title()].index[0]
+    except IndexError as e:
+        error = 1
+        return_div['message'] = f'Book with title {title.title()} does not exist'
+    if book_id not in list(df.index.values):
+        error = 1
+        return_div['message'] = f'Book with that id does not exist'
+    if error:
+        return return_div
+    return_div['message'] = 'Book was deleted successfully'
+    return_div['type'] = 'success'
+    df.drop(book_id, inplace=True)
+    df.to_csv('Library/book.csv')
+    return return_div
