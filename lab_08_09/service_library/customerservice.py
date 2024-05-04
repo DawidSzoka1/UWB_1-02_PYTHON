@@ -208,7 +208,8 @@ def return_book(customer_id, book_title=''):
         lines = f.readlines()
 
     for i, line in enumerate(lines):
-        if line.split(',')[2].split(':')[1] == book_title.title() and line.split(',')[5].split(':')[1][:-1].strip() == 'False':
+        if line.split(',')[2].split(':')[1] == book_title.title() and line.split(',')[5].split(':')[1][
+                                                                      :-1].strip() == 'False':
             index = i
             break
     if index is not None:
@@ -228,21 +229,22 @@ def update_user(customer_id, name='', email='', phone_number=0, street='', city=
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
-    if not df or not df_address:
-        return 0
+    return_div = {'type': 'error'}
     if type(df) is not pd.DataFrame or type(df_address) is not pd.DataFrame:
-        print('Please enter a valid dataframe')
-        return 0
-    if customer_id not in df.index:
-        print('User does not exist')
-        return 0
-    elif customer_id not in df_address.index:
-        print('Address does not exist')
-        return 0
+        return_div['message'] = (f'Error while reading dataframe: \n '
+                                 f'{df if type(df) is not pd.DataFrame else df_address}')
+        return return_div
+    if customer_id not in df.index.values:
+        return_div['message'] = f'User with that id was not found'
+        return return_div
+    # to update its look like shit have to be changed
     if update_customer(customer_id, df, name, email, phone_number):
         if update_address(customer_id, df_address, street, city, country):
-            print('Successfully updated')
-            return 1
-        print('Only user was updated')
-        return 1
-    return 0
+            return_div['type'] = 'success'
+            return_div['message'] = f'User info was successfully updated'
+            return return_div
+        return_div['type'] = 'success'
+        return_div['message'] = f'User info was successfully updated'
+        return return_div
+    return_div['message'] = 'Some error occured while updating data'
+    return return_div
