@@ -45,39 +45,45 @@ def delete_user(name='', customer_id=None):
         customer_id(int): The id of the customer:
 
     Returns:
-        1 if successful, else 0
+       {'type': 'success', 'message': 'User was successfully deleted'} if user was successfully deleted else
+        {'type': 'error', 'message': 'some error info'}
     Raises:
         TypeError: if customer_id is not a number
 
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
-    if type(df) is pd.DataFrame:
-        print('Error while loading the csv (customer.csv)')
-        return 0
-    if name:
-        if name.title() not in df['NAME']:
-            print('No customer with that name')
-            return 0
-    else:
-        if customer_id not in df.index:
-            print('No customer with that id')
-            return 0
-    customer_id = customer_id if customer_id else df[df['NAME'] == name.title()].index
+    return_div = {'type': 'error'}
+    if type(df) is not pd.DataFrame:
+        return_div['message'] = f'Error while reading database: \n {df}'
+        return return_div
+    try:
+        customer_id = customer_id if customer_id else df[df['NAME'] == name.title()].index[0]
+    except IndexError:
+        return_div['message'] = f'User with that name does not exist'
+        return return_div
+    if customer_id not in list(df.index.values):
+        return_div['message'] = f'No customer with that id'
+        return return_div
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
+    if type(df_address) is not pd.DataFrame:
+        return_div['message'] = f'Error while reading database: \n {df_address}'
+        return return_div
     try:
         df.drop([customer_id], inplace=True)
         df_address.drop([customer_id], inplace=True)
     except TypeError as e:
-        print('TypeError', e)
-        return 0
+        return_div['message'] = f'Error while deleting user: \n {e}'
+        return return_div
     if df.loc[customer_id].empty:
         df.to_csv('Library/customer.csv')
         df_address.to_csv('Library/address.csv')
-        return 1
-
-    return 0
+        return_div['type'] = 'success'
+        return_div['message'] = 'User was successfully deleted'
+        return return_div
+    return_div['message'] = 'Some unexpected error occurred'
+    return return_div
 
 
 def add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA',
@@ -105,21 +111,27 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
     """
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
+    return_div = {'type': 'error'}
     if type(df) is not pd.DataFrame:
-        print('Error while loading the csv (customer.csv)')
-        return 0
+        return_div['message'] = f'Error while loading the csv (customer.csv): {df}'
+        return return_div
+    try:
+        phone_number = float(phone_number)
+    except ValueError:
+        return_div['message'] = f'phone number must be a number: {phone_number}'
+        return return_div
     time = date.today()
-    if float(phone_number) in df['PHONE'].values:
-        print('Phone number is already taken')
-        return 0
+    if phone_number in df['PHONE'].values:
+        return_div['message'] = 'Phone number is taken already'
+        return return_div
     if email in df['E-MAIL'].values:
-        print('E-mail is already taken')
-        return 0
+        return_div['message'] = 'E-mail is already taken already'
+        return return_div
     df_address = read_csv('Library/address.csv',
                           'ID', 'STREET', 'CITY', 'COUNTRY')
     if type(df_address) is not pd.DataFrame:
-        print('Error while loading the csv (address.csv)')
-        return 0
+        return_div['message'] = f'Error while loading the csv (address.csv): {df}'
+        return return_div
 
     next_id = find_free_id(df)
     name = f'{first_name.title()} {last_name.title()}'
