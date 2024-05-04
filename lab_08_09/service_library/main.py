@@ -1,6 +1,7 @@
 import customerservice
 import rejestbook
 import tkinter as tk
+from tkinter import messagebox
 from additionalfun import read_csv
 import pandas as pd
 
@@ -79,7 +80,11 @@ class LibraryApp(tk.Tk):
         self.load_books()
 
     def add_book(self):
-        rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(), int(self.entry_pages.get()))
+        call_back = rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(), int(self.entry_pages.get()))
+        if call_back['type'] == 'error':
+            messagebox.showerror("Error", call_back['message'])
+        else:
+            messagebox.showinfo("Success", call_back['message'])
         self.load_books()
 
     def load_books(self):
@@ -155,6 +160,9 @@ class LibraryApp(tk.Tk):
         customer_id = self.return_book_id.get()
         book_title = self.return_book_title.get()
         customerservice.return_book(customer_id, book_title)
+
+    def delete_customer(self):
+        pass
 
 
 def main():
