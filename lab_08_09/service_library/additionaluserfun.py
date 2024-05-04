@@ -110,12 +110,12 @@ def borrow_book_function(df_book, customer_id, title):
         pass
     try:
         book_id = df_book[df_book['TITLE'] == title.title()].index[0]
-        book = df_book.loc[book_id]
     except IndexError:
-        return_div['message'] = 'Book not found'
+        return_div['message'] = f'Book not found {title}'
         return return_div
+    book = df_book.loc[book_id]
     if book['BORROWED']:
-        return_div['message'] = 'Book is already borrowed'
+        return_div['message'] = f'Book is already borrowed {book["TITLE"]}'
         return return_div
     df_book.at[book_id, 'BORROWED'] = True
     df_book.to_csv('Library/book.csv')

@@ -176,8 +176,9 @@ def borrow_book(customer_id, *args):
     borrowed_books_info = list(map(lambda title: borrow_book_function(df_book, customer_id, title), args))
     all_success = all(item['type'] == 'success' for item in borrowed_books_info)
     if not all_success:
-        error_messages = [item['message'] if item['type'] == 'error' else 0 for item in borrowed_books_info]
-        return_div['message'] = f'Some error with borrowing books: {error_messages}'
+        error_messages = [item['message'] if item['type'] == 'error' else '' for item in borrowed_books_info]
+        error_messages = list(filter(lambda text: text != '', error_messages))
+        return_div['message'] = f'Some error with borrowing books: {", ".join(error_messages)}'
         return return_div
     return_div['type'] = 'success'
     return_div['message'] = 'All books borrowed'
