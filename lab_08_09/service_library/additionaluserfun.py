@@ -93,9 +93,10 @@ def check_if_dataset(customer_id):
     elif customer_id not in df.index:
         print('No such customer')
         return 0
-    elif not os.path.exists(os.path.join(path, f'{customer_id}.txt')):
-        with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
-            pass
+    elif os.path.exists(os.path.join(path, f'{customer_id}.txt')):
+        return 0
+    with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
+        pass
     return 1
 
 
