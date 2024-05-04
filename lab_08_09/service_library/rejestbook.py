@@ -46,18 +46,27 @@ def add_book(read_func, author, title, pages):
     """
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
-
+    return_div = {'type': 'error'}
+    error = 0
     if type(df) is not pd.DataFrame:
-        return df
+        error = df
     time = date.today()
     next_id = find_free_id(df)
+    try:
+        pages = int(pages)
+    except ValueError as e:
+        error = e
+    if error:
+        return_div['message'] = f'{error}'
+        return return_div
     df.loc[next_id] = [author.title(), title.title(), pages, time, time, False]
-    if not df.loc[next_id].empty:
-        df.to_csv('Library/book.csv')
-        print('Added book to database')
-        return 1
-    print('There was an error')
-    return 0
+    return_div['type'] = 'success'
+    return_div['message'] = 'Book was successfully added'
+    if df.loc[next_id].empty:
+        return_div['type'] = 'error'
+        return_div['message'] = 'some error occured'
+    df.to_csv('Library/book.csv')
+    return return_div
 
 
 def update_book(read_func, book_id, author='', title_book='', pages=None):
