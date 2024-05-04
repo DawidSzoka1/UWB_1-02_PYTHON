@@ -40,7 +40,7 @@ def add_book(read_func, author, title, pages):
 
     Returns:
         {'type': 'success', 'message': 'Book was successfully added'} if book was successfully added else
-        {'type': 'success', 'message': 'some error info'}
+        {'type': 'error', 'message': 'some error info'}
     Raises:
         ValueError: if index of dataframe is not a number and if pages is not int
 
