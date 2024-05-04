@@ -101,18 +101,27 @@ def check_if_dataset(customer_id):
 
 
 def borrow_book_function(df_book, customer_id, title):
+    return_div = {'type': 'error'}
     if type(df_book) is not pd.DataFrame:
-        return 0
+        return_div['message'] = 'df_book is not a DataFrame'
+        return return_div
     path = os.path.join(os.getcwd(), 'DATASET')
-    book_id = df_book[df_book['TITLE'] == title.title()].index[0]
-    book = df_book.loc[book_id]
+    if not os.path.exists(path):
+        pass
+    try:
+        book_id = df_book[df_book['TITLE'] == title.title()].index[0]
+        book = df_book.loc[book_id]
+    except IndexError:
+        return_div['message'] = 'Book not found'
+        return return_div
     if book['BORROWED']:
-        print('Book already borrowed')
-        return 0
+        return_div['message'] = 'Book is already borrowed'
+        return return_div
     df_book.at[book_id, 'BORROWED'] = True
     df_book.to_csv('Library/book.csv')
     with open(os.path.join(path, f'{customer_id}.txt'), 'a') as f:
         f.write(
             f"id:{book_id}, author:{book['AUTHOR']},  title:{book['TITLE']},  "
             f"pages:{book['PAGES']}, borrowed: {date.today()}, returned: False\n")
-    return 1
+    return_div['type'] = 'success'
+    return return_div
