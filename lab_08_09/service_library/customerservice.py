@@ -102,7 +102,8 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         country(str): The country of the customer:
 
     Returns:
-        1 if successful added customer to customer.csv and address to address.csv, else 0
+        {'type': 'success', 'message': 'User was successfully created'} if user was successfully created else
+        {'type': 'error', 'message': some_error_info}
     Exceptions:
         ValueError: If we try to add a customer with an invalid data value of all fields
         TypeError: If we try to add a customer with an invalid data type of all fields
@@ -135,25 +136,28 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
 
     next_id = find_free_id(df)
     name = f'{first_name.title()} {last_name.title()}'
-    create_user_dataset(next_id)
+
     try:
         df_address.loc[next_id] = [street.title(), city.title(), country]
         df.loc[next_id] = [name.title(), email, phone_number, time, time]
     except ValueError as e:
-        print("Value error occurred: ", e)
-        return 0
+        return_div['message'] = f'ValueError: {e}'
+        return return_div
     except TypeError as e:
-        print("Type error occurred: ", e)
-        return 0
+        return_div['message'] = f'TypeError: {e}'
+        return return_div
     except SettingWithCopyWarning as e:
-        print("SettingWithCopyWarning error occurred: ", e)
-        return 0
+        return_div['message'] = f'SettingWithCopyWarning: {e}'
+        return return_div
     except IndexingError as e:
-        print("IndexingErrors error occurred: ", e)
-        return 0
+        return_div['message'] = f'IndexingError: {e}'
+        return return_div
     df.to_csv('Library/customer.csv')
     df_address.to_csv('Library/address.csv')
-    return 1
+    create_user_dataset(next_id)
+    return_div['type'] = 'success'
+    return_div['message'] = 'User was successfully created'
+    return return_div
 
 
 def borrow_book(customer_id, *args):
