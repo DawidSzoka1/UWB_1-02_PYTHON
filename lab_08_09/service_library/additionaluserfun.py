@@ -6,12 +6,13 @@ from pandas.errors import SettingWithCopyWarning, IndexingError
 
 
 def update_address(customer_id, df_address, street='', city='', country=''):
+    return_div = {'type': 'error'}
     if type(df_address) is not pd.DataFrame:
-        print('df_address is not a Pandas DataFrame')
-        return 0
+        return_div['message'] = f'df_address must be a Pandas dataframe not {type(df_address)}'
+        return return_div
     if customer_id not in df_address.index:
-        print('customer_id is not in df_address')
-        return 0
+        return_div['message'] = 'The customer does not exist'
+        return return_div
     address = df_address.loc[customer_id]
     street = street.title() if street else address['STREET']
     city = city.title() if city else address['CITY']
@@ -19,22 +20,28 @@ def update_address(customer_id, df_address, street='', city='', country=''):
     try:
         df_address.loc[customer_id] = [street.title(), city.title(), country]
         df_address.to_csv('Library/address.csv')
-        return 1
+        return_div['type'] = 'success'
+        return_div['message'] = 'Successfully updated address'
+        return return_div
     except ValueError as e:
-        print("Value error occurred: ", e)
-        return 0
+        return_div['message'] = f'Value error while updating address {e}'
     except TypeError as e:
-        print("Type error occurred: ", e)
-        return 0
+        return_div['message'] = f'Type error while updating address {e}'
     except SettingWithCopyWarning as e:
-        print("SettingWithCopyWarning error occurred: ", e)
-        return 0
+        return_div['message'] = f'SettingWithCopyWarning error while updating address {e}'
     except IndexingError as e:
-        print("IndexingErrors error occurred: ", e)
-        return 0
+        return_div['message'] = f'IndexingError error while updating address {e}'
+    return return_div
 
 
 def update_customer(customer_id, df, name='', email='', phone_number=0):
+    return_div = {'type': 'error'}
+    if type(df) is not pd.DataFrame:
+        return_div['message'] = f'df_address must be a Pandas dataframe not {type(df)}'
+        return return_div
+    if customer_id not in df.index.values:
+        return_div['message'] = 'Customer ID does not exist'
+        return return_div
     user = df.loc[customer_id]
     name = name.title() if name else user['NAME']
     email = email if email else user['E-MAIL']
@@ -42,19 +49,18 @@ def update_customer(customer_id, df, name='', email='', phone_number=0):
     try:
         df.loc[customer_id] = [name.title(), email, phone_number, df.loc[customer_id]['CREATE'], date.today()]
         df.to_csv('Library/customer.csv')
-        return 1
+        return_div['type'] = 'success'
+        return_div['message'] = 'Successfully updated user info'
+        return return_div
     except ValueError as e:
-        print("Value error occurred: ", e)
-        return 0
+        return_div['message'] = f'Value error while updating address {e}'
     except TypeError as e:
-        print("Type error occurred: ", e)
-        return 0
+        return_div['message'] = f'Type error while updating address {e}'
     except SettingWithCopyWarning as e:
-        print("SettingWithCopyWarning error occurred: ", e)
-        return 0
+        return_div['message'] = f'SettingWithCopyWarning error while updating address {e}'
     except IndexingError as e:
-        print("IndexingErrors error occurred: ", e)
-        return 0
+        return_div['message'] = f'IndexingError error while updating address {e}'
+    return return_div
 
 
 def create_user_dataset(customer_id):
