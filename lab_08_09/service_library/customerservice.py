@@ -163,7 +163,7 @@ def borrow_book(customer_id, *args):
     if not args:
         return_div['message'] = 'You must provide some book titles'
         return return_div
-    if not check_if_dataset(customer_id):
+    if not check_if_user_dataset(customer_id):
         return_div['message'] = 'User does not exist or some error with his dataset file'
         return return_div
     df_book = read_csv('Library/book.csv',
@@ -187,17 +187,19 @@ def borrow_book(customer_id, *args):
 @decorator
 def return_book(customer_id, book_title=''):
     return_div = {'type': 'error'}
-    if not check_if_dataset(customer_id):
-        return 0
+    dataset = check_if_user_dataset(customer_id)
+    if dataset['type'] == 'error':
+        return dataset
     df_book = read_csv('Library/book.csv',
                        'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     if type(df_book) is not pd.DataFrame:
-        return 0
+        return_div['message'] = f'Error with dataframe: {df_book}'
+        return return_div
     try:
         book_id = df_book[df_book['TITLE'] == book_title.title()].index.values[0]
     except IndexError as e:
-        print('Our library does not have that book title.')
-        return 0
+        return_div['message'] = f'Our library does not have that book title({e}).'
+        return return_div
     if not book_id:
         print('Our library does not have that book title.')
         return 0
