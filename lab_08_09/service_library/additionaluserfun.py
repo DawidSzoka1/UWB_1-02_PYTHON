@@ -108,7 +108,7 @@ def create_user_dataset(customer_id):
     return return_div
 
 
-def check_if_dataset(customer_id):
+def check_if_user_dataset(customer_id):
     return_div = {'type': 'error'}
     if not os.path.exists('DATASET'):
         check = create_dataset()
