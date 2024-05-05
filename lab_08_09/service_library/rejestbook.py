@@ -63,7 +63,7 @@ def add_book(read_func, author, title, pages):
     return_div['message'] = 'Book was successfully added'
     if df.loc[next_id].empty:
         return_div['type'] = 'error'
-        return_div['message'] = 'some error occured'
+        return_div['message'] = 'some error occurred'
     df.to_csv('Library/book.csv')
     return return_div
 

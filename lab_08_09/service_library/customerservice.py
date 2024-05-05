@@ -237,14 +237,17 @@ def update_user(customer_id, name='', email='', phone_number=0, street='', city=
     if customer_id not in df.index.values:
         return_div['message'] = f'User with that id was not found'
         return return_div
-    # to update its look like shit have to be changed
-    if update_customer(customer_id, df, name, email, phone_number):
-        if update_address(customer_id, df_address, street, city, country):
-            return_div['type'] = 'success'
-            return_div['message'] = f'User info was successfully updated'
-            return return_div
+    check_update_user = update_customer(customer_id, df, name, email, phone_number)
+    check_update_address = update_address(customer_id, df_address, street, city, country)
+    if check_update_user['type'] == 'success':
         return_div['type'] = 'success'
-        return_div['message'] = f'User info was successfully updated'
+        return_div['message'] = 'Successfully updated user info'
+        if check_update_address['type'] == 'success':
+            return_div['message'] = 'Successfully updated both user info and user address'
+        return_div['error_address'] = check_update_address['message']
         return return_div
-    return_div['message'] = 'Some error occured while updating data'
+    return_div['message'] = \
+        (f'Some error occurred while updating data: \n'
+         f'{check_update_user["message"] if check_update_user["type"] == "error" else "personal info was updated succesfully"}'
+         f'\n{check_update_address["message"] if check_update_address["type"] == "error" else "address info was updated succesfully"}')
     return return_div
