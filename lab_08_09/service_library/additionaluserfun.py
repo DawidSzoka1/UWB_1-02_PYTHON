@@ -63,21 +63,37 @@ def update_customer(customer_id, df, name='', email='', phone_number=0):
     return return_div
 
 
-def create_user_dataset(customer_id):
-    path = os.path.join(os.getcwd(), 'DATASET')
+def create_dataset():
+    return_div = {'type': 'error'}
     if not os.path.exists('DATASET'):
         try:
-            os.mkdir(path)
+            os.mkdir('DATASET')
+            return_div['type'] = 'success'
+            return_div['message'] = 'Successfully created DATABASE'
+            return return_div
         except PermissionError as e:
-            print('Error ', e)
-            return 0
+            return_div['message'] = f'PermissionError {e}'
         except OSError as e:
-            print('Error ', e)
-            return 0
+            return_div['message'] = f'OSError {e}'
+        return return_div
+    if os.path.isdir('DATASET'):
+        return_div['type'] = 'success'
+        return_div['message'] = 'Dataset already exists'
+        return return_div
+
+
+def create_user_dataset(customer_id):
+    return_div = {'type': 'error'}
+    path = os.path.join(os.getcwd(), 'DATASET')
+    if not os.path.exists('DATASET'):
+        create = create_dataset()
+        if create['type'] == 'error':
+            return create
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     if type(df) is not pd.DataFrame:
-        return 0
+        return_div['message'] = f'error with database: \n {df}'
+        return return_div
     elif customer_id not in df.index:
         print('No such customer')
         return 0
