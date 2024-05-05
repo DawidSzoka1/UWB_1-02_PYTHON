@@ -114,6 +114,7 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         SettingWithCopyWarning: If we are working with copy of a dataframe
         IndexingError: If we try to go the wrong index
     """
+
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     return_div = {'type': 'error'}
@@ -121,15 +122,19 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         return_div['message'] = f'Error while loading the csv (customer.csv): {df}'
         return return_div
     try:
-        phone_number = float(phone_number)
+        if phone_number:
+            phone_number = float(phone_number)
     except ValueError:
         return_div['message'] = f'phone number must be a number: {phone_number}'
         return return_div
+    if f'{first_name.title()} {last_name.title()}' in df['NAME'].values and email == 'NO DATA':
+        return_div['message'] = f'You need to provide email because your first name and last name is taken'
+        return return_div
     time = date.today()
-    if phone_number in df['PHONE'].values:
+    if phone_number in df['PHONE'].values and phone_number:
         return_div['message'] = 'Phone number is taken already'
         return return_div
-    if email in df['E-MAIL'].values:
+    if email in df['E-MAIL'].values and email != 'NO DATA':
         return_div['message'] = 'E-mail is already taken already'
         return return_div
     df_address = read_csv('Library/address.csv',
