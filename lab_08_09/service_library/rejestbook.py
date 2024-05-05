@@ -56,6 +56,9 @@ def add_book(read_func, author, title, pages):
     except ValueError:
         return_div['message'] = 'Pages must be a int'
         return return_div
+    except TypeError:
+        return_div['message'] = 'Pages must be a int'
+        return return_div
     time = date.today()
     next_id = find_free_id(df)
     df.loc[next_id] = [author.title(), title.title(), pages, time, time, False]
@@ -110,3 +113,6 @@ def delete_book(read_func, book_id=None, title=''):
     df.drop(book_id, inplace=True)
     df.to_csv('Library/book.csv')
     return return_div
+
+for i in range(2):
+    print(add_book(read_csv, f'author{i}', f'title{i}', i))

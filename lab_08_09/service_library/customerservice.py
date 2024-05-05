@@ -174,14 +174,22 @@ def borrow_book(customer_id, *args):
     except ValueError:
         return_div['message'] = 'ID must be an integer'
         return return_div
+    except TypeError:
+        return_div['message'] = 'ID must be an integer'
+        return return_div
+    df_customer = read_csv('Library/customer.csv',
+                           'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
+    if customer_id not in df_customer.index.values:
+        return_div['message'] = 'There is no customer with that ID'
+        return return_div
     if not args:
         return_div['message'] = 'You must provide some book titles'
         return return_div
-    if not check_if_user_dataset(customer_id):
-        return_div['message'] = 'User does not exist or some error with his dataset file'
-        return return_div
+    user_dataset = check_if_user_dataset(customer_id)
+    if user_dataset['type'] == 'error':
+        return user_dataset
     df_book = read_csv('Library/book.csv',
-                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'BORROWED')
+                       'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     if type(df_book) is not pd.DataFrame:
         return_div['message'] = f'Some error with database: \n {df_book}'
         return return_div
@@ -191,7 +199,10 @@ def borrow_book(customer_id, *args):
         error_messages = list(filter(lambda text: text != '',
                                      [item['message'] if item['type'] == 'error' else '' for item in
                                       borrowed_books_info]))
-        return_div['message'] = f'Some error with borrowing books: {", ".join(error_messages)}'
+        success = len(args) - len(error_messages)
+        return_div['message'] = (f'Successfully borrowed ({success if success >= 0 else 0}),\n'
+                                 f'Some error with borrowing books({len(error_messages)}):'
+                                 f' {", ".join(error_messages)}')
         return return_div
     return_div['type'] = 'success'
     return_div['message'] = 'All books borrowed'
@@ -201,12 +212,15 @@ def borrow_book(customer_id, *args):
 @decorator
 def return_book(customer_id, book_title=''):
     return_div = {'type': 'error'}
-    dataset = check_if_user_dataset(customer_id)
     try:
         customer_id = int(customer_id)
     except ValueError:
         return_div['message'] = 'ID must be an integer'
         return return_div
+    except TypeError:
+        return_div['message'] = 'ID must be an integer'
+        return return_div
+    dataset = check_if_user_dataset(customer_id)
     if dataset['type'] == 'error':
         return dataset
     df_book = read_csv('Library/book.csv',
@@ -244,6 +258,9 @@ def return_book(customer_id, book_title=''):
         return return_div
     return_div['message'] = 'The book was not found in your database or you already'
     return return_div
+
+
+print(borrow_book(203, 'Title0', 'Title1', 'asdasd'))
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):

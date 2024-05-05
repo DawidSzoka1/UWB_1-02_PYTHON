@@ -120,10 +120,11 @@ def check_if_user_dataset(customer_id):
     if type(df) is not pd.DataFrame:
         return_div['message'] = f'Error with database: \n {df}'
         return return_div
-    elif customer_id not in df.index:
+    elif customer_id not in df.index.values:
         return_div['message'] = 'No such customer'
         return return_div
     elif os.path.exists(os.path.join(path, f'{customer_id}.txt')):
+        return_div['type'] = 'success'
         return_div['message'] = 'File already exists'
         return return_div
     with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
