@@ -231,10 +231,10 @@ def return_book(customer_id, book_title=''):
     try:
         book_id = df_book[df_book['TITLE'] == book_title.title()].index.values[0]
     except IndexError as e:
-        return_div['message'] = f'Our library does not have that book title({e}).'
+        return_div['message'] = f'Our library does not have that book title({book_title}).'
         return return_div
     if not book_id:
-        return_div['message'] = 'Our library does not have that book title.'
+        return_div['message'] = 'Our library does not have that book title({book_title}).'
         return return_div
 
     path = os.path.join(os.getcwd(), 'DATASET')
@@ -254,13 +254,10 @@ def return_book(customer_id, book_title=''):
         df_book.at[book_id, 'BORROWED'] = False
         df_book.to_csv('Library/book.csv')
         return_div['type'] = 'success'
-        return_div['message'] = 'Successfully returned book'
+        return_div['message'] = f'Successfully returned book ({book_title})'
         return return_div
-    return_div['message'] = 'The book was not found in your database or you already'
+    return_div['message'] = f'The book was already returned or you do not borrowed that book ({book_title})'
     return return_div
-
-
-print(borrow_book(203, 'Title0', 'Title1', 'asdasd'))
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):

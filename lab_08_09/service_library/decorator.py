@@ -8,8 +8,12 @@ def decorator(func):
             return_div['message'] = 'All books were successfully returned'
             return return_div
         error_messages = list(filter(lambda text: text != '',
-                                         [item['message'] if item['type'] == 'error' else '' for item in
-                                          check]))
-        return_div['message'] = f'Some error with borrowing books: {", ".join(error_messages)}'
+                                     [item['message'] if item['type'] == 'error' else '' for item in
+                                      check]))
+        success_amount = len(args) - len(error_messages)
+        return_div['message'] = (f'Successfully returned ({success_amount if success_amount >= 0 else 0}),\n'
+                                 f'Some error with returning books({len(error_messages)}):'
+                                 f' {", ".join(error_messages)}')
         return return_div
+
     return wrapper
