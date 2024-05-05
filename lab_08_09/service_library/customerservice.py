@@ -139,9 +139,11 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
     try:
         df_address.loc[next_id] = [street.title(), city.title(), country]
         df.loc[next_id] = [name.title(), email, phone_number, time, time]
+        check_dataset = create_user_dataset(next_id)
+        if check_dataset['type'] == 'error':
+            return check_dataset
         df.to_csv('Library/customer.csv')
         df_address.to_csv('Library/address.csv')
-        create_user_dataset(next_id)
         return_div['type'] = 'success'
         return_div['message'] = 'User was successfully created'
         return return_div
@@ -172,8 +174,9 @@ def borrow_book(customer_id, *args):
     borrowed_books_info = list(map(lambda title: borrow_book_function(df_book, customer_id, title), args))
     all_success = all(item['type'] == 'success' for item in borrowed_books_info)
     if not all_success:
-        error_messages = [item['message'] if item['type'] == 'error' else '' for item in borrowed_books_info]
-        error_messages = list(filter(lambda text: text != '', error_messages))
+        error_messages = list(filter(lambda text: text != '',
+                                     [item['message'] if item['type'] == 'error' else '' for item in
+                                      borrowed_books_info]))
         return_div['message'] = f'Some error with borrowing books: {", ".join(error_messages)}'
         return return_div
     return_div['type'] = 'success'
@@ -183,6 +186,7 @@ def borrow_book(customer_id, *args):
 
 @decorator
 def return_book(customer_id, book_title=''):
+    return_div = {'type': 'error'}
     if not check_if_dataset(customer_id):
         return 0
     df_book = read_csv('Library/book.csv',
