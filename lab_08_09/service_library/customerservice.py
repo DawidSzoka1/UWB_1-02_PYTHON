@@ -52,7 +52,7 @@ def delete_user(name='', customer_id=None):
 
     """
     df = read_csv('Library/customer.csv',
-                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATE', 'UPDATE')
+                  'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     return_div = {'type': 'error'}
     if type(df) is not pd.DataFrame:
         return_div['message'] = f'Error while reading database: \n {df}'
@@ -65,6 +65,7 @@ def delete_user(name='', customer_id=None):
     except ValueError:
         return_div['message'] = f'ID must be int'
         return return_div
+    print(customer_id)
     if customer_id not in list(df.index.values):
         return_div['message'] = f'No customer with that id'
         return return_div
@@ -79,13 +80,13 @@ def delete_user(name='', customer_id=None):
     except TypeError as e:
         return_div['message'] = f'Error while deleting user: \n {e}'
         return return_div
-    if df.loc[customer_id].empty:
-        df.to_csv('Library/customer.csv')
-        df_address.to_csv('Library/address.csv')
-        return_div['type'] = 'success'
-        return_div['message'] = 'User was successfully deleted'
+    except KeyError as e:
+        return_div['message'] = f'Error while deleting user: \n {e}'
         return return_div
-    return_div['message'] = 'Some unexpected error occurred'
+    df.to_csv('Library/customer.csv')
+    df_address.to_csv('Library/address.csv')
+    return_div['type'] = 'success'
+    return_div['message'] = 'User was successfully deleted'
     return return_div
 
 
