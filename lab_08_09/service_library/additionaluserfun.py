@@ -95,37 +95,48 @@ def create_user_dataset(customer_id):
         return_div['message'] = f'error with database: \n {df}'
         return return_div
     elif customer_id not in df.index:
-        print('No such customer')
-        return 0
-    elif os.path.exists(os.path.join(path, f'{customer_id}.txt')):
-        return 1
-    with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
-        pass
-    return 1
+        return_div['message'] = f'No such customer'
+        return return_div
+
+    if not os.path.exists(f'DATASET/{customer_id}.txt'):
+        with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
+            pass
+        return_div['type'] = 'success'
+        return_div['message'] = 'successfully created user dataset file'
+        return return_div
+    return_div['message'] = f'Some wierd error occurred try again later'
+    return return_div
 
 
 def check_if_dataset(customer_id):
+    return_div = {'type': 'error'}
     if not os.path.exists('DATASET'):
-        return create_user_dataset(customer_id)
+        check = create_dataset()
+        if check['type'] == 'error':
+            return check
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     path = os.path.join(os.getcwd(), 'DATASET')
     if type(df) is not pd.DataFrame:
-        return 0
+        return_div['message'] = f'Error with database: \n {df}'
+        return return_div
     elif customer_id not in df.index:
-        print('No such customer')
-        return 0
+        return_div['message'] = 'No such customer'
+        return return_div
     elif os.path.exists(os.path.join(path, f'{customer_id}.txt')):
-        return 0
+        return_div['message'] = 'File already exists'
+        return return_div
     with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
         pass
-    return 1
+    return_div['type'] = 'success'
+    return_div['message'] = 'File created successfully'
+    return return_div
 
 
 def borrow_book_function(df_book, customer_id, title):
     return_div = {'type': 'error'}
     if type(df_book) is not pd.DataFrame:
-        return_div['message'] = 'df_book is not a DataFrame'
+        return_div['message'] = f'df_book is not a pandas DataFrame: {df_book}'
         return return_div
     path = os.path.join(os.getcwd(), 'DATASET')
     if not os.path.exists(path):
