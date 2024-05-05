@@ -48,15 +48,13 @@ def add_book(read_func, author, title, pages):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     return_div = {'type': 'error'}
-    error = 0
     if type(df) is not pd.DataFrame:
-        error = df
+        return_div['message'] = f'Some error with database {df}'
+        return return_div
     try:
         pages = int(pages)
-    except ValueError as e:
-        error = e
-    if error:
-        return_div['message'] = f'{error}'
+    except ValueError:
+        return_div['message'] = 'Pages must be a int'
         return return_div
     time = date.today()
     next_id = find_free_id(df)
@@ -74,14 +72,12 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     return_div = {'type': 'error'}
-    error = 0
     if type(df) is not pd.DataFrame:
-        error = df
+        return_div['message'] = f'Some error with database {df}'
+        return return_div
     time = date.today()
     if book_id not in df.index:
-        error = 'Book not found'
-    if error:
-        return_div['message'] = f'{error}'
+        return_div['message'] = 'Book not found'
         return return_div
     author = author.title() if author else df.loc[book_id]['AUTHOR']
     title_book = title_book.title() if title_book else df.loc[book_id]['TITLE']
@@ -90,7 +86,6 @@ def update_book(read_func, book_id, author='', title_book='', pages=None):
     df.to_csv('Library/book.csv')
     return_div['type'] = 'success'
     return_div['message'] = 'Book was updated successfully'
-
     return return_div
 
 
@@ -98,20 +93,17 @@ def delete_book(read_func, book_id=None, title=''):
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     return_div = {'type': 'error'}
-    error = 0
 
     if type(df) is not pd.DataFrame:
-        error = 1
         return_div['message'] = f'There was an error with loading database:\n {df}'
+        return return_div
     try:
         book_id = book_id if book_id else df[df['TITLE'] == title.title()].index[0]
-    except IndexError as e:
-        error = 1
+    except IndexError:
         return_div['message'] = f'Book with title {title.title()} does not exist'
+        return return_div
     if book_id not in list(df.index.values):
-        error = 1
-        return_div['message'] = f'Book with that id does not exist'
-    if error:
+        return_div['message'] = 'Book with that id does not exist'
         return return_div
     return_div['message'] = 'Book was deleted successfully'
     return_div['type'] = 'success'
