@@ -58,9 +58,12 @@ def delete_user(name='', customer_id=None):
         return_div['message'] = f'Error while reading database: \n {df}'
         return return_div
     try:
-        customer_id = customer_id if customer_id else df[df['NAME'] == name.title()].index[0]
+        customer_id = int(customer_id) if customer_id else df[df['NAME'] == name.title()].index[0]
     except IndexError:
         return_div['message'] = f'User with that name does not exist'
+        return return_div
+    except ValueError:
+        return_div['message'] = f'ID must be int'
         return return_div
     if customer_id not in list(df.index.values):
         return_div['message'] = f'No customer with that id'
@@ -96,7 +99,7 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         first_name(str): First name of the customer:
         last_name(str): Last name of the customer:
         email(str): The email of the customer:
-        phone_number(str): The phone number of the customer:
+        phone_number(float): The phone number of the customer:
         street(str): The street of the customer:
         city(str): The city of the customer:
         country(str): The country of the customer:
@@ -160,6 +163,11 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
 
 def borrow_book(customer_id, *args):
     return_div = {'type': 'error'}
+    try:
+        customer_id = int(customer_id)
+    except ValueError:
+        return_div['message'] = 'ID must be an integer'
+        return return_div
     if not args:
         return_div['message'] = 'You must provide some book titles'
         return return_div
@@ -188,6 +196,11 @@ def borrow_book(customer_id, *args):
 def return_book(customer_id, book_title=''):
     return_div = {'type': 'error'}
     dataset = check_if_user_dataset(customer_id)
+    try:
+        customer_id = int(customer_id)
+    except ValueError:
+        return_div['message'] = 'ID must be an integer'
+        return return_div
     if dataset['type'] == 'error':
         return dataset
     df_book = read_csv('Library/book.csv',
@@ -201,8 +214,8 @@ def return_book(customer_id, book_title=''):
         return_div['message'] = f'Our library does not have that book title({e}).'
         return return_div
     if not book_id:
-        print('Our library does not have that book title.')
-        return 0
+        return_div['message'] = 'Our library does not have that book title.'
+        return return_div
 
     path = os.path.join(os.getcwd(), 'DATASET')
     index = None
@@ -210,8 +223,8 @@ def return_book(customer_id, book_title=''):
         lines = f.readlines()
 
     for i, line in enumerate(lines):
-        if line.split(',')[2].split(':')[1] == book_title.title() and line.split(',')[5].split(':')[1][
-                                                                      :-1].strip() == 'False':
+        if line.split(',')[2].split(':')[1].strip() == book_title.title() and line.split(',')[5].split(':')[1][
+                                                                              :-1].strip() == 'False':
             index = i
             break
     if index is not None:
@@ -220,10 +233,11 @@ def return_book(customer_id, book_title=''):
             file.writelines(lines)
         df_book.at[book_id, 'BORROWED'] = False
         df_book.to_csv('Library/book.csv')
-        print('Successfully returned book')
-        return 1
-    print('The book was not found in your database or you already returned the book')
-    return 0
+        return_div['type'] = 'success'
+        return_div['message'] = 'Successfully returned book'
+        return return_div
+    return_div['message'] = 'The book was not found in your database or you already'
+    return return_div
 
 
 def update_user(customer_id, name='', email='', phone_number=0, street='', city='', country=''):
