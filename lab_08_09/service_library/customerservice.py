@@ -136,27 +136,23 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
 
     next_id = find_free_id(df)
     name = f'{first_name.title()} {last_name.title()}'
-
     try:
         df_address.loc[next_id] = [street.title(), city.title(), country]
         df.loc[next_id] = [name.title(), email, phone_number, time, time]
+        df.to_csv('Library/customer.csv')
+        df_address.to_csv('Library/address.csv')
+        create_user_dataset(next_id)
+        return_div['type'] = 'success'
+        return_div['message'] = 'User was successfully created'
+        return return_div
     except ValueError as e:
         return_div['message'] = f'ValueError: {e}'
-        return return_div
     except TypeError as e:
         return_div['message'] = f'TypeError: {e}'
-        return return_div
     except SettingWithCopyWarning as e:
         return_div['message'] = f'SettingWithCopyWarning: {e}'
-        return return_div
     except IndexingError as e:
         return_div['message'] = f'IndexingError: {e}'
-        return return_div
-    df.to_csv('Library/customer.csv')
-    df_address.to_csv('Library/address.csv')
-    create_user_dataset(next_id)
-    return_div['type'] = 'success'
-    return_div['message'] = 'User was successfully created'
     return return_div
 
 
