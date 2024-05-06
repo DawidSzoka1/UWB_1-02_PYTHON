@@ -113,6 +113,3 @@ def delete_book(read_func, book_id=None, title=''):
     df.drop(book_id, inplace=True)
     df.to_csv('Library/book.csv')
     return return_div
-
-for i in range(2):
-    print(add_book(read_csv, f'author{i}', f'title{i}', i))
