@@ -6,11 +6,15 @@ from additionalfun import read_csv
 import pandas as pd
 
 
-def button_border(on, row, col, y, x=None, color="", bg_color=""):
-    button_border_frame = tk.Frame(on, highlightbackground=color,
-                                   highlightthickness=3, bd=0, bg=bg_color)
-    button_border_frame.grid(row=row, column=col, rowspan=1, padx=x, pady=y)
-    return button_border_frame
+def custom_border(on, row, col, y, x=None, color="", bg_color=""):
+    border = tk.Frame(on, highlightbackground=color,
+                      highlightthickness=3, bd=0, bg=bg_color)
+    border.grid(row=row, column=col, rowspan=1, padx=x, pady=y)
+    return border
+
+
+def change_height_width(object, width, height):
+    pass
 
 
 class LibraryApp(tk.Tk):
@@ -20,7 +24,7 @@ class LibraryApp(tk.Tk):
         self.title("Library Management System")
         self.geometry("1500x1000")
         self.books = []
-
+        self.customer_frame = 0
         self.frame1 = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=990)
         self.frame1.grid(row=0, column=0, sticky="nsew")
         self.frame1.grid_propagate(False)
@@ -31,7 +35,7 @@ class LibraryApp(tk.Tk):
         self.text_label.grid(row=0, column=2, padx=80, pady=(50, 0))
 
         self.books_redirect = tk.Button(
-            button_border(self.frame1, 1, 2, (150, 10), 80, "#CFCFA7", "#08172B"),
+            custom_border(self.frame1, 1, 2, (150, 10), 80, "#CFCFA7", "#08172B"),
             bg="#08172B", width=20,
             text="AVAILABLE BOOKS",
             fg="#CFCFA7",
@@ -40,7 +44,7 @@ class LibraryApp(tk.Tk):
         self.books_redirect.grid(row=0, column=0)
 
         self.borrowed_books_redirect = tk.Button(
-            button_border(self.frame1, 2, 2, 10, 80, "#CFCFA7", "#08172B"),
+            custom_border(self.frame1, 2, 2, 10, 80, "#CFCFA7", "#08172B"),
             bg="#08172B",
             text="BORROWED BOOKS", fg="#CFCFA7",
             width=20,
@@ -49,7 +53,7 @@ class LibraryApp(tk.Tk):
         self.borrowed_books_redirect.grid(row=0, column=0)
 
         self.customer_list_redirect = tk.Button(
-            button_border(self.frame1, 3, 2, 10, 80, "#CFCFA7", "#08172B"),
+            custom_border(self.frame1, 3, 2, 10, 80, "#CFCFA7", "#08172B"),
             bg="#08172B", width=20,
             text="CUSTOMERS LIST",
             fg="#CFCFA7",
@@ -64,27 +68,27 @@ class LibraryApp(tk.Tk):
         self.frame2.grid_columnconfigure(0, weight=1)
 
         self.add_book_redirect = tk.Button(
-            button_border(self.frame2, 0, 0, (100, 10), color="white", bg_color="black"),
+            custom_border(self.frame2, 0, 0, (100, 10), color="white", bg_color="black"),
             text="ADD \nBOOK", width=20, height=5, command=self.add_book,
             background="black", fg="white",
             font=("Georgia pro", 20, "bold"))
         self.add_book_redirect.grid(row=0, column=0)
 
         self.add_user_redirect = tk.Button(
-            button_border(self.frame2, 1, 0, 5, color="white", bg_color="black"),
+            custom_border(self.frame2, 1, 0, 5, color="white", bg_color="black"),
             text="ADD \nUSER", width=20, height=5,
             background="black", fg="white", font=("Georgia pro", 20, "bold")
         )
         self.add_user_redirect.grid(row=0, column=0)
         self.borrow_book_redirect = tk.Button(
-            button_border(self.frame2, 2, 0, 5, color="white", bg_color="black"),
+            custom_border(self.frame2, 2, 0, 5, color="white", bg_color="black"),
             text="BORROW \nBOOK", width=20, height=5,
             background="black", fg="white", font=("Georgia pro", 20, "bold")
         )
         self.borrow_book_redirect.grid(row=0, column=0)
 
         self.return_book_redirect = tk.Button(
-            button_border(self.frame2, 3, 0, 5, color="white", bg_color="black"),
+            custom_border(self.frame2, 3, 0, 5, color="white", bg_color="black"),
             text="RETURN \nBOOK", width=20, height=5,
             background="black", fg="white", font=("Georgia pro", 20, "bold")
         )
@@ -101,17 +105,24 @@ class LibraryApp(tk.Tk):
         self.frame1.configure(height=window_height, width=window_width * 66 / 100)
         self.frame2.configure(height=window_height, width=window_width * 34 / 100)
 
+    def go_to_main_menu(self):
+        self.frame1.grid()
+        self.frame2.grid()
+        self.customer_frame.grid_remove()
+
     def customer_list(self):
         self.frame1.grid_remove()
         self.frame2.grid_remove()
-        customer_frame = tk.Frame(self, bg="#08172B")
-        customer_frame.pack(fill="both", expand=True)
-        white_bar = tk.Frame(customer_frame, bg="white", width=5, height=self.winfo_height())
-        white_bar.pack(fill="y", side="left", padx=30)
+        self.configure(bg="#08172B")
+        self.customer_frame = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=1500)
+        self.customer_frame.grid(row=0, column=0, sticky="nsew")
+
         customer_label = tk.Label(
-            customer_frame, text="CUSTOMER LIST", font=("Georgia pro", 100), bg="#08172B", fg="#CFCFA7"
+            self.customer_frame, text="CUSTOMER LIST", font=("Georgia pro", 100), bg="#08172B", fg="#CFCFA7"
         )
-        customer_label.grid(row=1, column=0, padx=5, pady=5)
+        customer_label.grid(row=0, column=10, padx=80, pady=(100, 0), sticky="nsew")
+        back_button = tk.Button(self.customer_frame, text='BACK', command=self.go_to_main_menu)
+        back_button.grid(row=1, column=2)
 
     def add_book(self):
         call_back = rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(),
