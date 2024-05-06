@@ -62,17 +62,19 @@ class LibraryApp(tk.Tk):
                                            font=("Georgia pro", 20, "bold"))
         self.add_book_redirect.grid(row=0, column=0)
 
-        self.add_user_redirect = tk.Button(button_border(self.frame2, 1, 0,  5, color="white",
+        self.add_user_redirect = tk.Button(button_border(self.frame2, 1, 0, 5, color="white",
                                                          bg_color="black"), text="ADD \nUSER", width=20, height=5,
                                            background="black", fg="white", font=("Georgia pro", 20, "bold"))
         self.add_user_redirect.grid(row=0, column=0)
-        self.borrow_book_redirect = tk.Button(self.frame2, text="BORROW \nBOOK", width=20, height=5,
+        self.borrow_book_redirect = tk.Button(button_border(self.frame2, 2, 0, 5, color="white",
+                                                            bg_color="black"), text="BORROW \nBOOK", width=20, height=5,
                                               background="black", fg="white", font=("Georgia pro", 20, "bold"))
-        self.borrow_book_redirect.grid(row=2, column=0, pady=5)
+        self.borrow_book_redirect.grid(row=0, column=0)
 
-        self.return_book_redirect = tk.Button(self.frame2, text="RETURN \nBOOK", width=20, height=5,
+        self.return_book_redirect = tk.Button(button_border(self.frame2, 3, 0, 5, color="white",
+                                                            bg_color="black"), text="RETURN \nBOOK", width=20, height=5,
                                               background="black", fg="white", font=("Georgia pro", 20, "bold"))
-        self.return_book_redirect.grid(row=3, column=0, pady=5)
+        self.return_book_redirect.grid(row=0, column=0)
 
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
