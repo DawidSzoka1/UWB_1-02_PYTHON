@@ -16,25 +16,29 @@ class LibraryApp(tk.Tk):
 
         self.frame1 = tk.Frame(self, bg="#08172B", width=800, height=1000)
         self.frame1.grid(row=0, column=0, sticky="nsew")
+        self.frame1.grid_propagate(False)
 
-        self.text_label = tk.Label(self.frame1, bg="#08172B", text="LIBRARY", fg="#CFCFA7", font=("Georgia pro", 20))
-        self.text_label.grid(row=0, column=0)
+        self.text_label = tk.Label(self.frame1, bg="#08172B", text="LIBRARY", fg="#CFCFA7", font=("Georgia pro", 70))
+        self.text_label.grid(row=0, column=0, padx=10, pady=10)
+        self.books_button = tk.Button(self.frame1, bg="#08172B", text="AVAILABLE BOOKS", fg="#CFCFA7",
+                                      font=("Georgia pro", 30))
+        self.books_button.grid(row=1, column=0, padx=10)
+
         self.frame2 = tk.Frame(self, bg="black", width=200, height=1000)
         self.frame2.grid(row=0, column=1, rowspan=2, sticky="nsew")
-
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=2)
-        self.bind("<Configure>", self.on_window_resize)
-
+        self.frame2.grid_propagate(False)
+        self.frame2.grid_columnconfigure(0, weight=1)
         self.add_book_button = tk.Button(self.frame2, text="ADD \nBOOK", width=45, height=5, command=self.add_book,
                                          background="black", fg="white", bd=5, relief="raised",
-                                         highlightbackground='white', )
-        self.add_book_button.grid(row=0, column=2, sticky="nsew", padx=50, pady=(200, 10))
+                                         highlightbackground='white')
+        self.add_book_button.grid(row=0, column=0, pady=(150, 10))
 
         self.add_user_button = tk.Button(self.frame2, text="ADD \nUSER", width=45, height=5,
                                          background="black", fg="white")
-        self.add_user_button.grid(row=1, column=2, pady=(10, 200), padx=50)
-
+        self.add_user_button.grid(row=1, column=0, pady=5)
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=2)
+        self.bind("<Configure>", self.on_window_resize)
         # self.load_books()
 
     def on_window_resize(self, event):
