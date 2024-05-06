@@ -14,28 +14,44 @@ class LibraryApp(tk.Tk):
         self.geometry("1500x1000")
         self.books = []
 
-        self.frame1 = tk.Frame(self, bg="#08172B", width=800, height=1000)
+        self.frame1 = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=self.winfo_width() * 66 / 100)
         self.frame1.grid(row=0, column=0, sticky="nsew")
         self.frame1.grid_propagate(False)
 
         self.text_label = tk.Label(self.frame1, bg="#08172B", text="LIBRARY", fg="#CFCFA7", font=("Georgia pro", 70))
-        self.text_label.grid(row=0, column=0, padx=10, pady=10)
-        self.books_button = tk.Button(self.frame1, bg="#08172B", text="AVAILABLE BOOKS", fg="#CFCFA7",
-                                      font=("Georgia pro", 30))
-        self.books_button.grid(row=1, column=0, padx=10)
+        self.text_label.grid(row=0, column=0, padx=10, pady=(50, 0))
+        self.books_redirect = tk.Button(self.frame1, bg="#08172B", text="AVAILABLE BOOKS", fg="#CFCFA7",
+                                        font=("Georgia pro", 30, "bold"))
+        self.books_redirect.grid(row=1, column=0, padx=10, pady=(150, 10))
 
-        self.frame2 = tk.Frame(self, bg="black", width=200, height=1000)
+        self.borrowed_books_redirect = tk.Button(self.frame1, bg="#08172B", text="BORROWED BOOKS", fg="#CFCFA7",
+                                                 font=("Georgia pro", 30, "bold"))
+        self.borrowed_books_redirect.grid(row=2, column=0, padx=10, pady=4)
+
+        self.customer_list_redirect = tk.Button(self.frame1, bg="#08172B", text="CUSTOMERS LIST", fg="#CFCFA7",
+                                                font=("Georgia pro", 30, "bold"))
+        self.customer_list_redirect.grid(row=3, column=0, padx=10, pady=4)
+
+        self.frame2 = tk.Frame(self, bg="black", height=self.winfo_height(), width=self.winfo_width() * 34 / 100)
         self.frame2.grid(row=0, column=1, rowspan=2, sticky="nsew")
         self.frame2.grid_propagate(False)
         self.frame2.grid_columnconfigure(0, weight=1)
-        self.add_book_button = tk.Button(self.frame2, text="ADD \nBOOK", width=20, height=5, command=self.add_book,
-                                         background="black", fg="white", bd=5, relief="raised",
-                                         highlightbackground='white', font=("Georgia pro", 20))
-        self.add_book_button.grid(row=0, column=0, pady=(150, 10))
+        self.add_book_redirect = tk.Button(self.frame2, text="ADD \nBOOK", width=20, height=5, command=self.add_book,
+                                           background="black", fg="white", bd=5, relief="raised",
+                                           highlightbackground='white', font=("Georgia pro", 20, "bold"))
+        self.add_book_redirect.grid(row=0, column=0, pady=(100, 10))
 
-        self.add_user_button = tk.Button(self.frame2, text="ADD \nUSER", width=20, height=5,
-                                         background="black", fg="white", font=("Georgia pro", 20))
-        self.add_user_button.grid(row=1, column=0, pady=5)
+        self.add_user_redirect = tk.Button(self.frame2, text="ADD \nUSER", width=20, height=5,
+                                           background="black", fg="white", font=("Georgia pro", 20, "bold"))
+        self.add_user_redirect.grid(row=1, column=0, pady=5)
+        self.borrow_book_redirect = tk.Button(self.frame2, text="BORROW \nBOOK", width=20, height=5,
+                                              background="black", fg="white", font=("Georgia pro", 20, "bold"))
+        self.borrow_book_redirect.grid(row=2, column=0, pady=5)
+
+        self.return_book_redirect = tk.Button(self.frame2, text="RETURN \nBOOK", width=20, height=5,
+                                              background="black", fg="white", font=("Georgia pro", 20, "bold"))
+        self.return_book_redirect.grid(row=3, column=0, pady=5)
+
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
         self.bind("<Configure>", self.on_window_resize)
@@ -44,11 +60,12 @@ class LibraryApp(tk.Tk):
     def on_window_resize(self, event):
         window_height = self.winfo_height()
         window_width = self.winfo_width()
-        self.frame1.configure(height=window_height, width=window_width*66/100)
-        self.frame2.configure(height=window_height, width=window_width*34/100)
+        self.frame1.configure(height=window_height, width=window_width * 66 / 100)
+        self.frame2.configure(height=window_height, width=window_width * 34 / 100)
 
     def add_book(self):
-        call_back = rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(), int(self.entry_pages.get()))
+        call_back = rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(),
+                                        int(self.entry_pages.get()))
         if call_back['type'] == 'error':
             messagebox.showerror("Error", call_back['message'])
         else:
@@ -116,7 +133,7 @@ class LibraryApp(tk.Tk):
         street = self.update_customer_street.get()
         city = self.update_customer_city.get()
         country = self.update_customer_country.get()
-        customerservice.update_user(customer_id,f'{first_name} {last_name}',
+        customerservice.update_user(customer_id, f'{first_name} {last_name}',
                                     email, phone_number, street, city, country)
 
     def borrow_books(self):
