@@ -113,16 +113,22 @@ class LibraryApp(tk.Tk):
     def customer_list(self):
         self.frame1.grid_remove()
         self.frame2.grid_remove()
-        self.configure(bg="#08172B")
-        self.customer_frame = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=1500)
-        self.customer_frame.grid(row=0, column=0, sticky="nsew")
 
+        self.customer_frame = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=1500)
+        self.customer_frame.pack(fill="both", expand=True)
+        self.customer_frame.grid_propagate(False)
+        self.customer_frame.columnconfigure(0, weight=1)
+
+        white_bar = tk.Frame(self.customer_frame, bg="white", width=5, height=self.winfo_height())
+        white_bar.pack(fill="y", side="left", padx=30)
         customer_label = tk.Label(
             self.customer_frame, text="CUSTOMER LIST", font=("Georgia pro", 100), bg="#08172B", fg="#CFCFA7"
         )
-        customer_label.grid(row=0, column=10, padx=80, pady=(100, 0), sticky="nsew")
-        back_button = tk.Button(self.customer_frame, text='BACK', command=self.go_to_main_menu)
-        back_button.grid(row=1, column=2)
+        customer_label.grid(row=0, column=1, padx=(0, 80), pady=(60, 0))
+        back_button = tk.Button(
+            self.customer_frame, text='<', command=self.go_to_main_menu, height=5, bg="#08172B", fg="#CFCFA7", bd=0
+        )
+        back_button.grid(row=0, column=0, pady=(50, 0))
 
     def add_book(self):
         call_back = rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(),
