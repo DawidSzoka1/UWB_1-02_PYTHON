@@ -6,6 +6,13 @@ from additionalfun import read_csv
 import pandas as pd
 
 
+def button_border(on, row, col, y, x=None, color="", bg_color=""):
+    button_border_frame = tk.Frame(on, highlightbackground=color,
+                                   highlightthickness=3, bd=0, bg=bg_color)
+    button_border_frame.grid(row=row, column=col, rowspan=1, padx=x, pady=y)
+    return button_border_frame
+
+
 class LibraryApp(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -14,36 +21,51 @@ class LibraryApp(tk.Tk):
         self.geometry("1500x1000")
         self.books = []
 
-        self.frame1 = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=self.winfo_width() * 66 / 100)
+        self.frame1 = tk.Frame(self, bg="#08172B", height=self.winfo_height(), width=990)
         self.frame1.grid(row=0, column=0, sticky="nsew")
         self.frame1.grid_propagate(False)
+        self.white_bar = tk.Frame(self.frame1, bg="white", width=5, height=self.winfo_height())
+        self.white_bar.pack(fill="y", side="left", padx=30)
 
-        self.text_label = tk.Label(self.frame1, bg="#08172B", text="LIBRARY", fg="#CFCFA7", font=("Georgia pro", 70))
-        self.text_label.grid(row=0, column=0, padx=10, pady=(50, 0))
-        self.books_redirect = tk.Button(self.frame1, bg="#08172B", text="AVAILABLE BOOKS", fg="#CFCFA7",
+        self.text_label = tk.Label(self.frame1, bg="#08172B", text="LIBRARY", fg="#CFCFA7", font=("Georgia pro", 80))
+        self.text_label.grid(row=0, column=2, padx=80, pady=(50, 0))
+
+        self.books_redirect = tk.Button(button_border(self.frame1, 1, 2, (150, 10), 80, "#CFCFA7", "#08172B"),
+                                        bg="#08172B", width=20,
+                                        text="AVAILABLE BOOKS",
+                                        fg="#CFCFA7",
                                         font=("Georgia pro", 30, "bold"))
-        self.books_redirect.grid(row=1, column=0, padx=10, pady=(150, 10))
+        self.books_redirect.grid(row=0, column=0)
 
-        self.borrowed_books_redirect = tk.Button(self.frame1, bg="#08172B", text="BORROWED BOOKS", fg="#CFCFA7",
+        self.borrowed_books_redirect = tk.Button(button_border(self.frame1, 2, 2, 10, 80, "#CFCFA7", "#08172B"),
+                                                 bg="#08172B",
+                                                 text="BORROWED BOOKS", fg="#CFCFA7",
+                                                 width=20,
                                                  font=("Georgia pro", 30, "bold"))
-        self.borrowed_books_redirect.grid(row=2, column=0, padx=10, pady=4)
+        self.borrowed_books_redirect.grid(row=0, column=0)
 
-        self.customer_list_redirect = tk.Button(self.frame1, bg="#08172B", text="CUSTOMERS LIST", fg="#CFCFA7",
+        self.customer_list_redirect = tk.Button(button_border(self.frame1, 3, 2, 10, 80, "#CFCFA7", "#08172B"),
+                                                bg="#08172B", width=20,
+                                                text="CUSTOMERS LIST",
+                                                fg="#CFCFA7",
                                                 font=("Georgia pro", 30, "bold"))
-        self.customer_list_redirect.grid(row=3, column=0, padx=10, pady=4)
+        self.customer_list_redirect.grid(row=0, column=0)
 
-        self.frame2 = tk.Frame(self, bg="black", height=self.winfo_height(), width=self.winfo_width() * 34 / 100)
+        self.frame2 = tk.Frame(self, bg="black", height=self.winfo_height(), width=510)
         self.frame2.grid(row=0, column=1, rowspan=2, sticky="nsew")
         self.frame2.grid_propagate(False)
         self.frame2.grid_columnconfigure(0, weight=1)
-        self.add_book_redirect = tk.Button(self.frame2, text="ADD \nBOOK", width=20, height=5, command=self.add_book,
-                                           background="black", fg="white", bd=5, relief="raised",
-                                           highlightbackground='white', font=("Georgia pro", 20, "bold"))
-        self.add_book_redirect.grid(row=0, column=0, pady=(100, 10))
+        self.add_book_redirect = tk.Button(button_border(self.frame2, 0, 0, (100, 10), color="white",
+                                                         bg_color="black"),
+                                           text="ADD \nBOOK", width=20, height=5, command=self.add_book,
+                                           background="black", fg="white",
+                                           font=("Georgia pro", 20, "bold"))
+        self.add_book_redirect.grid(row=0, column=0)
 
-        self.add_user_redirect = tk.Button(self.frame2, text="ADD \nUSER", width=20, height=5,
+        self.add_user_redirect = tk.Button(button_border(self.frame2, 1, 0,  5, color="white",
+                                                         bg_color="black"), text="ADD \nUSER", width=20, height=5,
                                            background="black", fg="white", font=("Georgia pro", 20, "bold"))
-        self.add_user_redirect.grid(row=1, column=0, pady=5)
+        self.add_user_redirect.grid(row=0, column=0)
         self.borrow_book_redirect = tk.Button(self.frame2, text="BORROW \nBOOK", width=20, height=5,
                                               background="black", fg="white", font=("Georgia pro", 20, "bold"))
         self.borrow_book_redirect.grid(row=2, column=0, pady=5)
