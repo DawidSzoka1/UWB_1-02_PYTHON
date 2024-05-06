@@ -28,13 +28,13 @@ class LibraryApp(tk.Tk):
         self.frame2.grid(row=0, column=1, rowspan=2, sticky="nsew")
         self.frame2.grid_propagate(False)
         self.frame2.grid_columnconfigure(0, weight=1)
-        self.add_book_button = tk.Button(self.frame2, text="ADD \nBOOK", width=45, height=5, command=self.add_book,
+        self.add_book_button = tk.Button(self.frame2, text="ADD \nBOOK", width=20, height=5, command=self.add_book,
                                          background="black", fg="white", bd=5, relief="raised",
-                                         highlightbackground='white')
+                                         highlightbackground='white', font=("Georgia pro", 20))
         self.add_book_button.grid(row=0, column=0, pady=(150, 10))
 
-        self.add_user_button = tk.Button(self.frame2, text="ADD \nUSER", width=45, height=5,
-                                         background="black", fg="white")
+        self.add_user_button = tk.Button(self.frame2, text="ADD \nUSER", width=20, height=5,
+                                         background="black", fg="white", font=("Georgia pro", 20))
         self.add_user_button.grid(row=1, column=0, pady=5)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=2)
