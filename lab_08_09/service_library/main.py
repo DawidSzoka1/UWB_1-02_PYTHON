@@ -53,7 +53,8 @@ class LibraryApp(tk.Tk):
             bg="#08172B", width=20,
             text="CUSTOMERS LIST",
             fg="#CFCFA7",
-            font=("Georgia pro", 30, "bold")
+            font=("Georgia pro", 30, "bold"),
+            command=self.customer_list
         )
         self.customer_list_redirect.grid(row=0, column=0)
 
@@ -99,6 +100,18 @@ class LibraryApp(tk.Tk):
         window_width = self.winfo_width()
         self.frame1.configure(height=window_height, width=window_width * 66 / 100)
         self.frame2.configure(height=window_height, width=window_width * 34 / 100)
+
+    def customer_list(self):
+        self.frame1.grid_remove()
+        self.frame2.grid_remove()
+        customer_frame = tk.Frame(self, bg="#08172B")
+        customer_frame.pack(fill="both", expand=True)
+        white_bar = tk.Frame(customer_frame, bg="white", width=5, height=self.winfo_height())
+        white_bar.pack(fill="y", side="left", padx=30)
+        customer_label = tk.Label(
+            customer_frame, text="CUSTOMER LIST", font=("Georgia pro", 100), bg="#08172B", fg="#CFCFA7"
+        )
+        customer_label.grid(row=1, column=0, padx=5, pady=5)
 
     def add_book(self):
         call_back = rejestbook.add_book(read_csv, self.entry_author.get(), self.entry_title.get(),
@@ -188,9 +201,8 @@ class LibraryApp(tk.Tk):
 
 
 def main():
-    pass
+    return LibraryApp()
 
 
 if __name__ == '__main__':
-    LibraryApp().mainloop()
-    main()
+    main().mainloop()
