@@ -2,7 +2,7 @@ import customerservice
 import rejestbook
 import tkinter as tk
 from tkinter import messagebox
-from additionalfun import read_csv
+from lab_08_09.service_library.additionalfun import read_csv
 import pandas as pd
 
 
@@ -228,4 +228,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main().mainloop()
+    app = main()
+    app.mainloop()
