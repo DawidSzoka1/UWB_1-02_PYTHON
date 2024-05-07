@@ -14,24 +14,30 @@ class Application(tk.Frame):
         self.main_frame = self
         self.main_frame.pack(fill=tk.BOTH, expand=True)
         self.main_frame.columnconfigure(0, weight=1)
+        self.main_frame.columnconfigure(1, weight=2)
         self.main_frame.rowconfigure(0, weight=1)
 
         self.load_main_widgets()
 
     def load_main_widgets(self):
+        self.create_frame_actions()
         self.create_frame_list()
         self.create_pager()
 
     def create_frame_list(self):
-        frame_list = tk.Frame(self.main_frame, background=self.bg_color_1)
+        frame_list = tk.Frame(self.main_frame, background=self.bg_color_1, width=1000)
         frame_list.columnconfigure(0, weight=1)
         frame_list.rowconfigure(0, weight=1)
         frame_list.grid(row=0, column=0, sticky='nsew')
-        text_container = tk.Label(frame_list, text="Hello World!", background=self.font_color_1)
-        text_container.grid(row=0, column=0)
+        frame_list.grid_propagate(False)
+        white_bar = tk.Frame(frame_list, bg="white", width=5, height=self.winfo_height())
+        white_bar.pack(fill="y", side="left", padx=30)
 
     def create_frame_actions(self):
-        pass
+        frame_actions = tk.Frame(self.main_frame, background=self.bg_color_2, width=500)
+        frame_actions.columnconfigure(1, weight=1)
+        frame_actions.rowconfigure(1, weight=1)
+        frame_actions.grid(row=0, column=1, sticky='nsew')
 
     def create_pager(self):
         pass
