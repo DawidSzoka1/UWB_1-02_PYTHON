@@ -71,29 +71,38 @@ class AvailableBooks(tk.Frame):
     def tabel_info(self):
         df = get_available_books()
         for index, book in df.iterrows():
+            author_border = border_func(self.frame, 3, 0, y=10, color=self.parent.font_color_1,
+                                        bg_color=self.parent.bg_color_1, sticky_type='nsew')
+            author_border.grid_rowconfigure(0, weight=1)
+            author_border.grid_columnconfigure(0, weight=1)
             author = tk.Label(
-                border_func(self.frame, 3, 0, color=self.parent.font_color_1,
-                            bg_color=self.parent.bg_color_1, sticky_type='nsew'),
+                author_border,
                 text=f'{book["AUTHOR"]}',
                 bg=self.parent.bg_color_1,
                 fg=self.parent.font_color_1,
-                anchor="center",
-                justify="center"
             )
-            author.grid(row=3, column=0, sticky='nsew', padx=5, pady=5)
+            author.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            title_border = border_func(self.frame, 3, 1, y=10, color=self.parent.font_color_1,
+                                       bg_color=self.parent.bg_color_1, sticky_type='nsew')
+            title_border.grid_rowconfigure(0, weight=1)
+            title_border.grid_columnconfigure(0, weight=1)
             title = tk.Label(
-                self.frame,
+                title_border,
                 text=f'{book["TITLE"]}',
                 pady=50,
                 bg=self.parent.bg_color_1,
                 fg=self.parent.font_color_1
             )
-            title.grid(row=3, column=1, sticky='nsew')
+            title.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
+            pages_border = border_func(self.frame, 3, 2, y=10, color=self.parent.font_color_1,
+                                       bg_color=self.parent.bg_color_1, sticky_type='nsew')
+            pages_border.grid_rowconfigure(0, weight=1)
+            pages_border.grid_columnconfigure(0, weight=1)
             pages = tk.Label(
-                self.frame,
+                pages_border,
                 text=f'{book["PAGES"]}',
                 pady=50,
                 bg=self.parent.bg_color_1,
                 fg=self.parent.font_color_1
             )
-            pages.grid(row=3, column=2, sticky='nsew')
+            pages.grid(row=0, column=0, sticky='nsew',  padx=10, pady=10)
