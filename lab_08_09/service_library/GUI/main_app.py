@@ -1,5 +1,6 @@
 import tkinter as tk
 from lab_08_09.service_library.GUI.custom_border import border_func
+from lab_08_09.service_library.GUI.available_books import AvailableBooks
 
 
 class Application(tk.Frame):
@@ -9,14 +10,28 @@ class Application(tk.Frame):
         self.font_color_1 = '#CFCFA7'
         self.font_color_2 = 'white'
         self.font_style = "Georgia pro"
+        self.pages = [Application, AvailableBooks]
+        self.current_page = 0
 
         super().__init__(root, bg=self.bg_color_1)
 
         self.main_frame = self
         self.main_frame.pack(fill=tk.BOTH, expand=True)
         self.main_frame.columnconfigure(0, weight=1)
-        self.main_frame.columnconfigure(1, weight=2)
-        self.load_main_widgets()
+        if self.current_page == 0:
+            self.load_main_widgets()
+
+    def show_frame(self, page):
+        if page != 0:
+            frame = self.pages[page](self.main_frame)
+            frame.grid(row=0, column=0, sticky='nsew')
+            frame.columnconfigure(0, weight=1)
+            frame.tkraise()
+        else:
+            frame = self.pages[0]()
+            frame.grid(row=0, column=0, sticky='nsew')
+            frame.columnconfigure(0, weight=1)
+            frame.tkraise()
 
     def load_main_widgets(self):
         self.create_frame_list()
@@ -50,6 +65,7 @@ class Application(tk.Frame):
             border_func(self.frame_list, 1, 2, (150, 10), (0, 300), self.font_color_1, self.bg_color_1),
             bg="#08172B", width=20,
             text="AVAILABLE BOOKS",
+            command=lambda: self.show_frame(page=1),
             fg=self.font_color_1,
             font=(self.font_style, 30, "bold")
         )
@@ -58,7 +74,9 @@ class Application(tk.Frame):
         self.borrowed_books_redirect = tk.Button(
             border_func(self.frame_list, 2, 2, 10, (0, 300), self.font_color_1, self.bg_color_1),
             bg="#08172B",
-            text="BORROWED BOOKS", fg=self.font_color_1,
+            text="BORROWED BOOKS",
+            fg=self.font_color_1,
+            command=lambda: self.show_frame(page=2),
             width=20,
             font=(self.font_style, 30, "bold")
         )
@@ -66,9 +84,11 @@ class Application(tk.Frame):
 
         self.customer_list_redirect = tk.Button(
             border_func(self.frame_list, 3, 2, (10, 150), (0, 300), self.font_color_1, self.bg_color_1),
-            bg="#08172B", width=20,
+            bg="#08172B",
+            width=20,
             text="CUSTOMERS LIST",
             fg=self.font_color_1,
+            command=lambda: self.show_frame(page=3),
             font=(self.font_style, 30, "bold"),
         )
         self.customer_list_redirect.grid(row=3, column=0)
@@ -78,7 +98,7 @@ class Application(tk.Frame):
             self.main_frame,
             background=self.bg_color_2,
             width=500,
-            height=self.main_frame.winfo_height())
+            height=1000)
         self.frame_actions.grid_columnconfigure(1, weight=1)
         self.frame_actions.grid(row=0, column=1, sticky='nsew')
         self.frame_actions.grid_propagate(False)
