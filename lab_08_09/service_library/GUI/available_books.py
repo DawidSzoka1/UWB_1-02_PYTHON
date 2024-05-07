@@ -71,7 +71,7 @@ class AvailableBooks(tk.Frame):
     def tabel_info(self):
         df = get_available_books()
         for index, book in df.iterrows():
-            author_border = border_func(self.frame, 3, 0, y=10, color=self.parent.font_color_1,
+            author_border = border_func(self.frame, 3+index, 0, y=10, color=self.parent.font_color_1,
                                         bg_color=self.parent.bg_color_1, sticky_type='nsew')
             author_border.grid_rowconfigure(0, weight=1)
             author_border.grid_columnconfigure(0, weight=1)
@@ -82,7 +82,7 @@ class AvailableBooks(tk.Frame):
                 fg=self.parent.font_color_1,
             )
             author.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
-            title_border = border_func(self.frame, 3, 1, y=10, color=self.parent.font_color_1,
+            title_border = border_func(self.frame, 3+index, 1, y=10, color=self.parent.font_color_1,
                                        bg_color=self.parent.bg_color_1, sticky_type='nsew')
             title_border.grid_rowconfigure(0, weight=1)
             title_border.grid_columnconfigure(0, weight=1)
@@ -94,7 +94,7 @@ class AvailableBooks(tk.Frame):
                 fg=self.parent.font_color_1
             )
             title.grid(row=0, column=0, sticky='nsew', padx=10, pady=10)
-            pages_border = border_func(self.frame, 3, 2, y=10, color=self.parent.font_color_1,
+            pages_border = border_func(self.frame, 3+index, 2, y=10, color=self.parent.font_color_1,
                                        bg_color=self.parent.bg_color_1, sticky_type='nsew')
             pages_border.grid_rowconfigure(0, weight=1)
             pages_border.grid_columnconfigure(0, weight=1)
