@@ -1,5 +1,5 @@
 import tkinter as tk
-from custom_border import border_func
+from lab_08_09.service_library.GUI.custom_border import border_func
 
 
 class Application(tk.Frame):
@@ -127,8 +127,3 @@ class Application(tk.Frame):
         )
         self.return_book_redirect.grid(row=0, column=0)
 
-
-root = tk.Tk()
-root.geometry('1500x1000')
-app = Application(root)
-root.mainloop()
