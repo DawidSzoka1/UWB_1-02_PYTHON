@@ -22,6 +22,5 @@ class Application(tk.Frame):
     def show_frame(self, page):
         frame = self.pages[page](self.main_frame)
         frame.grid(row=0, column=0, sticky='nsew')
-        frame.columnconfigure(0, weight=1)
         frame.tkraise()
 
