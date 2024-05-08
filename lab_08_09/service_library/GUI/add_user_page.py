@@ -47,54 +47,54 @@ class AddUserPage(tk.Frame):
     def create_entry(self):
         self.name_entry = tk.Entry(self.entry_frame,
                                    bg=self.parent.bg_color_1,
-                                   font=(self.parent.font_style, 50),
+                                   font=(self.parent.font_style, 40),
                                    insertbackground='white'
                                    )
-        self.name_entry.grid(row=1, column=0, sticky='nsew')
+        self.name_entry.grid(row=1, column=0, sticky='nsew', padx=20, pady=5)
         self.name_entry.config(fg=self.parent.font_color_1)
 
         self.mail_entry = tk.Entry(self.entry_frame,
                                    bg=self.parent.bg_color_1,
-                                   font=(self.parent.font_style, 50),
+                                   font=(self.parent.font_style, 40),
                                    insertbackground='white'
                                    )
-        self.mail_entry.grid(row=2, column=0, sticky='nsew')
+        self.mail_entry.grid(row=3, column=0, sticky='nsew', padx=20, pady=5)
         self.mail_entry.config(fg=self.parent.font_color_1)
 
         self.phone_entry = tk.Entry(self.entry_frame,
                                     bg=self.parent.bg_color_1,
-                                    font=(self.parent.font_style, 50),
+                                    font=(self.parent.font_style, 40),
                                     insertbackground='white',
                                     )
 
-        self.phone_entry.grid(row=5, column=0, sticky='nsew')
+        self.phone_entry.grid(row=5, column=0, sticky='nsew', padx=20, pady=5)
         self.phone_entry.config(fg=self.parent.font_color_1)
 
         self.street_entry = tk.Entry(self.entry_frame,
                                      bg=self.parent.bg_color_1,
-                                     font=(self.parent.font_style, 50),
+                                     font=(self.parent.font_style, 40),
                                      insertbackground='white',
                                      )
 
-        self.street_entry.grid(row=6, column=0, sticky='nsew')
+        self.street_entry.grid(row=7, column=0, sticky='nsew', padx=20, pady=5)
         self.street_entry.config(fg=self.parent.font_color_1)
 
         self.city_entry = tk.Entry(self.entry_frame,
                                    bg=self.parent.bg_color_1,
-                                   font=(self.parent.font_style, 50),
+                                   font=(self.parent.font_style, 40),
                                    insertbackground='white',
                                    )
 
-        self.city_entry.grid(row=7, column=0, sticky='nsew')
+        self.city_entry.grid(row=9, column=0, sticky='nsew', padx=20, pady=5)
         self.city_entry.config(fg=self.parent.font_color_1)
 
         self.country_entry = tk.Entry(self.entry_frame,
                                       bg=self.parent.bg_color_1,
-                                      font=(self.parent.font_style, 50),
+                                      font=(self.parent.font_style, 40),
                                       insertbackground='white',
                                       )
 
-        self.country_entry.grid(row=8, column=0, sticky='nsew')
+        self.country_entry.grid(row=11, column=0, sticky='nsew', padx=20, pady=5)
         self.country_entry.config(fg=self.parent.font_color_1)
 
     def create_label(self):
@@ -106,7 +106,59 @@ class AddUserPage(tk.Frame):
             font=(self.parent.font_style, 80)
         )
         self.main_label.grid(row=0, column=1, sticky="nsew")
+        self.name_label = tk.Label(
+            self.entry_frame,
+            text="NAME",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.name_label.grid(row=0, column=0, sticky='nsew', padx=(0, 80))
 
+        self.mail_label = tk.Label(
+            self.entry_frame,
+            text="E-MAIL",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.mail_label.grid(row=2, column=0, sticky='nsew', padx=(0, 80))
+
+        self.phone_label = tk.Label(
+            self.entry_frame,
+            text="PHONE",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.phone_label.grid(row=4, column=0, sticky='nsew', padx=(0, 80))
+
+        self.street_label = tk.Label(
+            self.entry_frame,
+            text="STREET",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.street_label.grid(row=6, column=0, sticky='nsew', padx=(0, 80))
+
+        self.city_label = tk.Label(
+            self.entry_frame,
+            text="CITY",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.city_label.grid(row=8, column=0, sticky='nsew', padx=(0, 80))
+
+        self.country_label = tk.Label(
+            self.entry_frame,
+            text="COUNTRY",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.country_label.grid(row=10, column=0, sticky='nsew', padx=(0, 80))
 
     def create_send_button(self):
         self.send_frame.rowconfigure(0, weight=1)
@@ -116,8 +168,14 @@ class AddUserPage(tk.Frame):
             width=15,
             height=4,
             text="ADD",
-            command=lambda: use_backend_func(add_customer, self.author_entry.get(), self.title_entry.get(),
-                                             self.pages_entry.get()),
+            command=lambda: use_backend_func(add_customer,
+                                             self.name_entry.get(),
+                                             self.mail_entry.get(),
+                                             self.phone_entry.get(),
+                                             self.street_entry.get(),
+                                             self.city_entry.get(),
+                                             self.country_entry.get()
+                                             ),
             fg=self.parent.font_color_2,
             font=(self.parent.font_style, 20, "bold")
         )
