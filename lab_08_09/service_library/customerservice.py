@@ -35,6 +35,7 @@ from additionaluserfun import *
 from decorator import decorator
 from lab_08_09.service_library.additionalfun import find_free_id
 import pandas as pd
+from datetime import datetime
 
 
 def delete_user(name='', customer_id=None):
@@ -241,10 +242,15 @@ def return_book(customer_id, book_title=''):
     index = None
     with open(os.path.join(path, f'{customer_id}.txt'), 'r') as f:
         lines = f.readlines()
-
+    late = False
     for i, line in enumerate(lines):
-        if line.split(',')[2].split(':')[1].strip() == book_title.title() and line.split(',')[5].split(':')[1][
-                                                                              :-1].strip() == 'False':
+        if book_title.title() in line and 'False' in line:
+            deadline = datetime.strptime(line.split(',')[-1].split(':')[1], '%Y-%m-%d')
+            if deadline > date.today():
+                late_days = deadline - date.today()
+                late = True
+                return_div['message'] = (f'Your deadline to return the book was {late_days},'
+                                         f' you have to pay {late_days * 10}')
             index = i
             break
     if index is not None:
@@ -253,6 +259,8 @@ def return_book(customer_id, book_title=''):
             file.writelines(lines)
         df_book.at[book_id, 'BORROWED'] = False
         df_book.to_csv('Library/book.csv')
+        if late:
+            return return_div
         return_div['type'] = 'success'
         return_div['message'] = f'Successfully returned book ({book_title})'
         return return_div
