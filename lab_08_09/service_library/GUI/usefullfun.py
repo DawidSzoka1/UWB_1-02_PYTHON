@@ -32,3 +32,15 @@ def label_tabel(object, text, bg_color, font_color, font, row, column, sticky_ty
     )
     author_label.grid(row=row, column=column, sticky=sticky_type)
     return author_label
+
+
+def tabel_rows(object, text, bg_color, font_color, font, row_p, column_p, sticky_type="", x=0, y=0):
+    row = tk.Label(
+        object,
+        text=text,
+        bg=bg_color,
+        fg=font_color,
+        font=font
+    )
+    row.grid(row=row_p, column=column_p, sticky=sticky_type, padx=x, pady=y)
+    return row
