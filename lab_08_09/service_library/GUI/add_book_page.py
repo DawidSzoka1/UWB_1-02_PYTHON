@@ -53,7 +53,6 @@ class AddBookPage(tk.Frame):
         self.create_send_button()
 
     def create_entry_fields(self):
-        fields = ['AUTHOR', 'TITLE', 'PAGES']
         self.author_entry = tk.Entry(self.entry_frame,
                                      bg=self.parent.bg_color_1,
                                      font=(self.parent.font_style, 50),
