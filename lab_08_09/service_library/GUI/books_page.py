@@ -1,6 +1,7 @@
 import tkinter as tk
 from lab_08_09.service_library.GUI.custom_border import border_func
 from lab_08_09.service_library.get_books import get_books
+from lab_08_09.service_library.GUI.back_to_main_page_button import back_to_home_page
 
 
 class Books(tk.Frame):
@@ -36,24 +37,12 @@ class Books(tk.Frame):
             height=900
         )
         self.frame_tabel.grid(row=1, column=0, sticky='nsew')
-        self.back_to_home_page()
+        back_to_home_page(self.frame_label, self.parent.show_frame, self.parent.font_color_1)
         self.tabel_label()
         self.tabel_info()
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         self.columnconfigure(0, weight=1)
-
-    def back_to_home_page(self):
-        self.button_back = tk.Button(
-            self.frame_label,
-            bd=0,
-            bg="#08172B", width=10,
-            text="<",
-            command=lambda: self.parent.show_frame(page=0),
-            fg=self.parent.font_color_1,
-            font=("Georgia pro", 30)
-        )
-        self.button_back.grid(row=0, column=0)
 
     def tabel_label(self):
         df = get_books(self.borrowed)
