@@ -1,5 +1,5 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.custom_border import border_func
+from lab_08_09.service_library.GUI.usefullfun import border_func
 
 
 class MainPage(tk.Frame):
@@ -88,7 +88,9 @@ class MainPage(tk.Frame):
             height=5,
             background=self.parent.bg_color_2,
             fg=self.parent.font_color_2,
-            font=(self.parent.font_style, 20, "bold"))
+            font=(self.parent.font_style, 20, "bold"),
+            command=lambda: self.parent.show_frame(4)
+        )
         self.add_book_redirect.grid(row=0, column=0)
 
         self.add_user_redirect = tk.Button(
