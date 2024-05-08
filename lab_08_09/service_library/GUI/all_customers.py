@@ -1,5 +1,5 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel, tabel_full, border_func
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel, tabel_full
 from lab_08_09.service_library.get_df_for_pages import get_customers
 
 

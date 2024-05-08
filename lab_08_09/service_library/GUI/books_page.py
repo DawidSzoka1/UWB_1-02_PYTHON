@@ -1,7 +1,6 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import border_func, tabel_full
 from lab_08_09.service_library.get_df_for_pages import get_books
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel, tabel_rows
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel, tabel_full
 
 
 class Books(tk.Frame):
@@ -37,12 +36,15 @@ class Books(tk.Frame):
             height=900
         )
         self.frame_tabel.grid(row=1, column=0, sticky='nsew')
-        back_to_home_page(self.frame_label, self.parent.show_frame, self.parent.font_color_1)
-        self.tabel_label()
-        self.tabel_info()
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=8)
         self.columnconfigure(0, weight=1)
+        self.show_widgets()
+
+    def show_widgets(self):
+        back_to_home_page(self.frame_label, self.parent.show_frame, self.parent.font_color_1)
+        self.tabel_label()
+        self.tabel_info()
 
     def tabel_label(self):
         self.frame_tabel.columnconfigure(0, weight=1)
