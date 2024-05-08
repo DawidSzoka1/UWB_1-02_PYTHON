@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 
 def border_func(on, row, col, y=0, x=0, color="", bg_color="", sticky_type=""):
@@ -65,3 +66,18 @@ def tabel_full(df, fields, object, bg_color, font_color, font, row_p, column_p, 
                 x,
                 y
             )
+
+
+def show_message(type, title, message):
+    if type == 'info':
+        tk.messagebox.showinfo(title, message)
+    else:
+        tk.messagebox.showwarning(title, message)
+
+
+def use_backend_func(func, *args):
+    check = func(*args)
+    if check['type'] == 'success':
+        messagebox.showinfo('Success', f'{check["message"]}')
+    else:
+        messagebox.showerror('ERROR', f'{check["message"]}')

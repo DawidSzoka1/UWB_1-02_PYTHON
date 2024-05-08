@@ -1,6 +1,7 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page
-from lab_08_09.service_library.additionalfun import validate_int
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func, use_backend_func
+from lab_08_09.service_library.additionalfun import validate_int, read_csv
+from lab_08_09.service_library.rejestbook import add_book
 
 
 class AddBookPage(tk.Frame):
@@ -54,10 +55,10 @@ class AddBookPage(tk.Frame):
     def create_entry_fields(self):
         fields = ['AUTHOR', 'TITLE', 'PAGES']
         self.author_entry = tk.Entry(self.entry_frame,
-                                    bg=self.parent.bg_color_1,
-                                    font=(self.parent.font_style, 50),
-                                    insertbackground='white'
-                                    )
+                                     bg=self.parent.bg_color_1,
+                                     font=(self.parent.font_style, 50),
+                                     insertbackground='white'
+                                     )
         self.author_entry.grid(row=1, column=0, sticky='nsew')
         self.author_entry.config(fg=self.parent.font_color_1)
         self.author_label = tk.Label(
@@ -105,4 +106,15 @@ class AddBookPage(tk.Frame):
         self.pages_label.grid(row=4, column=0, sticky='nsew', padx=(0, 80))
 
     def create_send_button(self):
-        pass
+        self.send_frame.rowconfigure(0, weight=1)
+        self.send_backend = tk.Button(
+            border_func(self.send_frame, 0, 2, (10, 150),  (40, 0), self.parent.font_color_2, self.parent.bg_color_2),
+            bg=self.parent.bg_color_2,
+            width=15,
+            height=4,
+            text="ADD",
+            command=lambda: use_backend_func(add_book, read_csv, self.author_entry.get(), self.title_entry.get(), self.pages_entry.get()),
+            fg=self.parent.font_color_2,
+            font=(self.parent.font_style, 20, "bold")
+        )
+        self.send_backend.grid(row=0, column=0)

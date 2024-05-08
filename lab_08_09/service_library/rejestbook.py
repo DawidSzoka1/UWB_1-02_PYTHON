@@ -45,6 +45,8 @@ def add_book(read_func, author, title, pages):
         ValueError: if index of dataframe is not a number and if pages is not int
 
     """
+    if not pages or not author or not title:
+        return {'type': 'error', 'message': 'All fields are required'}
     df = read_func('Library/book.csv',
                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED', 'BORROWED')
     return_div = {'type': 'error'}

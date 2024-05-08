@@ -34,7 +34,6 @@ def validate_int(text, from_where='page'):
         if text.isdigit() or text == "":
             return True
         else:
-            messagebox.showerror("ERROR", "Pages must be number")
             return False
     return_dict = {'type': 'error'}
     try:
