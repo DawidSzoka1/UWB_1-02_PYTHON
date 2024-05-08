@@ -66,6 +66,9 @@ def delete_user(name='', customer_id=None):
     except ValueError:
         return_div['message'] = f'ID must be int'
         return return_div
+    except TypeError:
+        return_div['message'] = f'ID must be int'
+        return return_div
     print(customer_id)
     if customer_id not in list(df.index.values):
         return_div['message'] = f'No customer with that id'
@@ -91,15 +94,14 @@ def delete_user(name='', customer_id=None):
     return return_div
 
 
-def add_customer(first_name, last_name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA',
+def add_customer(name, email='NO DATA', phone_number=None, street='NO DATA', city='NO DATA',
                  country='NO DATA'):
     """
     Function to add a customer to an existing csv file (customer.csv) with
     first name, last name , email ,phone number, data of created and updated customer
 
     Args:
-        first_name(str): First name of the customer:
-        last_name(str): Last name of the customer:
+        name(str): name of the customer:
         email(str): The email of the customer:
         phone_number(float): The phone number of the customer:
         street(str): The street of the customer:
@@ -115,7 +117,8 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         SettingWithCopyWarning: If we are working with copy of a dataframe
         IndexingError: If we try to go the wrong index
     """
-
+    if name == '':
+        return {'type': 'error', 'message': 'Name cannot be empty'}
     df = read_csv('Library/customer.csv',
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     return_div = {'type': 'error'}
@@ -128,7 +131,7 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
     except ValueError:
         return_div['message'] = f'phone number must be a number: {phone_number}'
         return return_div
-    if f'{first_name.title()} {last_name.title()}' in df['NAME'].values and email == 'NO DATA':
+    if f'{name.title()}' in df['NAME'].values and (email == 'NO DATA' or email == ''):
         return_div['message'] = f'You need to provide email because your first name and last name is taken'
         return return_div
     time = date.today()
@@ -145,15 +148,15 @@ def add_customer(first_name, last_name, email='NO DATA', phone_number=None, stre
         return return_div
 
     next_id = find_free_id(df)
-    name = f'{first_name.title()} {last_name.title()}'
     try:
         df_address.loc[next_id] = [street.title(), city.title(), country]
         df.loc[next_id] = [name.title(), email, phone_number, time, time]
-        check_dataset = create_user_dataset(next_id)
-        if check_dataset['type'] == 'error':
-            return check_dataset
         df.to_csv('Library/customer.csv')
         df_address.to_csv('Library/address.csv')
+        check_dataset = create_user_dataset(next_id)
+        if check_dataset['type'] == 'error':
+            delete_user(next_id)
+            return check_dataset
         return_div['type'] = 'success'
         return_div['message'] = 'User was successfully created'
         return return_div
