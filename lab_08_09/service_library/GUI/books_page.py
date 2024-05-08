@@ -1,7 +1,7 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.custom_border import border_func
-from lab_08_09.service_library.get_books import get_books
-from lab_08_09.service_library.GUI.back_to_main_page_button import back_to_home_page
+from lab_08_09.service_library.GUI.usefullfun import border_func
+from lab_08_09.service_library.get_df_for_pages import get_books
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel
 
 
 class Books(tk.Frame):
@@ -41,39 +41,25 @@ class Books(tk.Frame):
         self.tabel_label()
         self.tabel_info()
         self.rowconfigure(0, weight=1)
-        self.rowconfigure(1, weight=1)
+        self.rowconfigure(1, weight=8)
         self.columnconfigure(0, weight=1)
 
     def tabel_label(self):
-        df = get_books(self.borrowed)
-        self.frame_label.columnconfigure(0, weight=1)
-        self.frame_label.columnconfigure(1, weight=1)
-        self.frame_label.columnconfigure(2, weight=1)
-        self.author_label = tk.Label(
-            self.frame_tabel,
-            text='AUTHOR',
-            bg=self.parent.bg_color_2,
-            fg=self.parent.font_color_2,
-            font=(self.parent.font_style, 20)
-        )
-        self.author_label.grid(row=0, column=0, sticky='nsew')
-        self.title_label = tk.Label(
-            self.frame_tabel,
-            text='TITLE',
-            bg=self.parent.bg_color_2,
-            fg=self.parent.font_color_2,
-            font=(self.parent.font_style, 20)
-
-        )
-        self.title_label.grid(row=0, column=1, sticky='nsew')
-        self.pages_label = tk.Label(
-            self.frame_tabel,
-            text='PAGES',
-            bg=self.parent.bg_color_2,
-            fg=self.parent.font_color_2,
-            font=(self.parent.font_style, 20)
-        )
-        self.pages_label.grid(row=0, column=2, sticky='nsew')
+        self.frame_tabel.columnconfigure(0, weight=1)
+        self.frame_tabel.columnconfigure(1, weight=1)
+        self.frame_tabel.columnconfigure(2, weight=1)
+        label_text = ['AUTHOR', 'TITLE', 'PAGES']
+        for i, label in enumerate(label_text):
+            label_tabel(
+                self.frame_tabel,
+                label,
+                self.parent.bg_color_2,
+                self.parent.font_color_2,
+                (self.parent.font_style, 20),
+                0,
+                i,
+                'nsew'
+            )
 
     def tabel_info(self):
         df = get_books(self.borrowed)
