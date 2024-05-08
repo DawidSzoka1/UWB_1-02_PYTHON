@@ -1,5 +1,6 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page
+from lab_08_09.service_library.additionalfun import validate_int
 
 
 class AddBookPage(tk.Frame):
@@ -51,23 +52,57 @@ class AddBookPage(tk.Frame):
         self.create_send_button()
 
     def create_entry_fields(self):
-        border = border_func(
+        fields = ['AUTHOR', 'TITLE', 'PAGES']
+        self.author_entry = tk.Entry(self.entry_frame,
+                                    bg=self.parent.bg_color_1,
+                                    font=(self.parent.font_style, 50),
+                                    insertbackground='white'
+                                    )
+        self.author_entry.grid(row=1, column=0, sticky='nsew')
+        self.author_entry.config(fg=self.parent.font_color_1)
+        self.author_label = tk.Label(
             self.entry_frame,
-            0,
-            0,
-            color=self.parent.bg_color_1,
-            bg_color=self.parent.font_color_1,
-            sticky_type='nsew'
-        )
-        self.title_entry = tk.Entry(border, bg=self.parent.bg_color_1, font=(self.parent.font_style, 20))
-        self.title_entry.grid(row=0, column=0, sticky='nsew')
-        self.title_entry.config(fg=self.parent.font_color_1)
-        self.title_label = tk.Label(
-            self.title_entry,
-            text="TITLE",
+            text="AUTHOR",
             bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
             font=(self.parent.font_style, 30)
         )
+        self.author_label.grid(row=0, column=0, sticky='nsew', padx=(0, 80))
+
+        self.title_entry = tk.Entry(self.entry_frame,
+                                    bg=self.parent.bg_color_1,
+                                    font=(self.parent.font_style, 50),
+                                    insertbackground='white'
+                                    )
+        self.title_entry.grid(row=3, column=0, sticky='nsew')
+        self.title_entry.config(fg=self.parent.font_color_1)
+        self.title_label = tk.Label(
+            self.entry_frame,
+            text="TITLE",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.title_label.grid(row=2, column=0, sticky='nsew', padx=(0, 80))
+
+        validate_pages = self.register(validate_int)
+        self.pages_entry = tk.Entry(self.entry_frame,
+                                    bg=self.parent.bg_color_1,
+                                    font=(self.parent.font_style, 50),
+                                    insertbackground='white',
+                                    validate='key',
+                                    validatecommand=(validate_pages, '%P')
+                                    )
+        self.pages_entry.grid(row=5, column=0, sticky='nsew')
+        self.pages_entry.config(fg=self.parent.font_color_1)
+        self.pages_label = tk.Label(
+            self.entry_frame,
+            text="PAGES",
+            bg=self.parent.bg_color_1,
+            fg=self.parent.font_color_1,
+            font=(self.parent.font_style, 30)
+        )
+        self.pages_label.grid(row=4, column=0, sticky='nsew', padx=(0, 80))
 
     def create_send_button(self):
         pass
