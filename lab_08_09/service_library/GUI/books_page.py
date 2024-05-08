@@ -1,5 +1,5 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import border_func
+from lab_08_09.service_library.GUI.usefullfun import border_func, tabel_full
 from lab_08_09.service_library.get_df_for_pages import get_books
 from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel, tabel_rows
 
@@ -64,21 +64,16 @@ class Books(tk.Frame):
     def tabel_info(self):
         df = get_books(self.borrowed)
         label_text = ['AUTHOR', 'TITLE', 'PAGES']
-        for index, book in df.iterrows():
-            for i, label in enumerate(label_text):
-                border = border_func(self.frame_tabel, 1 + index, i, y=10, color=self.parent.font_color_1,
-                                     bg_color=self.parent.bg_color_1, sticky_type='nsew')
-                border.grid_rowconfigure(0, weight=1)
-                border.grid_columnconfigure(0, weight=1)
-                tabel_rows(
-                    border,
-                    f'{book[label]}',
-                    self.parent.bg_color_1,
-                    self.parent.font_color_1,
-                    (self.parent.font_style, 20),
-                    0,
-                    0,
-                    'nsew',
-                    10,
-                    10
-                )
+        tabel_full(
+            df,
+            label_text,
+            self.frame_tabel,
+            self.parent.bg_color_1,
+            self.parent.font_color_1,
+            (self.parent.font_style, 20),
+            0,
+            0,
+            'nsew',
+            10,
+            10,
+        )

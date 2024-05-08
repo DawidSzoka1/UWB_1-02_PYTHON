@@ -44,3 +44,24 @@ def tabel_rows(object, text, bg_color, font_color, font, row_p, column_p, sticky
     )
     row.grid(row=row_p, column=column_p, sticky=sticky_type, padx=x, pady=y)
     return row
+
+
+def tabel_full(df, fields, object, bg_color, font_color, font, row_p, column_p, sticky_type="", x=0, y=0, start_row=0, end_row=0):
+    for index, data_series in df.iterrows():
+        for i, label in enumerate(fields):
+            border = border_func(object, 1 + index, start_row+i, y=10, color=font_color,
+                                 bg_color=bg_color, sticky_type='nsew')
+            border.grid_rowconfigure(0, weight=1)
+            border.grid_columnconfigure(0, weight=1)
+            tabel_rows(
+                border,
+                f'{data_series[label]}',
+                bg_color,
+                font_color,
+                font,
+                row_p,
+                column_p,
+                sticky_type,
+                x,
+                y
+            )

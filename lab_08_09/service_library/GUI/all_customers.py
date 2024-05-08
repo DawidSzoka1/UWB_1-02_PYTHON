@@ -1,5 +1,5 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, label_tabel, tabel_full, border_func
 from lab_08_09.service_library.get_df_for_pages import get_customers
 
 
@@ -36,6 +36,7 @@ class Customers(tk.Frame):
         self.rowconfigure(1, weight=8)
         self.columnconfigure(0, weight=1)
         self.create_tabel_label()
+        self.create_rows_tabel()
 
     def create_tabel_label(self):
         self.frame_tabel.columnconfigure(0, weight=1)
@@ -44,7 +45,7 @@ class Customers(tk.Frame):
         self.frame_tabel.columnconfigure(3, weight=1)
         self.frame_tabel.columnconfigure(4, weight=1)
         self.frame_tabel.columnconfigure(5, weight=1)
-        label_text = ['FULL NAME', 'E-MAIL', 'PHONE', 'ADDRESS', 'CITY', 'COUNTRY']
+        label_text = ['NAME', 'E-MAIL', 'PHONE', 'STREET', 'CITY', 'COUNTRY']
         for i, label in enumerate(label_text):
             label_tabel(
                 self.frame_tabel,
@@ -55,4 +56,22 @@ class Customers(tk.Frame):
                 0,
                 i,
                 'nsew'
+            )
+
+    def create_rows_tabel(self):
+        text = [['NAME', 'E-MAIL', 'PHONE'], ['STREET', 'CITY', 'COUNTRY']]
+        for index, df in enumerate(get_customers()):
+            tabel_full(
+                df,
+                text[index],
+                self.frame_tabel,
+                self.parent.bg_color_1,
+                self.parent.font_color_1,
+                (self.parent.font_style, 20),
+                0,
+                0,
+                'nsew',
+                10,
+                10,
+                start_row=index*3
             )
