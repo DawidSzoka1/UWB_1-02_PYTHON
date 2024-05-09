@@ -109,7 +109,7 @@ def create_user_dataset(customer_id):
 
 
 def check_if_user_dataset(customer_id):
-    return_div = {'type': 'error'}
+    return_dict = {'type': 'error'}
     if not os.path.exists('DATASET'):
         check = create_dataset()
         if check['type'] == 'error':
@@ -118,20 +118,20 @@ def check_if_user_dataset(customer_id):
                   'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED')
     path = os.path.join(os.getcwd(), 'DATASET')
     if type(df) is not pd.DataFrame:
-        return_div['message'] = f'Error with database: \n {df}'
-        return return_div
+        return_dict['message'] = f'Error with database: \n {df}'
+        return return_dict
     elif customer_id not in df.index.values:
-        return_div['message'] = 'No such customer'
-        return return_div
+        return_dict['message'] = 'No such customer'
+        return return_dict
     elif os.path.exists(os.path.join(path, f'{customer_id}.txt')):
-        return_div['type'] = 'success'
-        return_div['message'] = 'File already exists'
-        return return_div
+        return_dict['type'] = 'success'
+        return_dict['message'] = 'File already exists'
+        return return_dict
     with open(os.path.join(path, f'{customer_id}.txt'), 'w') as f:
         pass
-    return_div['type'] = 'success'
-    return_div['message'] = 'File created successfully'
-    return return_div
+    return_dict['type'] = 'success'
+    return_dict['message'] = 'File created successfully'
+    return return_dict
 
 
 def borrow_book_function(df_book, customer_id, title):

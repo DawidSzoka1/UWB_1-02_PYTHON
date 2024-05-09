@@ -7,6 +7,8 @@ class MainPage(tk.Frame):
         super().__init__(parent)
         self.parent = parent
         self.load_main_widgets()
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
 
     def load_main_widgets(self):
         self.create_frame_list()
