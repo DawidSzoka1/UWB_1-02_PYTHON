@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func, use_backend_func
+from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func, use_backend_func, \
+    check_user_to_id_and_backend
 from lab_08_09.service_library.customerservice import borrow_book
 from lab_08_09.service_library.get_df_for_pages import get_customers
 
@@ -82,6 +83,7 @@ class BorrowBookPage(tk.Frame):
             insertbackground='white'
         )
         self.user_entry.grid(row=1, column=0, sticky='nsew')
+        self.user_entry.config(fg=self.parent.font_color_1)
 
         self.books_entry = tk.Entry(
             self.entry_frame,
@@ -90,21 +92,23 @@ class BorrowBookPage(tk.Frame):
             insertbackground='white'
         )
         self.books_entry.grid(row=3, column=0, sticky='nsew')
+        self.books_entry.config(fg=self.parent.font_color_1)
 
     def create_send_button(self):
-
         df, _ = get_customers()
 
         self.send_frame.rowconfigure(0, weight=1)
+
         self.send_backend = tk.Button(
             border_func(self.send_frame, 0, 2, (10, 150), (40, 0), self.parent.font_color_2, self.parent.bg_color_2),
             bg=self.parent.bg_color_2,
             width=15,
             height=4,
-            text="ADD",
-            command=lambda: use_backend_func(
+            text="BORROW",
+            command=lambda: check_user_to_id_and_backend(
+                self.user_entry.get(),
+                df,
                 borrow_book,
-                df[df['NAME'] == self.user_entry.get()].index.values[0],
                 *self.books_entry.get().split(',')
             ),
             fg=self.parent.font_color_2,
