@@ -25,7 +25,7 @@ class Books(tk.Frame):
             bg="#08172B",
             text=label_text,
             fg="#CFCFA7",
-            font=("Georgia pro", 70)
+            font=(self.parent.font_style, 70)
 
         )
         self.label.grid(row=0, column=1, sticky='nsew', pady=20, padx=(0, 200))

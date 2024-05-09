@@ -13,7 +13,7 @@ class Application(tk.Frame):
         self.bg_color_2 = 'black'
         self.font_color_1 = '#CFCFA7'
         self.font_color_2 = 'white'
-        self.font_style = "Georgia pro"
+        self.font_style = "Georgia pro Regular"
         self.pages = [MainPage, Books, Books, Customers, AddBookPage, AddUserPage, BorrowBookPage]
 
         super().__init__(root, bg=self.bg_color_1)
