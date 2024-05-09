@@ -47,10 +47,11 @@ def tabel_rows(object, text, bg_color, font_color, font, row_p, column_p, sticky
     return row
 
 
-def tabel_full(df, fields, object, bg_color, font_color, font, row_p, column_p, sticky_type="", x=0, y=0, start_row=0, end_row=0):
+def tabel_full(df, fields, object, bg_color, font_color, font, row_p, column_p, sticky_type="", x=0, y=0, start_row=0,
+               end_row=0):
     for index, data_series in df.iterrows():
         for i, label in enumerate(fields):
-            border = border_func(object, 1 + index, start_row+i, y=10, color=font_color,
+            border = border_func(object, 1 + index, start_row + i, y=10, color=font_color,
                                  bg_color=bg_color, sticky_type='nsew')
             border.grid_rowconfigure(0, weight=1)
             border.grid_columnconfigure(0, weight=1)
@@ -81,3 +82,15 @@ def use_backend_func(func, *args):
         messagebox.showinfo('Success', f'{check["message"]}')
     else:
         messagebox.showerror('ERROR', f'{check["message"]}')
+
+
+def check_user_to_id_and_backend(name, df, func, *args):
+    if name == '' or len(args) == 0:
+        messagebox.showinfo('info', 'All fields are required.')
+    else:
+        try:
+            get_id = df[df["NAME"] == name.title()].index.values[0]
+        except IndexError:
+            messagebox.showerror('ERROR', f'{name.title()} we dont have that user')
+        else:
+            use_backend_func(func, get_id, *args)
