@@ -45,54 +45,60 @@ class AddUserPage(tk.Frame):
         self.create_entry()
 
     def create_entry(self):
-        self.name_entry = tk.Entry(self.entry_frame,
-                                   bg=self.parent.bg_color_1,
-                                   font=(self.parent.font_style, 40),
-                                   insertbackground='white'
-                                   )
+        self.name_entry = tk.Entry(
+            self.entry_frame,
+            bg=self.parent.bg_color_1,
+            font=(self.parent.font_style, 40),
+            insertbackground='white'
+        )
         self.name_entry.grid(row=1, column=0, sticky='nsew', padx=20, pady=5)
         self.name_entry.config(fg=self.parent.font_color_1)
 
-        self.mail_entry = tk.Entry(self.entry_frame,
-                                   bg=self.parent.bg_color_1,
-                                   font=(self.parent.font_style, 40),
-                                   insertbackground='white'
-                                   )
+        self.mail_entry = tk.Entry(
+            self.entry_frame,
+            bg=self.parent.bg_color_1,
+            font=(self.parent.font_style, 40),
+            insertbackground='white'
+        )
         self.mail_entry.grid(row=3, column=0, sticky='nsew', padx=20, pady=5)
         self.mail_entry.config(fg=self.parent.font_color_1)
 
-        self.phone_entry = tk.Entry(self.entry_frame,
-                                    bg=self.parent.bg_color_1,
-                                    font=(self.parent.font_style, 40),
-                                    insertbackground='white',
-                                    )
+        self.phone_entry = tk.Entry(
+            self.entry_frame,
+            bg=self.parent.bg_color_1,
+            font=(self.parent.font_style, 40),
+            insertbackground='white',
+        )
 
         self.phone_entry.grid(row=5, column=0, sticky='nsew', padx=20, pady=5)
         self.phone_entry.config(fg=self.parent.font_color_1)
 
-        self.street_entry = tk.Entry(self.entry_frame,
-                                     bg=self.parent.bg_color_1,
-                                     font=(self.parent.font_style, 40),
-                                     insertbackground='white',
-                                     )
+        self.street_entry = tk.Entry(
+            self.entry_frame,
+            bg=self.parent.bg_color_1,
+            font=(self.parent.font_style, 40),
+            insertbackground='white',
+        )
 
         self.street_entry.grid(row=7, column=0, sticky='nsew', padx=20, pady=5)
         self.street_entry.config(fg=self.parent.font_color_1)
 
-        self.city_entry = tk.Entry(self.entry_frame,
-                                   bg=self.parent.bg_color_1,
-                                   font=(self.parent.font_style, 40),
-                                   insertbackground='white',
-                                   )
+        self.city_entry = tk.Entry(
+            self.entry_frame,
+            bg=self.parent.bg_color_1,
+            font=(self.parent.font_style, 40),
+            insertbackground='white',
+        )
 
         self.city_entry.grid(row=9, column=0, sticky='nsew', padx=20, pady=5)
         self.city_entry.config(fg=self.parent.font_color_1)
 
-        self.country_entry = tk.Entry(self.entry_frame,
-                                      bg=self.parent.bg_color_1,
-                                      font=(self.parent.font_style, 40),
-                                      insertbackground='white',
-                                      )
+        self.country_entry = tk.Entry(
+            self.entry_frame,
+            bg=self.parent.bg_color_1,
+            font=(self.parent.font_style, 40),
+            insertbackground='white',
+        )
 
         self.country_entry.grid(row=11, column=0, sticky='nsew', padx=20, pady=5)
         self.country_entry.config(fg=self.parent.font_color_1)
