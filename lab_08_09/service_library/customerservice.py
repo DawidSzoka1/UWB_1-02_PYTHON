@@ -234,7 +234,7 @@ def return_book(customer_id, book_title=''):
         return return_div
     try:
         book_id = df_book[df_book['TITLE'] == book_title.title()].index.values[0]
-    except IndexError as e:
+    except IndexError:
         return_div['message'] = f'Our library does not have that book title({book_title}).'
         return return_div
     if not book_id:
@@ -248,12 +248,12 @@ def return_book(customer_id, book_title=''):
     late = False
     for i, line in enumerate(lines):
         if book_title.title() in line and 'False' in line:
-            deadline = datetime.strptime(line.split(',')[-1].split(':')[1], '%Y-%m-%d')
-            if deadline > date.today():
+            deadline = datetime.strptime(line.split(',')[-1].split(':')[1][:-1].strip(), '%Y-%m-%d').date()
+            if deadline < date.today():
                 late_days = deadline - date.today()
-                late = True
-                return_div['message'] = (f'Your deadline to return the book was {late_days},'
-                                         f' you have to pay {late_days * 10}')
+                return_div['message'] = (f'Your deadline to return the book was {late_days} ago,'
+                                         f' you have to pay {late_days * 10} zl')
+                return return_div
             index = i
             break
     if index is not None:
@@ -262,8 +262,6 @@ def return_book(customer_id, book_title=''):
             file.writelines(lines)
         df_book.at[book_id, 'BORROWED'] = False
         df_book.to_csv('Library/book.csv')
-        if late:
-            return return_div
         return_div['type'] = 'success'
         return_div['message'] = f'Successfully returned book ({book_title})'
         return return_div
