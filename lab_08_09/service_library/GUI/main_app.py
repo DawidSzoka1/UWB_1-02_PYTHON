@@ -5,7 +5,7 @@ from lab_08_09.service_library.GUI.all_customers import Customers
 from lab_08_09.service_library.GUI.add_book_page import AddBookPage
 from lab_08_09.service_library.GUI.add_user_page import AddUserPage
 from lab_08_09.service_library.GUI.borrow_book_page import BorrowBookPage
-from lab_08_09.service_library.GUI.return_book import ReturnBook
+from lab_08_09.service_library.GUI.return_book_page import ReturnBook
 
 
 class Application(tk.Frame):
