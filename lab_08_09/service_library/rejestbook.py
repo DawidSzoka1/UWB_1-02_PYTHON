@@ -53,8 +53,8 @@ def add_book(read_func, author, title, pages):
     if type(df) is not pd.DataFrame:
         return_div['message'] = f'Some error with database {df}'
         return return_div
-    if title.title() in df['TITLE'].values and author.title() in df[df['TITLE'] == title.title()]['AUTHOR'].values:
-        return_div['message'] = 'Book with that author already exists'
+    if title.title() in df['TITLE'].values:
+        return_div['message'] = 'Book with that title already exists'
         return return_div
     try:
         pages = int(pages)

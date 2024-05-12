@@ -5,6 +5,7 @@ from lab_08_09.service_library.GUI.all_customers import Customers
 from lab_08_09.service_library.GUI.add_book_page import AddBookPage
 from lab_08_09.service_library.GUI.add_user_page import AddUserPage
 from lab_08_09.service_library.GUI.borrow_book_page import BorrowBookPage
+from lab_08_09.service_library.GUI.return_book import ReturnBook
 
 
 class Application(tk.Frame):
@@ -14,7 +15,7 @@ class Application(tk.Frame):
         self.font_color_1 = '#CFCFA7'
         self.font_color_2 = 'white'
         self.font_style = "Georgia pro Regular"
-        self.pages = [MainPage, Books, Books, Customers, AddBookPage, AddUserPage, BorrowBookPage]
+        self.pages = [MainPage, Books, Books, Customers, AddBookPage, AddUserPage, BorrowBookPage, ReturnBook]
 
         super().__init__(root, bg=self.bg_color_1)
 

@@ -128,6 +128,7 @@ class MainPage(tk.Frame):
             height=5,
             background=self.parent.bg_color_2,
             fg=self.parent.font_color_2,
-            font=(self.parent.font_style, 20, "bold")
+            font=(self.parent.font_style, 20, "bold"),
+            command=lambda: self.parent.show_frame(page=7)
         )
         self.return_book_redirect.grid(row=0, column=0)
