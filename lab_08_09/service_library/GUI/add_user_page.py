@@ -1,7 +1,7 @@
 import tkinter as tk
 
-from lab_08_09 import back_to_home_page, border_func, use_backend_func
-from lab_08_09 import add_customer
+from GUI.usefullfun import back_to_home_page, border_func, use_backend_func
+from customerservice import add_customer
 
 
 class AddUserPage(tk.Frame):
@@ -100,7 +100,7 @@ class AddUserPage(tk.Frame):
             insertbackground='white',
         )
 
-        self.country_entry.grid(row=11, column=0, sticky='nsew', padx=20, pady=5)
+        self.country_entry.grid(row=1, column=1, sticky='nsew', padx=20, pady=5)
         self.country_entry.config(fg=self.parent.font_color_1)
 
     def create_label(self):
@@ -164,7 +164,7 @@ class AddUserPage(tk.Frame):
             fg=self.parent.font_color_1,
             font=(self.parent.font_style, 30)
         )
-        self.country_label.grid(row=10, column=0, sticky='nsew', padx=(0, 80))
+        self.country_label.grid(row=0, column=1, sticky='nsew', padx=(0, 80))
 
     def create_send_button(self):
         self.send_frame.rowconfigure(0, weight=1)

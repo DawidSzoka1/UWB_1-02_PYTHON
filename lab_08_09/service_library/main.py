@@ -4,7 +4,7 @@ import tkinter as tk
 
 def main():
     root = tk.Tk()
-    root.geometry('1500x1000')
+    root.geometry('1500x1100')
     app = main_app.Application(root)
     return app
 

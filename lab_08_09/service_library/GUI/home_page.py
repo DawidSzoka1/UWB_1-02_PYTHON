@@ -1,5 +1,5 @@
 import tkinter as tk
-from lab_08_09 import border_func
+from GUI.usefullfun import border_func
 
 
 class MainPage(tk.Frame):
@@ -83,7 +83,7 @@ class MainPage(tk.Frame):
 
     def redirect_actions(self):
         self.add_book_redirect = tk.Button(
-            border_func(self.frame_actions, 0, 0, (100, 10), (80, 0), color=self.parent.font_color_2,
+            border_func(self.frame_actions, 0, 0, (10, 10), (80, 0), color=self.parent.font_color_2,
                         bg_color=self.parent.bg_color_2),
             text="ADD \nBOOK",
             width=20,
@@ -121,7 +121,7 @@ class MainPage(tk.Frame):
         self.borrow_book_redirect.grid(row=0, column=0)
 
         self.return_book_redirect = tk.Button(
-            border_func(self.frame_actions, 3, 0, 5, (80, 0), color=self.parent.font_color_2,
+            border_func(self.frame_actions, 3, 0, (5, 20), (80, 0), color=self.parent.font_color_2,
                         bg_color=self.parent.bg_color_2),
             text="RETURN \nBOOK",
             width=20,

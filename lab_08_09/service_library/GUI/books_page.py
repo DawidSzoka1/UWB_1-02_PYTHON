@@ -1,6 +1,6 @@
 import tkinter as tk
-from lab_08_09 import get_books
-from lab_08_09 import back_to_home_page, label_tabel, tabel_full
+from get_df_for_pages import get_books
+from GUI.usefullfun import back_to_home_page, label_tabel, tabel_full
 
 
 class Books(tk.Frame):

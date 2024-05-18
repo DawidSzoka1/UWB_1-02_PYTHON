@@ -26,7 +26,7 @@ Examples
 """
 from datetime import date
 import pandas as pd
-from lab_08_09 import find_free_id
+from additionalfun import find_free_id
 
 
 def add_book(read_func, author, title, pages):
