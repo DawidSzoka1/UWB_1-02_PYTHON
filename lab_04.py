@@ -96,6 +96,8 @@ import os
 ########################## Zadanie 5 #######################
 ## Korzystając wyłącznie z metod Pythona, utworz w swoim folderze katalog,
 ## a następnie zmień nazwę katalogu na inną, dowolną.
+import math
+
 # local_path = os.getcwd()
 # new_file_path = os.path.join(local_path, "change")
 # try:

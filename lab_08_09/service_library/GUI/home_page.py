@@ -1,5 +1,5 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import border_func
+from GUI.usefullfun import border_func
 
 
 class MainPage(tk.Frame):

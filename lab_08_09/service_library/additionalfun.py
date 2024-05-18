@@ -1,6 +1,5 @@
 import pandas as pd
 import random
-from tkinter import messagebox
 
 
 def read_csv(path_to_csv_file, *args):
