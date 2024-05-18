@@ -1,11 +1,11 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.books_page import Books
-from lab_08_09.service_library.GUI.home_page import MainPage
-from lab_08_09.service_library.GUI.all_customers import Customers
-from lab_08_09.service_library.GUI.add_book_page import AddBookPage
-from lab_08_09.service_library.GUI.add_user_page import AddUserPage
-from lab_08_09.service_library.GUI.borrow_book_page import BorrowBookPage
-from lab_08_09.service_library.GUI.return_book_page import ReturnBook
+from lab_08_09 import Books
+from lab_08_09 import MainPage
+from lab_08_09 import Customers
+from lab_08_09 import AddBookPage
+from lab_08_09 import AddUserPage
+from lab_08_09 import BorrowBookPage
+from lab_08_09 import ReturnBook
 
 
 class Application(tk.Frame):

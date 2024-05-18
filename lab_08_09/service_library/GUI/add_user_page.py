@@ -1,7 +1,7 @@
 import tkinter as tk
 
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func, use_backend_func
-from lab_08_09.service_library.customerservice import add_customer
+from lab_08_09 import back_to_home_page, border_func, use_backend_func
+from lab_08_09 import add_customer
 
 
 class AddUserPage(tk.Frame):

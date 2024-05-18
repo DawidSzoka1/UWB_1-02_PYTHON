@@ -1,6 +1,5 @@
 from datetime import date, timedelta
 import os
-from lab_08_09.service_library.additionalfun import *
 import pandas as pd
 from pandas.errors import SettingWithCopyWarning, IndexingError
 

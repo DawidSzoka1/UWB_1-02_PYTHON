@@ -1,7 +1,7 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func, check_user_to_id_and_backend
-from lab_08_09.service_library.customerservice import return_book
-from lab_08_09.service_library.get_df_for_pages import get_customers
+from lab_08_09 import back_to_home_page, border_func, check_user_to_id_and_backend
+from lab_08_09 import return_book
+from lab_08_09 import get_customers
 
 
 class ReturnBook(tk.Frame):

@@ -1,7 +1,7 @@
 import tkinter as tk
-from lab_08_09.service_library.GUI.usefullfun import back_to_home_page, border_func, use_backend_func
-from lab_08_09.service_library.additionalfun import validate_int, read_csv
-from lab_08_09.service_library.rejestbook import add_book
+from lab_08_09 import back_to_home_page, border_func, use_backend_func
+from lab_08_09 import validate_int, read_csv
+from lab_08_09 import add_book
 
 
 class AddBookPage(tk.Frame):
