@@ -1,5 +1,0 @@
-id:102, author:Donald Knuth,  title:The Art of Computer Programming,  pages:3168, borrowed: 2024-04-28, returned: 2024-04-29
-id:9698, author:Jakis,  title:Fgds,  pages:123, borrowed: 2024-04-28, returned: False
-id:4664, author:Niger,  title:Nigers,  pages:231, borrowed: 2024-05-01, returned: 2024-05-01
-id:4664, author:Niger,  title:Nigers,  pages:231, borrowed: 2024-05-01, returned: 2024-05-01
-id:4664, author:Niger,  title:Nigers,  pages:231, borrowed: 2024-05-01, returned: 2024-05-01
