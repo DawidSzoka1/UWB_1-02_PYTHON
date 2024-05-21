@@ -1,4 +1,5 @@
 from tkinter import *  # standard Python interface to the Tcl/Tk GUI toolkit
+from tkinter.messagebox import showinfo, showerror, showwarning
 import requests  # package allows you to send HTTP requests
 from PIL import Image, ImageTk
 
@@ -124,7 +125,7 @@ from tkinter.messagebox import showinfo, showerror, showwarning
 # ## Zapoznaj się z przykładami tworzenia okienek informacyjnych
 # ## How we create a message box
 #
-# from tkinter.messagebox import showinfo, showerror, showwarning
+
 # # ## Example - showinfo
 
 # window = Tk()
@@ -244,8 +245,43 @@ from tkinter.messagebox import showinfo, showerror, showwarning
 # # w kontrolkach edit
 # # Obsłuż potencjalne błędy wpisując własny komentarz: np. TypeError
 # # Do wyswietlania komunikatów użyj okienek komunikacyjnych
-window = Tk()
+def operation():
+    try:
+        num1 = float(a.get())
+        num2 = float(b.get())
+    except ValueError:
+        showerror('Wrong input', 'Please enter valid numbers')
+        return 0
+    if var.get() == 1:
+        result_operation = f'{num1 + num2}'
+    elif var.get() == 2:
+        result_operation = f'{num1 - num2}'
+    elif var.get() == 3:
+        result_operation = f'{num1 * num2}'
+    elif var.get() == 4:
+        result_operation = f'{num1 / num2}'
+    else:
+        return 0
+    result.config(text=result_operation)
 
+
+window = Tk()
+window.geometry("500x500")
+a = Entry(window)
+a.grid(row=0, column=0)
+b = Entry(window)
+b.grid(row=1, column=0)
+button = Button(window, text='ok', command=operation)
+button.grid(row=2, column=0)
+var = IntVar()
+Radiobutton(window, text='+', variable=var, value=1).grid(row=0, column=1)
+Radiobutton(window, text='-', variable=var, value=2).grid(row=1, column=1)
+Radiobutton(window, text='*', variable=var, value=3).grid(row=2, column=1)
+Radiobutton(window, text='/', variable=var, value=4).grid(row=3, column=1)
+result = Label(window, text='')
+result.grid(row=3, column=0)
+
+window.mainloop()
 # # ########## Zadanie 2
 # # Okres świąt to również zwiększony czas brania kredytów przez konsumentów
 # # Zaprojektuj prosty interfejs który obliczy ratę kredytu 1000-10000zł zgodnie ze wzorem:
